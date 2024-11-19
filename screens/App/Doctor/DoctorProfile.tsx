@@ -1,0 +1,276 @@
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { colors } from '../../../css/colorsIndex'
+import * as Haptics from 'expo-haptics';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { getPricing } from '../../../hooks/getPricing';
+import Rating from '../../../components/Rating';
+import BottomButton from '../../../components/BottomButton';
+import { DocterPhone } from '../../../assets/svg/DocterPhone';
+import { DocterVideo } from '../../../assets/svg/DocterVideo';
+import { DoctorMessage } from '../../../assets/svg/DoctorMessage';
+import { DoctorProfilePic } from '../../../assets/svg/DoctorProfile';
+
+
+const DoctorProfile = () => {
+	const navigation: any = useNavigation();
+	const route = useRoute();
+	// @ts-ignore
+	const { item, user } = route.params;
+	const [isLoading, setIsLoading] = useState(false);
+	const [pricing, setPricing] = useState<any>({});
+	const [profile, setProfile] = useState([]);
+	const [doctorDetails, setDoctorDetails] = useState([]);
+	const [details, setDetails] = useState<any>({});
+
+	useEffect(() => {
+		try {
+			// Check if item is a valid stringified JSON, parse it only if needed
+			const parsedItem = typeof item === 'string' ? JSON.parse(item) : item;
+			setDetails(parsedItem);
+		} catch (error) {
+		}
+	}, [item]);
+	// console.log('item---item', JSON.stringify(details, null, 2));
+
+
+
+
+	useEffect(() => {
+		setIsLoading(true)
+		getPricing()
+			.then(data => {
+				setPricing(data);
+				setIsLoading(false)
+			})
+			.catch(error => {
+				// toastRef.current.error(error.message);
+				Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error)
+				setIsLoading(false);
+			});
+
+	}, []);
+
+
+
+
+	useEffect(() => {
+		setIsLoading(true);
+		// Set isLoading to false after 2 seconds
+		setTimeout(() => {
+			setIsLoading(false);
+		}, 1000);
+	}, []);
+
+
+	const handlePresss = () => {
+		if (!pricing || Object.keys(pricing).length === 0) {
+			// Show a feedback (Haptics or Alert) if pricing is not available
+			Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+			return;
+		}
+
+		navigation.navigate('BookingAppointment', { item: item, user: user, pricing: pricing });
+		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+	};
+
+	const handleIcon = () => {
+		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+	};
+
+	return (
+		<View style={styles.container} 	>
+			<ScrollView
+				contentContainerStyle={styles.scrollViewContent} contentInsetAdjustmentBehavior="automatic">
+				<View style={styles.list_icon_and_image_container}>
+					<View style={styles.list_icon_and_image_container_img}>
+						{!item?.photo_url ? <DoctorProfilePic /> :
+							<Image
+								source={{ uri: item?.photo_url }}
+								style={styles.top_container_img_icon_pics}
+								resizeMode="cover"
+							/>}
+					</View>
+					<View style={styles.info_icons_text_one_container}>
+						<Text style={styles.info_icons_text_one}>{ }.{details?.first_name} {details?.last_name}</Text>
+						<Text style={styles.info_icons_text_two}>{details?.specialization}</Text>
+					</View>
+					<View style={styles.info_icons_text_one_container}>
+						<Text style={styles.info_icons_text_three}>{details?.experience_yrs} Years Experiece</Text>
+						<View style={styles.no_appointments_star_flex}>
+
+							<Rating rating={details?.rating || 0} />
+						</View>
+					</View>
+
+					<View style={styles.info_icons_container}>
+						<TouchableOpacity style={styles.info_icons1} onPress={handleIcon}>
+							<DoctorMessage />
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.info_icons2} onPress={handleIcon} >
+							<DocterVideo />
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.info_icons3} onPress={handleIcon} >
+							<DocterPhone />
+						</TouchableOpacity>
+					</View>
+				</View>
+
+				<View style={styles.info_text_container_main}>
+					<View style={styles.info_text_container}>
+						<Text style={styles.info_text_information}>About</Text>
+						<Text style={styles.info_text_information_text}>{details?.about}</Text>
+					</View>
+
+					<View style={styles.info_text_container}>
+						<Text style={styles.info_text_information}>Specialities</Text>
+						<Text style={styles.info_text_information_text}>General Practice, Pediatrics.</Text>
+					</View>
+
+					<View style={styles.info_text_container}>
+						<Text style={styles.info_text_information}>Consultation Channels</Text>
+						<Text style={styles.info_text_information_text}>Online & Face-to-Face.</Text>
+					</View>
+
+					<View style={styles.info_text_container}>
+						<Text style={styles.info_text_information}>Price</Text>
+						<Text style={styles.info_text_information_text}>₦{pricing[0]?.pricing}</Text>
+					</View>
+				</View>
+			</ScrollView>
+
+
+			<BottomButton onPress={handlePresss} text={"Book an Appointments"} />
+		</View>
+	)
+}
+
+export default DoctorProfile
+
+const styles = StyleSheet.create({
+
+
+
+	info_text_container_main: {
+		flexDirection: 'column',
+		gap: 40,
+		marginTop: 40,
+	},
+
+	info_text_information: {
+		color: colors.black,
+		fontSize: 16,
+		fontFamily: "Inter-Regular",
+		marginBottom: 10,
+	},
+	info_text_information_text: {
+		color: colors.black,
+		fontSize: 14,
+		fontFamily: "Inter-Regular",
+		marginBottom: 10,
+	},
+
+
+	info_text_container: {
+
+	},
+
+	info_icons_text_three: {
+		color: colors.black,
+		fontSize: 14,
+	},
+
+	info_icons_text_one_container: {
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+
+	info_icons_text_two: {
+		fontSize: 14,
+		color: colors.smail_text_color,
+		fontFamily: "Inter_400Regular",
+	},
+
+	info_icons_text_one: {
+		fontSize: 14,
+		color: colors.black,
+		fontFamily: "Inter_400Regular",
+	},
+
+	info_icons1: {
+		width: 35,
+		height: 28,
+		borderRadius: 5,
+		backgroundColor: "#CEECCE",
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	info_icons2: {
+		width: 35,
+		height: 28,
+		borderRadius: 5,
+		backgroundColor: "#D4DAF2",
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	info_icons3: {
+		width: 35,
+		height: 28,
+		borderRadius: 5,
+		backgroundColor: "#F4E8C4",
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+
+	info_icons_container: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'center',
+		gap: 10,
+	},
+
+	no_appointments_star_flex: {
+		flexDirection: "row",
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+
+	top_container_img_icon_pics: {
+		width: '100%',
+		height: '100%',
+		borderRadius: 50,
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+
+	scrollViewContent: {
+		paddingHorizontal: 20,
+		paddingTop: 30,
+		paddingBottom: 120,
+	},
+
+	list_icon_and_image_container_img: {
+		width: 100,
+		height: 100,
+		borderRadius: 50,
+		backgroundColor: "#D7DCE2",
+		alignItems: 'center',
+		justifyContent: 'center',
+
+	},
+
+	list_icon_and_image_container: {
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		gap: 10,
+	},
+
+
+	container: {
+		position: "relative",
+		flex: 1,
+		backgroundColor: colors.white,
+	},
+})

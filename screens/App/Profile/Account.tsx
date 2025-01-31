@@ -15,6 +15,9 @@ import { Creditcard } from '../../../assets/svg/CreditCard';
 import { Activity } from '../../../assets/svg/Activity';
 import { Logout } from '../../../assets/svg/Logout';
 import { Infocirlceo } from '../../../assets/svg/Infocirlceo';
+import { ProfileIcon } from '@/assets/svg/ProfileIcon';
+import { SecurityIcon } from '@/assets/svg/SecurityIcon';
+import { TrashIcon } from '@/assets/svg/TrashIcon';
 export const width = Dimensions.get("window").width - 300;
 export const Height = Dimensions.get("window").height - 410
 
@@ -43,7 +46,8 @@ const Account = () => {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			{/*<ProfileColorImage />*/}
+			<ScrollView>
+				{/*<ProfileColorImage />*/}
 			<View style={styles.top_container_main}>
 				{/*<View style={styles.top_nav_container}>
 					<Text style={styles.top_nav_title}>Profile</Text>
@@ -79,9 +83,9 @@ const Account = () => {
 			{/* List section */}
 			<View style={styles.logput_container_main}>
 				<View>
-					<TouchableOpacity style={styles.list_item_container} onPress={() => navigation.navigate("EditAccount")}>
+					<TouchableOpacity style={styles.list_item_container} onPress={() => navigation.navigate("PersonalInformation")}>
 						<View style={styles.list_item_image_container}>
-							<Medical />
+							<ProfileIcon />
 							<Text style={styles.list_item_text}>Profile Information</Text>
 						</View>
 						<AngleRight />
@@ -100,6 +104,13 @@ const Account = () => {
 						</View>
 						<AngleRight />
 					</TouchableOpacity>
+					<TouchableOpacity style={styles.list_item_container} onPress={() => navigation.navigate("")}>
+						<View style={styles.list_item_image_container}>
+							<SecurityIcon />
+							<Text style={styles.list_item_text}>Security</Text>
+						</View>
+						<AngleRight />
+					</TouchableOpacity>
 					<TouchableOpacity style={styles.list_item_container} onPress={() => navigation.navigate("VitalsHistory")}>
 						<View style={styles.list_item_image_container}>
 							<Activity />
@@ -114,14 +125,20 @@ const Account = () => {
 						</View>
 						<AngleRight />
 					</TouchableOpacity>
-
+					<TouchableOpacity style={styles.list_item_container} onPress={() => navigation.navigate("")}>
+						<View style={styles.list_item_image_container}>
+							<TrashIcon />
+							<Text style={styles.list_item_text}>Delete account</Text>
+						</View>
+						<AngleRight />
+					</TouchableOpacity>
 				</View>
 				<TouchableOpacity style={styles.logout_container} onPress={handleLogout}>
-
 					<Logout />
 					<Text style={styles.logout_container_text}>Logout</Text>
 				</TouchableOpacity>
 			</View>
+			</ScrollView>
 		</SafeAreaView>
 	);
 };
@@ -146,9 +163,10 @@ const styles = StyleSheet.create({
 
 	logout_container_text: {
 		color: colors.white,
-		fontSize: 16,
+		fontSize: 14,
 		marginLeft: 10,
-		fontFamily: "Inter_500Medium",
+		fontFamily: "Inter_Medium",
+		fontWeight: "500",
 	},
 
 	logput_container_main: {
@@ -164,17 +182,15 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'center',
-		padding: 10,
-		width: '100%',
-		backgroundColor: colors.red,
-		borderRadius: 50,
-		paddingHorizontal: 10,
-		marginTop: 20,
+		//padding: 10,
+		width: 380,
+		height: 40,
+		backgroundColor: "#BD0606",
+		borderRadius: 12,
+		//paddingHorizontal: 10,
+		marginTop: 30,
+		marginHorizontal: 15,
 	},
-
-
-
-
 
 	list_item_image_container: {
 		flexDirection: 'row',
@@ -187,10 +203,10 @@ const styles = StyleSheet.create({
 	list_item_container: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		//padding: 10,
+		paddingHorizontal: 20,
 		//marginBottom: 10,
 		borderBottomWidth: 0.3,
-		borderBottomColor: colors.smail_text_color,
+		borderBottomColor: "#D5D5D5",
 		justifyContent: 'space-between',
 		height: 72
 	},
@@ -199,7 +215,8 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		fontWeight: "500",
 		fontFamily: "Inter-Medium",
-		color: "#171717"
+		color: "#171717",
+		marginTop: 2
 	},
 
 	profile_text_img_btn_text: {
@@ -232,7 +249,8 @@ const styles = StyleSheet.create({
 		fontFamily: "Inter-Medium",
 		fontWeight: "500",
 		textAlign: "center",
-		margin: 15
+		margin: 15,
+		marginBottom: 4
 	},
 
 	profile_text2: {

@@ -44,6 +44,7 @@ import CompletedAppointmentDetails from '@/screens/App/Appointment/CompletedAppo
 import AppointmentReview from '@/screens/App/Appointment/AppointmentReview';
 import CancelledAppointmentDetails from '@/screens/App/Appointment/CancelledAppointmentDetails';
 import SuccessAppointmentReview from '@/screens/SuccessScreens/SuccessAppointmentReview';
+import PersonalInformation from '@/screens/App/Profile/PersonalInformation';
 
 
 
@@ -125,6 +126,17 @@ function RootNavigator() {
           </TouchableOpacity>
         )}}/>
       <Stack.Screen name="CancelledAppointmentDetails" component={CancelledAppointmentDetails} 
+      options={{
+        title: '', headerLeft: () => (
+          <TouchableOpacity onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            navigation.goBack();
+          }}>
+            <Back />
+          </TouchableOpacity>
+        )}}/>
+
+      <Stack.Screen name="PersonalInformation" component={PersonalInformation} 
       options={{
         title: '', headerLeft: () => (
           <TouchableOpacity onPress={() => {

@@ -20,6 +20,8 @@ import { baseUrl } from "../../../shared/baseUrl";
 import { Paystack, paystackProps } from "../../../components/PaystackWebView";
 import axios from "axios";
 import { UserCircle } from "../../../assets/svg/UserCircle";
+import { CalenderIcon2 } from "@/assets/svg/CalenderIcon2";
+import { SwitchIcon } from "@/assets/svg/SwitchIcon";
 
 const BillingDetails = () => {
 	const navigation: any = useNavigation();
@@ -201,32 +203,25 @@ const BillingDetails = () => {
 			<ScrollView style={styles.container}
 				contentInsetAdjustmentBehavior="automatic">
 				<View style={styles.topboxContainer}>
-					<View style={styles.topboxTextContainer} >
+					{/*<View style={styles.topboxTextContainer} >
 						<Text style={styles.topboxTextContainer_text_nett}>You will receive a confirmation mail </Text>
-					</View>
+					</View>*/}
 
 					<View style={styles.booked_text_nett}>
-						<View>
-							<Text style={styles.topboxTextContainer_text_nett}>Booked for</Text>
-						</View>
-						<View style={styles.booked_text_container_main}>
-
-							<View style={styles.booked_text_container}>
-								{!item?.photo_url ? <UserCircle /> : <Image
-									style={styles.image}		// @ts-ignore 
-									source={{ uri: item?.photo_url }}
-								/>}
-
-							</View>
-							<View>
-								<Text style={styles.bookeding_text}>{item?.first_name} {item?.last_name}</Text>
-								<Text style={styles.bookeding_text_two}>{item?.specialization}</Text>
-								<Text style={styles.bookeding_text_two}>{item?.hospital}</Text>
-							</View>
-						</View>
+						<Text style={styles.topboxTextContainer_text_nett}>Booking Info</Text>
 						<View style={styles.booked_text_container_main_two}>
-							<Text style={styles.bookeding_section_two}>Booking Information</Text>
-							<View style={styles.topboxInnerContainer_details}>
+							<View style={{flexDirection: "row", marginTop: 17, marginLeft: 15}}>
+								<CalenderIcon2 />
+								<Text style={styles.bookeding_section_two}>Date and Time</Text>
+							</View>
+							<Text style={styles.booking_date_text}>{input?.bookingDate}</Text>
+							<Text style={styles.booking_date_text}>{timeSlot(input)}</Text>
+							<View style={{flexDirection: "row", marginTop: 10, marginLeft: 15}}>
+								<SwitchIcon />
+								<Text style={styles.bookeding_section_two}>Communication Channel</Text>
+							</View>
+							<Text style={styles.booking_date_text}>{input?.bookingChannel}</Text>
+							{/*<View style={styles.topboxInnerContainer_details}>
 								<View style={styles.bookeding_section_text_container}>
 									<View style={styles.topboxInnerContainer}>
 										<Text style={styles.bookeding_section_text_two_sub}>Time Slot : </Text>
@@ -241,15 +236,30 @@ const BillingDetails = () => {
 									<Text>Booking Date :</Text>
 									<Text>{input?.bookingDate}</Text>
 								</View>
+							</View>*/}
+						</View>
+						<Text style={styles.topboxTextContainer_text_nett}>Doctor Info</Text>
+						<View style={styles.doctor_info_container}>
+							<View style={styles.booked_text_container}>
+								{!item?.photo_url ? <UserCircle /> : <Image
+									style={styles.image}		// @ts-ignore 
+									source={{ uri: item?.photo_url }}
+								/>}
+							</View>
+							<View style={{flexDirection: "column"}}>
+								<Text style={styles.bookeding_text}>{item?.first_name} {item?.last_name}</Text>
+								<Text style={styles.bookeding_text_two}>{item?.specialization}</Text>
+								<Text style={styles.bookeding_text_two}>{item?.hospital}</Text>
 							</View>
 						</View>
-						<View style={styles?.booked_text_container_main_two}>
-							<Text style={styles?.bookeding_section_two}>Appointment Fee</Text>
-							<View style={styles?.bookeding_section_text_container}>
-								<Text style={styles?.bookeding_section_text_two_sub}>₦{pricing[0]?.pricing}</Text>
+						<Text style={styles.topboxTextContainer_text_nett}>Payment Info</Text>
+						<View style={styles.payment_info_box_container}>
+							<View style={{flexDirection: 'row', margin: 18, justifyContent: 'space-between'}}>
+								<Text style={styles.consultation_text}>Consultation Fee</Text>
+								<Text style={styles.consultation_fee}>₦{pricing[0]?.pricing}</Text>
 							</View>
 						</View>
-						<View style={styles?.booked_text_container_main_two}>
+						{/*<View style={styles?.booked_text_container_main_two}>
 							<Text style={styles?.bookeding_section_text_two_sub}>Booking Channel</Text>
 
 							<Text style={styles?.bookeding_section_two}>{input?.bookingChannel === "Online" ? "Online" : "Physical appointment"}</Text>
@@ -257,7 +267,7 @@ const BillingDetails = () => {
 								<Text style={styles?.bookeding_section_text_two_sub}>Hospital</Text>
 							</View>
 							<Text style={styles?.bookeding_text_two}>{item?.hospital}</Text>
-						</View>
+						</View>*/}
 					</View>
 				</View>
 
@@ -350,12 +360,13 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 		borderTopWidth: 1,
 		borderTopColor: "rgba(31, 31, 31, 0.08)",
-		height: 50,
+		height: 40,
 		zIndex: 100
 	},
 
 	buttonText: {
 		fontStyle: 'normal',
+		fontFamily: 'Inter-Medium',
 		fontWeight: '500',
 		fontSize: 14,
 		lineHeight: 18,
@@ -364,11 +375,11 @@ const styles = StyleSheet.create({
 	},
 
 	buttonContainer: {
-		width: 328,
+		width: 380,
 		height: 40,
 		padding: 10,
 		backgroundColor: colors.accent_green,
-		borderRadius: 90,
+		borderRadius: 12,
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -414,16 +425,52 @@ const styles = StyleSheet.create({
 		borderColor: colors.border_color,
 	},
 	bookeding_section_two: {
-		color: colors.smail_text_color,
-		fontSize: 12.5,
+		color: colors.black,
+		fontSize: 12,
 		fontFamily: "Inter-Medium",
+		fontWeight: '500',
+		margin: 5,
+		marginHorizontal: 10
+	},
+
+	booking_date_text: {
+		fontSize: 12,
+		fontWeight: '400',
+		fontFamily: "Inter-Regular",
+		color: "#646464",
+		marginHorizontal: 50,
+		marginBottom: 5
 	},
 
 	bookeding_text_two: {
-		color: colors.smail_text_color,
-		fontSize: 12.5,
+		color: "#646464",
+		fontSize: 12,
 		fontFamily: "Inter-Reguler",
+		fontWeight: "400",
 		marginTop: 5,
+	},
+
+	payment_info_box_container: {
+		height: 52,
+		backgroundColor: "#FCFCFC",
+		borderWidth: 0.5,
+		borderRadius: 12,
+		borderColor: "#D5D5D5",
+		marginBottom: 20
+	},
+
+	consultation_text: {
+		fontSize: 12,
+		fontWeight: '400',
+		fontFamily: 'Inter-Regular',
+		color: "#171717"
+	},
+
+	consultation_fee: {
+		fontSize: 14,
+		fontWeight: '500',
+		fontFamily: 'Inter-Medium',
+		color: colors.black
 	},
 
 	bookeding_section_text_two_sub: {
@@ -438,16 +485,21 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 	},
 	bookeding_text: {
-		color: colors.black,
-		fontSize: 12.5,
-		fontFamily: "Poppins-Bold",
+		color: "#363636",
+		fontSize: 12,
+		fontFamily: "Inter-Medium",
+		fontWeight: '500',
+		marginTop: 18
 	},
 
 	booked_text_container_main_two: {
-		marginTop: 25,
-		borderBottomWidth: 0.4,
-		borderBottomColor: colors.smail_text_color,
-		paddingBottom: 30,
+		height: 158,
+		backgroundColor: "#FCFCFC",
+		//marginTop: 25,
+		borderRadius: 12,
+		borderWidth: 0.5,
+		borderColor: "#D5D5D5",
+		marginBottom: 25,
 	},
 	booked_text_container_main: {
 		flexDirection: 'row',
@@ -459,6 +511,17 @@ const styles = StyleSheet.create({
 		paddingBottom: 30,
 	},
 
+	doctor_info_container: {
+		width: "100%",
+		height: 100,
+		backgroundColor: "#FCFCFC",
+		borderRadius: 12,
+		borderWidth: 0.5,
+		borderColor: "#D5D5D5",
+		flexDirection: "row",
+		marginBottom: 15
+	},
+
 	booked_text_container: {
 		borderWidth: 1,
 		borderColor: colors.accent_green,
@@ -468,6 +531,8 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
+		margin: 15,
+		marginRight: 5
 	},
 
 	image: {
@@ -477,15 +542,17 @@ const styles = StyleSheet.create({
 	},
 
 	booked_text_nett: {
-		marginTop: 20,
-		marginHorizontal: 10,
+		//marginTop: 10,
+		marginHorizontal: 20,
 	},
 
 	topboxTextContainer_text_nett: {
-		color: colors.smail_text_color,
-		fontSize: 12.5,
+		color: colors.black,
+		fontSize: 14,
 		fontFamily: "Inter-Regular",
+		fontWeight: '500',
 		marginTop: 10,
+		marginBottom: 15
 	},
 
 
@@ -528,7 +595,7 @@ const styles = StyleSheet.create({
 
 	topboxContainer: {
 		width: "100%",
-		gap: 2,
+		//gap: 2,
 		paddingTop: 10,
 	},
 

@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View, ImageBackground, TouchableOpacity, FlatList, ScrollView, RefreshControl, Platform, Alert, ActivityIndicator } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, FlatList, ScrollView, RefreshControl, Platform, Alert, ActivityIndicator } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { Setting } from '../../../assets/svg/Setting';
 import { Medicine } from '../../../assets/svg/medicine';
@@ -19,8 +19,10 @@ import { capitalizedMonth } from '../../../hooks/helpers';
 import { checkSurveys } from '../../../hooks/checkSurveys';
 import { getAllDoctorsByRole } from '../../../hooks/getAllDoctorsByRole';
 import DoctorList from './DoctorList';
+import UpcomingAppointmentCard from './UpcomingAppointmentCard';
 import { Search } from '../../../assets/svg/Search';
 import { useRefresh } from '@/shared/RefreshContext';
+import { Locations } from '@/assets/svg/Location';
 
 
 const wait = (timeout: number | undefined) => {
@@ -114,6 +116,7 @@ const Home = () => {
 				const doctorMonthData = await getDoctorOfTheMonth({ month: capitalizedMonth });
 				setData((prev: any) => ({ ...prev, doctorMonth: doctorMonthData }));
 				setIsLoading(prev => ({ ...prev, doctorMonth: false }));
+				//console.log("data",  JSON.stringify(data, null, 2));
 
 				const doctorsByRoleData = await getAllDoctorsByRole();
 				setData((prev: any) => ({ ...prev, doctorsByRole: doctorsByRoleData }));
@@ -221,6 +224,11 @@ const Home = () => {
 		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 	};
 
+	const handlePress1 = (item: any) => {
+			navigation.navigate('DoctorProfile', { item: item });
+			Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+		};
+
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -236,24 +244,38 @@ const Home = () => {
 						<Search />
 						<View style={styles.isettingsContainer_text}>
 							<Text style={styles.settings} >
-								Search doctor
+								Find a Doctor
 							</Text>
 						</View>
-						<TouchableOpacity style={styles.inputContainer_setting}>
+						{/*<TouchableOpacity style={styles.inputContainer_setting}>
 							<Setting />
-						</TouchableOpacity>
+						</TouchableOpacity>*/}
 					</TouchableOpacity>
 
 					<View style={styles.doctor_container}>
-						<Text style={styles.doctor_container_text}>Doctor of the Month</Text>
+						<Text style={styles.homeHeadingTexts}>Doctor of the Month</Text>
 						<View style={styles.doctor_image_container}>
-
 							{data?.doctorMonth?.map((item: any, index: React.Key | null | undefined) => (
-								<ImageBackground
-									key={index}
-									source={{ uri: item?.photo_url }}
-									style={styles.top_container_img_icon} >
-									<View style={styles.doctor_image_container_inside}>
+								<>
+								  <Image 
+								  key={index} 
+								  source={{ uri: item?.photo_url }}
+								  style={styles.top_container_img_icon}/>
+								  <View style={styles.doctor_description_container}>
+								  <Text style={styles.doctor_inside_one_one}>Dr {item?.doctorName}</Text>
+								  <Text style={styles.doctor_inside_one_two}>{item?.specialization}</Text>
+								  </View>
+								  <View style={{ height: 1, backgroundColor: '#ccc', marginVertical: 6, marginHorizontal: 10 }} />
+								  <View style={styles.doctor_hospital_profile_container}>
+									<Locations color='#222222' />
+								    <Text style={styles.doctor_inside_one_three}>{item?.hospital}</Text>
+								    <TouchableOpacity onPress={() => navigation.navigate("DoctorOfTheMonth", { item })}>
+								      <Text style={styles.doctor_inside_one_one_out}>View Profile</Text>
+							        </TouchableOpacity>
+								  </View>
+								</>
+							))}
+								{/*<View style={styles.doctor_image_container_inside}>
 										<View style={styles.doctor_image_inside_one}></View>
 										<View style={styles.doctor_image_inside_two}>
 											<View style={styles.doctor_inside_one}>
@@ -267,20 +289,26 @@ const Home = () => {
 											>
 												<Text style={styles.doctor_inside_two_text}>View Profile</Text>
 											</TouchableOpacity>
-										</View>
-									</View>
-								</ImageBackground>
-							))}
-							<TouchableOpacity onPress={handleSearch}>
-								<Text style={styles.doctor_inside_one_one_out}>View All Doctors</Text>
-							</TouchableOpacity>
+										</View>*/}
+							{/*<TouchableOpacity onPress={handleSearch}>
+								<Text style={styles.doctor_inside_one_one_out}>View Profile</Text>
+							</TouchableOpacity>*/}
 						</View>
 					</View>
 
 				</View>
 				{/* Find a Specialist */}
 				<View style={styles.find_a_specialist_container}>
-					{!data?.specializations ? "" : <Text>Find a Specialist</Text>}
+					{!data?.specializations ? "" : (
+						<>
+						<View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+							<Text style={styles.homeHeadingTexts}>Find a Specialist</Text>
+							<TouchableOpacity onPress={()=> navigation.navigate('SearchDoctor')}>
+							<Text style={{color: '#C6A400'}}>See all</Text>
+							</TouchableOpacity>
+						</View>
+						</>
+					)}
 
 					<View style={styles.specialist_container_list}>
 						{isLoading.specializations ?
@@ -312,16 +340,24 @@ const Home = () => {
 									<Text style={styles.no_appointments_container_two_text_one}>Book now to see a doctor</Text>
 								</View>
 							</View> :
-							<View>
+							<>
+							<Text style={styles.homeHeadingTexts}>Upcoming Appointment</Text>
+							<View style={styles.upcoming_appointment_card}>
+								<UpcomingAppointmentCard />
+								<Text></Text>
+							</View>
+							{/*<View>
 								{/* Appointments */}
-								<BannerSlider data={filteredData} navigation={navigation} />
-							</View>}
+								{/*<BannerSlider data={filteredData} navigation={navigation} />
+							</View>*/}
+							</>
+							}
 
 
 					<View style={styles.no_appointments_container_three}>
 						{isLoading?.doctors || !data?.doctors ? "" :
 							<View >
-								<Text style={styles.no_appointments_container_three_text}>Active Doctors</Text>
+								<Text style={styles.homeHeadingTexts}>Doctors Available</Text>
 							</View>}
 
 						{isLoading?.doctors ?
@@ -341,6 +377,14 @@ const Home = () => {
 export default Home
 
 const styles = StyleSheet.create({
+	upcoming_appointment_card: {
+		width: "100%",
+		height: 165,
+		backgroundColor: colors.accent_green,
+		borderRadius: 10,
+		//marginTop: 30
+	},
+
 	starRatingContainer: {
 		paddingVertical: 0, // Remove padding
 	},
@@ -459,7 +503,8 @@ const styles = StyleSheet.create({
 
 	no_appointments_container_three_text: {
 		color: colors.black,
-		fontSize: 16,
+		fontSize: 17,
+		//fontWeight: 'bold',
 		marginBottom: 10,
 	},
 
@@ -555,55 +600,89 @@ const styles = StyleSheet.create({
 	},
 
 	specialist_text: {
-		color: colors.black,
+		color: colors.accent_green,
 		textAlign: "center",
 	},
 	specialist_list_container: {
-		width: 150,
-		height: 45,
-		backgroundColor: colors.white,
-		borderRadius: 10,
+		width: 158,
+		height: 48,
+		//backgroundColor: colors.white,
+		borderRadius: 12,
 		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
-		marginTop: 10,
+		//marginTop: 10,
+		marginBottom: 30,
 		borderWidth: 1,
-		borderColor: colors.grayColor,
+		borderColor: colors.accent_green,
 	},
 
 	find_a_specialist_container: {
-		marginTop: 40,
-		marginHorizontal: 10,
+		marginTop: 20,
+		marginHorizontal: 20,
+		
 	},
 
-	doctor_inside_one_one_out: {
-		color: colors.accent_green,
-		fontSize: 14,
-		marginTop: 10,
-	},
-
-	doctor_container_text: {
+	homeHeadingTexts: {
 		color: colors.black,
-		fontSize: 14,
-		fontFamily: "Inter-Regular",
+		fontSize: 15,
+		fontWeight: 500,
+		//fontFamily: "Poppins-Black",
 		marginBottom: 10,
+		//fontWeight: 'bold'
+	},
+
+	doctor_description_container: {
+		margin: 10,
+		marginTop: 1,
+		marginBottom: 4
+
 	},
 
 	doctor_inside_one_one: {
 		color: colors.black,
-		fontSize: 12,
+		fontSize: 14,
+		fontWeight: '500',
+		marginTop: 10,
+		//fontWeight: 'bold',
+		marginBottom: 5
 	},
+
 	doctor_inside_one_two: {
-		color: colors.white,
+		color: colors.black,
 		fontSize: 12,
+		fontWeight: '400',
+		//marginTop: 4,
+		//margin: 10
 
 	},
+
+	doctor_hospital_profile_container: {
+		flexDirection: 'row',
+		//justifyContent: 'space-between',
+		//marginBottom: 15,
+		margin: 10,
+		marginTop: 5,
+		//marginBottom: 5
+	},
+
 
 	doctor_inside_one_three: {
 		color: colors.black,
 		fontSize: 12,
-		marginTop: 10,
-		fontFamily: "Inter-Regular"
+		fontWeight: '400',
+		//marginTop: 10,
+		fontFamily: "Inter-Regular",
+		marginLeft: 2,
+		//marginTop: 3
+		//justifyContent: 'space-between'
+	},
+
+	doctor_inside_one_one_out: {
+		color: colors.accent_green,
+		fontSize: 15,
+		marginLeft: 100,
+		justifyContent: 'flex-end'
 	},
 
 	doctor_inside_two_text: {
@@ -649,14 +728,21 @@ const styles = StyleSheet.create({
 	},
 
 	doctor_image_container: {
+		width: "100%",
+		height: 275,
 		borderRadius: 10,
+		overflow: 'hidden',
+		//backgroundColor: colors.white,
+		borderColor: colors.doctorContainerColor,
+		borderWidth: 1
 	},
 
 
 	top_container_img_icon: {
-		width: "100%",
-		height: 220,
-		borderRadius: 10,
+		width: '100%',
+		height: 170,
+		//borderRadius: 10,
+		resizeMode: 'stretch',
 		overflow: 'hidden',
 	},
 
@@ -668,7 +754,8 @@ const styles = StyleSheet.create({
 	settings: {
 		borderColor: '#ECEEF1',
 		borderWidth: 0,
-		color: colors.smail_text_color
+		color: colors.smail_text_color,
+		marginLeft: 10
 	},
 
 	inputContainer_setting: {
@@ -681,17 +768,17 @@ const styles = StyleSheet.create({
 	},
 
 	inputContainer: {
-		height: 50,
+		height: 40,
 		backgroundColor: "#ECEEF1",
-		borderRadius: 50,
+		borderRadius: 12,
 		flexDirection: 'row',
-		justifyContent: 'space-between',
+		//justifyContent: 'space-between',
 		alignItems: 'center',
 		padding: 5,
 	},
 
 	top_container: {
-		marginHorizontal: 10,
+		marginHorizontal:20,
 		marginTop: 10,
 	},
 
@@ -699,6 +786,8 @@ const styles = StyleSheet.create({
 	container: {
 		flexGrow: 1,
 		paddingTop: Platform.OS === "android" ? 40 : 10,
-		backgroundColor: "#F0F4F8",
-	}
+		backgroundColor: colors.background,
+		//color: colors.background
+		//margin: 10,
+	},
 })

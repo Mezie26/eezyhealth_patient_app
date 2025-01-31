@@ -124,7 +124,7 @@ const RescheduleBooking = () => {
 		return availableSlots;
 	};
 
-	const renderAvailableSlots = () => {
+	const RenderAvailableSlots = () => {
 		const availableSlots = getAvailableSlots(day);
 
 		return (
@@ -135,9 +135,7 @@ const RescheduleBooking = () => {
 						const isSelected = selectedButtonIndex === index;
 
 						const itemStyle: any = {
-							backgroundColor: isSelected ? colors.accent_green : colors.accent_green_light,
-							opacity: 1,
-							pointerEvents: 'auto',
+							backgroundColor: isSelected ? colors.accent_green : "#FCFCFC",
 						};
 
 						return (
@@ -150,7 +148,7 @@ const RescheduleBooking = () => {
 									setBookingSlot(slot);
 								}}
 							>
-								<Text style={[styles.specialist_text, { color: isSelected ? colors.white : 'black' }]}>
+								<Text style={[styles.specialist_text, { color: isSelected ? colors.white : "#363636" }]}>
 									{formattedItem}
 								</Text>
 							</TouchableOpacity>
@@ -168,26 +166,27 @@ const RescheduleBooking = () => {
 			<Toast ref={toastRef} />
 			<ScrollView contentContainerStyle={styles.scrollViewContent} contentInsetAdjustmentBehavior="automatic">
 				<View style={styles.info_text_container_main}>
-					<View style={styles.info_text_container}>
+					{/*<View style={styles.info_text_container}>
 						<Text style={styles.info_text_information_one}>Reschedule Appointment</Text>
 						<Text style={styles.info_text_information_text}>Select a suitable date and time slot below.</Text>
 						<Text style={styles.info_text_information_text}>Payment Status - <Text style={user?.paymentStatus === "Paid" ? styles.info_text_payed : styles.info_text_notpay}>Paid</Text></Text>
 						{/* {user?.paymentStatus} */}
-						<Text style={styles.info_text_information_text}>Previous Date - <Text>{moment.unix(user?.bookingDate?.seconds).format('YYYY-MM-DD')}</Text></Text>
-					</View>
+						{/*<Text style={styles.info_text_information_text}>Previous Date - <Text>{moment.unix(user?.bookingDate?.seconds).format('YYYY-MM-DD')}</Text></Text>
+					</View>*/}
 
 					<View>
-						<Text style={styles.info_text_information_one_main}>Booking Date</Text>
+						<Text style={styles.info_text_information_one_main}>Select New Available Date</Text>
 						<TimeSlot setSelectedDate={setSelectedDate} selectedDate={selectedDate} />
 					</View>
 
 					<View style={styles.info_text_container_availability}>
-						<Text style={styles.info_text_information_one_main}>Available Slot</Text>
-						<TouchableOpacity onPress={toggleSection} style={styles.header}>
+						<Text style={styles.info_text_information_one_main}>Select New Available Time</Text>
+						{/*<TouchableOpacity onPress={toggleSection} style={styles.header}>
 							<Text style={styles.headerText}>{day}</Text>
 							{isActive ? <ChevronDown /> : <ChevronUp />}
 						</TouchableOpacity>
-						{isActive && renderAvailableSlots()}
+						{isActive && renderAvailableSlots()}*/}
+						<RenderAvailableSlots/>
 					</View>
 				</View>
 				{/* <ModalLoading isLoading={isLoading} /> */}
@@ -196,7 +195,7 @@ const RescheduleBooking = () => {
 				<TouchableOpacity onPress={onSubmit} style={styles.buttonContainer}>
 					<Text style={styles.buttonText}>
 						{isLoading ?
-							<ActivityIndicator color='white' size={20} /> : "Proceed"}
+							<ActivityIndicator color='white' size={20} /> : "Confirm"}
 					</Text>
 				</TouchableOpacity>
 			</View>
@@ -238,11 +237,11 @@ const styles = StyleSheet.create({
 		color: '#FFFFFF',
 	},
 	buttonContainer: {
-		width: 328,
+		width: 380,
 		height: 40,
 		padding: 10,
 		backgroundColor: colors.accent_green,
-		borderRadius: 90,
+		borderRadius: 12,
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -285,8 +284,12 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 	},
 	content: {
-		padding: 20,
-		backgroundColor: '#fff',
+		//padding: 20,
+		backgroundColor: '#ffffff',
+		flexDirection: "row",
+		flexWrap: "wrap",
+		gap: 12,
+		marginBottom: 10
 	},
 
 	info_text_container_timeSlot: {
@@ -309,20 +312,22 @@ const styles = StyleSheet.create({
 	},
 
 	specialist_text: {
-		color: colors.black,
+		color: "#363636",
+		fontSize: 12,
+		fontWeight: "500",
 		textAlign: "center",
 	},
 	specialist_list_container: {
-		// width: 120, 
-		height: 35,
-		borderRadius: 20,
-		paddingHorizontal: 15,
+		width: 116, 
+		height: 42,
+		borderRadius: 12,
+		//paddingHorizontal: 12,
 		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
 		marginTop: 10,
-		borderWidth: 1,
-		borderColor: colors.grayColor,
+		borderWidth: 0.5,
+		borderColor: "#D5D5D5",
 		// shadowColor: "#000",
 		// shadowOffset: {
 		// 	width: 0,
@@ -356,11 +361,12 @@ const styles = StyleSheet.create({
 		marginBottom: 10,
 	},
 	info_text_information_one_main: {
-		color: colors.smail_text_color,
-		fontSize: 14,
-		fontFamily: "Inter-Regular",
+		color: "#363636",
+		fontSize: 12,
+		fontFamily: "Inter-Medium",
+		fontWeight: "500",
 		// marginBottom: 10,
-		marginTop: 40,
+		//marginTop: 40,
 
 	},
 	info_text_information_text: {

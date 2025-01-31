@@ -10,8 +10,8 @@ import { AppointmentIcon } from '@/assets/svg/Appointments';
 import { Back } from '@/assets/svg/Back';
 import { EezyLogo } from '@/assets/svg/EezyLogo';
 import { HomeIcon } from '@/assets/svg/Home';
-import { MessageIcon } from '@/assets/svg/Message';
-import { SettingsIcon } from '@/assets/svg/Settings';
+import { MessageIcon } from '@/assets/svg/MessageIcon';
+import { SettingsIcon } from '@/assets/svg/SettingsIcon';
 import AppointmentDetails from '@/screens/App/Appointment/AppointmentDetails';
 import BookingAppointment from '@/screens/App/Appointment/BookingAppointment';
 import RescheduleBooking from '@/screens/App/Appointment/RescheduleBooking';
@@ -34,8 +34,16 @@ import Appointments from '@/screens/App/Appointment/Appointments';
 import Message from '@/screens/App/Appointment/Message';
 import Home from '@/screens/App/Home/Home';
 import Account from '@/screens/App/Profile/Account';
+import NotificationScreen from '@/screens/App/NotificationScreen';
+import UpdateVitals from '@/screens/App/Appointment/UpdateVitals';
 import { RootTabParamList } from '@/types';
 import { Colors } from '@/css/colorsIndex';
+import { Title } from 'react-native-paper';
+import UpcomingAppointmentDetails from '@/screens/App/Appointment/UpcomingAppointmentDetails';
+import CompletedAppointmentDetails from '@/screens/App/Appointment/CompletedAppointmentDetails';
+import AppointmentReview from '@/screens/App/Appointment/AppointmentReview';
+import CancelledAppointmentDetails from '@/screens/App/Appointment/CancelledAppointmentDetails';
+import SuccessAppointmentReview from '@/screens/SuccessScreens/SuccessAppointmentReview';
 
 
 
@@ -49,12 +57,12 @@ function RootNavigator() {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{
       headerShown: true,
-      headerStyle: { backgroundColor: Colors[colorScheme].TopTab },
-      headerTintColor: Colors[colorScheme].headerTintColor,
+      //headerStyle: { backgroundColor: Colors[colorScheme].TopTab },
+      //headerTintColor: Colors[colorScheme].headerTintColor,
       headerTitleStyle: { fontWeight: 'bold', fontFamily: 'Inter-Regular', },
     }}>
-
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+     
+      <Stack.Screen name="Home" component={BottomTabNavigator} options={{ headerShown: false }} />
 
       < Stack.Screen name="ChannelScreen" component={ChannelScreen}
         options={{
@@ -74,6 +82,59 @@ function RootNavigator() {
             </View>
           ),
         }} />
+      <Stack.Screen name="NotificationScreen" component={NotificationScreen} options={{title: "Notifications"}} />
+      <Stack.Screen name="UpdateVitals" component={UpdateVitals} options={{title: "Update Vitals"}} />
+      <Stack.Screen name="UpcomingAppointmentDetails" component={UpcomingAppointmentDetails}  
+      options={{
+        title: '', headerLeft: () => (
+          <TouchableOpacity onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            navigation.goBack();
+          }}>
+            <Back />
+          </TouchableOpacity>
+        )}}/>
+      <Stack.Screen name="CompletedAppointmentDetails" component={CompletedAppointmentDetails} 
+      options={{
+        title: '', headerLeft: () => (
+          <TouchableOpacity onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            navigation.goBack();
+          }}>
+            <Back />
+          </TouchableOpacity>
+        )}}/>
+      <Stack.Screen name="AppointmentReview" component={AppointmentReview} 
+      options={{
+        title: '', headerLeft: () => (
+          <TouchableOpacity onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            navigation.goBack();
+          }}>
+            <Back />
+          </TouchableOpacity>
+        )}}/>
+      <Stack.Screen name="SuccessAppointmentReview" component={SuccessAppointmentReview} 
+      options={{
+        title: '', headerLeft: () => (
+          <TouchableOpacity onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            navigation.goBack();
+          }}>
+            <Back />
+          </TouchableOpacity>
+        )}}/>
+      <Stack.Screen name="CancelledAppointmentDetails" component={CancelledAppointmentDetails} 
+      options={{
+        title: '', headerLeft: () => (
+          <TouchableOpacity onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            navigation.goBack();
+          }}>
+            <Back />
+          </TouchableOpacity>
+        )}}/>
+      
 
       <Stack.Screen name="SearchDoctor" component={SearchDoctor}
         options={{
@@ -113,7 +174,7 @@ function RootNavigator() {
         name="DoctorProfile"
         component={DoctorProfile}
         options={{
-          title: 'Doctor Profile',
+          title: "Doctor's Profile",
           headerLeft: () => (
             <TouchableOpacity
               onPress={() => {
@@ -169,9 +230,9 @@ function RootNavigator() {
         }} />
       <Stack.Screen name="Questionaire" component={Questionaire} options={{ headerShown: false }} />
       <Stack.Screen name="SuccessQuestionaire" component={SuccessQuestionaire} options={{ headerShown: false }} />
-      < Stack.Screen name="SuccessBookings" component={SuccessBookings} options={{ headerShown: false }} />
+      <Stack.Screen name="SuccessBookings" component={SuccessBookings} options={{ headerShown: false }} />
 
-      < Stack.Screen name="Medicalinfo" component={Medicalinfo}
+      <Stack.Screen name="Medicalinfo" component={Medicalinfo}
         options={{
           title: 'Medical Infomation', headerLeft: () => (
             <TouchableOpacity onPress={() => {
@@ -319,7 +380,7 @@ function RootNavigator() {
 
         < Stack.Screen name="RescheduleBooking" component={RescheduleBooking}
           options={{
-            title: 'Reschedule Booking', headerLeft: () => (
+            title: 'Reschedule Appointment', headerLeft: () => (
               <TouchableOpacity onPress={() => {
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
                 navigation.goBack();

@@ -17,10 +17,20 @@ const SuccessReschedule = () => {
 			<View style={styles.container_main}>
 				<SuccessIcon />
 				<View style={styles.container_main_text_container}>
-					<Text>Successful</Text>
 					<Text style={styles.container_main_text}>Appointment Rescheduled Successfully!</Text>
+					<Text style={styles.body_text}>The appointment has been rescheduled and notifications will be sent.</Text>
+					<View style={styles.date_container}>
+						<View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+							<Text style={styles.date_title_text}>New Date</Text>
+							<Text style={styles.date_text}>????</Text>
+						</View>
+						<View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+							<Text style={styles.date_title_text}>New Time</Text>
+							<Text style={styles.date_text}>????</Text>
+						</View>
+					</View>
 					<TouchableOpacity style={styles.okay_btn} onPress={handleBack}>
-						<Text style={styles.login_account_text2} >Okay</Text>
+						<Text style={styles.login_account_text2} >Done</Text>
 					</TouchableOpacity>
 				</View>
 			</View >
@@ -33,19 +43,19 @@ export default SuccessReschedule
 const styles = StyleSheet.create({
 	login_account_text2: {
 		color: colors.white,
-		fontSize: 16,
-		fontFamily: "Inter-Regular",
-
+		fontSize: 14,
+		fontFamily: "Inter-Medium",
+		fontWeight: "500"
 	},
 
 	okay_btn: {
-		width: 103,
-		height: 40,
+		width: 380,
+		height: 48,
 		backgroundColor: colors.accent_green,
 		alignItems: 'center',
 		justifyContent: 'center',
-		borderRadius: 10,
-		marginTop: 80,
+		borderRadius: 12,
+		marginTop: 40,
 	},
 
 	container_main_text_container: {
@@ -58,9 +68,44 @@ const styles = StyleSheet.create({
 	},
 
 	container_main_text: {
-		color: colors.smail_text_color,
-		fontFamily: "Inter-Regular",
+		color: "#171717",
+		fontFamily: "Inter-Medium",
 		fontSize: 14,
+		fontWeight: "500"
+	},
+
+	body_text: {
+		fontSize: 12,
+		color: "#363636",
+		fontFamily: "Inter-Regular",
+		fontWeight: "400",
+		width: 300,
+		textAlign: "center"
+	},
+
+	date_container: {
+		width: 380,
+		height: 84,
+		backgroundColor: "#FCFCFC",
+		borderWidth: 0.5,
+		borderRadius: 12,
+		borderColor: "#D5D5D5",
+		padding: 16,
+		gap: 15
+	},
+
+	date_title_text: {
+		color: "#646464",
+		fontSize: 12,
+		fontWeight: '400',
+		fontFamily: "Inter-Regular"
+	},
+
+	date_text: {
+		color: "#171717",
+		fontSize: 14,
+		fontWeight: '400',
+		fontFamily: "Inter-Regular"
 	},
 
 	container_main: {

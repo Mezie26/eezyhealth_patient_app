@@ -15,6 +15,7 @@ import { Chatbubbles } from '../../../assets/svg/Chatbubbles';
 import { UserCircle } from '../../../assets/svg/UserCircle';
 import Calendar from '../../../assets/svg/Calendar';
 import Clock from '../../../assets/svg/Clock';
+import { Locations } from '@/assets/svg/Location';
 
 const wait = (timeout: number | undefined) => {
 	return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -55,7 +56,11 @@ const Appointments = () => {
 	// Filter bookings based on their status (Pending or Completed)
 	const filteredBookings = index === 0
 		? (bookings && bookings.filter((booking: { bookingStatus: string; }) => booking?.bookingStatus === 'Accepted'))
-		: (bookings && bookings.filter((booking: { bookingStatus: string; }) => booking?.bookingStatus !== 'Accepted'));
+		: index === 1 ?(bookings && bookings.filter((booking: { bookingStatus: string; }) => booking?.bookingStatus === 'Pending'))
+		:index === 2 && (bookings && bookings.filter((booking: { bookingStatus: string; }) => booking?.bookingStatus === 'Declined'))
+
+
+console.log('index-index',index)
 
 	useEffect(() => {
 		setIndex(0);
@@ -67,9 +72,19 @@ const Appointments = () => {
 	}, []);
 
 
-	const handleNext = (message: any) => {
+	const handleNext1 = (message: any) => {
 		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-		navigation.navigate('AppointmentDetails', { item: message, user: user });
+		navigation.navigate('UpcomingAppointmentDetails', { item: message, user: user });
+	};
+
+	const handleNext2 = (message: any) => {
+		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+		navigation.navigate('CompletedAppointmentDetails', { item: message, user: user });
+	};
+
+	const handleNext3 = (message: any) => {
+		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+		navigation.navigate('CancelledAppointmentDetails', { item: message, user: user });
 	};
 
 	const hasData = Object.keys(bookings).length > 0;
@@ -84,10 +99,11 @@ const Appointments = () => {
 						<Tab
 							value={index}
 							onChange={(e) => setIndex(e)}
-							indicatorStyle={{ backgroundColor: colors.accent_green, height: 5, }}
+							indicatorStyle={{ backgroundColor: colors.accent_green, height: 1, }}
 							variant="default" >
 							<Tab.Item title="Upcoming" titleStyle={{ fontSize: 14, color: colors.black }} />
-							<Tab.Item title="Past" titleStyle={{ fontSize: 14, color: colors.black }} />
+							<Tab.Item title="Completed" titleStyle={{ fontSize: 14, color: colors.black }} />
+							<Tab.Item title="Cancelled" titleStyle={{ fontSize: 14, color: colors.black }} />
 						</Tab>
 					</View>
 					{
@@ -119,7 +135,7 @@ const Appointments = () => {
 											<ScrollView style={styles.card_list_scroll_container} refreshControl={
 												<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} >
 												{filteredBookings?.map((message: any, index: any) => (
-													<TouchableOpacity style={styles.card_list_container} key={index} onPress={() => handleNext(message)}>
+													<TouchableOpacity style={styles.card_list_container} key={index} onPress={() => handleNext1(message)}>
 														<View style={styles.card_list_image_container_main}>
 															<View style={styles.card_list_image_container}>
 																<View style={styles.top_container_img_circle}>
@@ -129,16 +145,27 @@ const Appointments = () => {
 																	/> : <UserCircle />}
 																</View>
 																<View style={styles.top_container_img_circle_second}>
-																	<Text style={styles.card_summary_text1}>{message?.doctorName}</Text>
+																	<Text style={styles.card_summary_text1}>Dr. {message?.doctorName}</Text>
 																	<Text style={styles.card_summary_text2}>{message?.specialization}</Text>
-																	<Text style={styles.card_summary_text3}>{message?.type}</Text>
+																	<View style={{flexDirection: 'row'}}>
+																		<Locations color='#646464'/>
+																		<Text style={styles.card_location_text}>{message?.Location}</Text>
+																	</View>
+																	{/*<Text style={styles.card_summary_text3}>{message?.type}</Text>*/}
 																</View>
 															</View>
-															<View style={styles.top_container_summary}>
+															{/*<View style={styles.top_container_summary}>
 																<Text style={styles.top_container_summary_text}>Summary</Text>
-															</View>
+															</View>*/}
 														</View>
-														<View style={styles.top_container_summary_container}>
+														<View style={{flexDirection: 'row', justifyContent: 'center'}}>
+															<Text style={styles.top_container_appointment1}>
+																{moment.unix(message?.bookingDate?.seconds).format('Do MMMM, YYYY')}
+															</Text>
+															<View style={{ width: 1, height: 15, backgroundColor: "#D5D5D5"}}></View>
+															<Text style={styles.appointment_time}>{timeSlot(message)}</Text>
+														</View>
+														{/*<View style={styles.top_container_summary_container}>
 															<View style={styles.top_container_summary_container_sub}>
 																<View>
 																	<Text style={styles.top_container_appointment}>Appointment Date</Text>
@@ -160,16 +187,16 @@ const Appointments = () => {
 																	<Text style={styles.appointment_hours}>{message?.duration}</Text>
 																</View>
 															</View>
-														</View>
+														</View>*/}
 													</TouchableOpacity>
 												))}
 											</ScrollView>
 										</TabView.Item>
 										<TabView.Item key={index} style={{ width: '100%' }}>
-											<ScrollView style={styles.card_list_scroll_container} refreshControl={
+										<ScrollView style={styles.card_list_scroll_container} refreshControl={
 												<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} >
 												{filteredBookings?.map((message: any, index: any) => (
-													<TouchableOpacity style={styles.card_list_container} key={index} onPress={() => handleNext(message)}>
+													<TouchableOpacity style={styles.card_list_container} key={index} onPress={() => handleNext2(message)}>
 														<View style={styles.card_list_image_container_main}>
 															<View style={styles.card_list_image_container}>
 																<View style={styles.top_container_img_circle}>
@@ -179,16 +206,27 @@ const Appointments = () => {
 																	/> : <UserCircle />}
 																</View>
 																<View style={styles.top_container_img_circle_second}>
-																	<Text style={styles.card_summary_text1}>{message?.doctorName}</Text>
+																	<Text style={styles.card_summary_text1}>Dr. {message?.doctorName}</Text>
 																	<Text style={styles.card_summary_text2}>{message?.specialization}</Text>
-																	<Text style={styles.card_summary_text3}>{message?.type}</Text>
+																	<View style={{flexDirection: 'row'}}>
+																		<Locations color='#646464'/>
+																		<Text style={styles.card_location_text}>{message?.Location}</Text>
+																	</View>
+																	{/*<Text style={styles.card_summary_text3}>{message?.type}</Text>*/}
 																</View>
 															</View>
-															<View style={styles.top_container_summary}>
+															{/*<View style={styles.top_container_summary}>
 																<Text style={styles.top_container_summary_text}>Summary</Text>
-															</View>
+															</View>*/}
 														</View>
-														<View style={styles.top_container_summary_container}>
+														<View style={{flexDirection: 'row', justifyContent: 'center'}}>
+															<Text style={styles.top_container_appointment1}>
+																{moment.unix(message?.bookingDate?.seconds).format('Do MMMM, YYYY')}
+															</Text>
+															<View style={{ width: 1, height: 15, backgroundColor: "#D5D5D5"}}></View>
+															<Text style={styles.appointment_time}>{timeSlot(message)}</Text>
+														</View>
+														{/*<View style={styles.top_container_summary_container}>
 															<View style={styles.top_container_summary_container_sub}>
 																<View>
 																	<Text style={styles.top_container_appointment}>Appointment Date</Text>
@@ -210,7 +248,68 @@ const Appointments = () => {
 																	<Text style={styles.appointment_hours}>{message?.duration}</Text>
 																</View>
 															</View>
+														</View>*/}
+													</TouchableOpacity>
+												))}
+											</ScrollView>
+										</TabView.Item>
+										<TabView.Item key={index} style={{ width: '100%' }}>
+										<ScrollView style={styles.card_list_scroll_container} refreshControl={
+												<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} >
+												{filteredBookings?.map((message: any, index: any) => (
+													<TouchableOpacity style={styles.card_list_container3} key={index} onPress={() => handleNext3(message)}>
+														<View style={styles.card_list_image_container_main}>
+															<View style={styles.card_list_image_container}>
+																<View style={styles.top_container_img_circle}>
+																	{message.photo_url ? < Image
+																		source={{ uri: message?.photo_url }}
+																		style={styles.top_container_img_icon}
+																	/> : <UserCircle />}
+																</View>
+																<View style={styles.top_container_img_circle_second}>
+																	<Text style={styles.card_summary_text1}>Dr. {message?.doctorName}</Text>
+																	<Text style={styles.card_summary_text2}>{message?.specialization}</Text>
+																	<View style={{flexDirection: 'row'}}>
+																		<Locations color='#646464'/>
+																		<Text style={styles.card_location_text}>{message?.Location}</Text>
+																	</View>
+																	{/*<Text style={styles.card_summary_text3}>{message?.type}</Text>*/}
+																</View>
+															</View>
+															{/*<View style={styles.top_container_summary}>
+																<Text style={styles.top_container_summary_text}>Summary</Text>
+															</View>*/}
 														</View>
+														<View style={{flexDirection: 'row', justifyContent: 'center'}}>
+															<Text style={styles.top_container_appointment1}>
+																{moment.unix(message?.bookingDate?.seconds).format('Do MMMM, YYYY')}
+															</Text>
+															<View style={{ width: 1, height: 15, backgroundColor: "#D5D5D5"}}></View>
+															<Text style={styles.appointment_time}>{timeSlot(message)}</Text>
+														</View>
+														{/*<View style={styles.top_container_summary_container}>
+															<View style={styles.top_container_summary_container_sub}>
+																<View>
+																	<Text style={styles.top_container_appointment}>Appointment Date</Text>
+																	<View style={styles.top_appointment_container}>
+																		<Calendar />
+																		<Text style={styles.top_container_appointment1}>
+																			{moment.unix(message?.bookingDate?.seconds).format('Do MMMM, YYYY')}
+																		</Text>
+																	</View>
+																</View>
+																<View style={styles.top_appointment_container}>
+																	<Clock />
+																	<Text style={styles.appointment_time}>{timeSlot(message)}</Text>
+																</View>
+															</View>
+															<View>
+																<View>
+																	<Text style={styles.appointment_duration}>Appointment Duration</Text>
+																	<Text style={styles.appointment_hours}>{message?.duration}</Text>
+																</View>
+															</View>
+														</View>*/}
 													</TouchableOpacity>
 												))}
 											</ScrollView>
@@ -301,9 +400,9 @@ const styles = StyleSheet.create({
 
 
 	card_list_scroll_container: {
-		paddingHorizontal: 10,
-		marginTop: 20,
-		marginBottom: 0,
+		//paddingHorizontal: 10,
+		//marginTop: 20,
+		//marginBottom: 0,
 	},
 
 	top_appointment_container: {
@@ -334,13 +433,19 @@ const styles = StyleSheet.create({
 	},
 
 	appointment_time: {
-		color: colors.black,
-		fontSize: 9,
+		color: "#363636",
+		fontSize: 12,
+		marginHorizontal: 10,
+		fontFamily: "Inter-Regular",
+		fontWeight: '400'
 	},
 
 	top_container_appointment1: {
-		fontSize: 10,
-		color: colors.black,
+		fontSize: 12,
+		color: "#363636",
+		fontWeight: '400',
+		fontFamily: "Inter-Regular",
+		marginHorizontal: 10
 	},
 	top_container_appointment: {
 		fontSize: 10,
@@ -358,13 +463,21 @@ const styles = StyleSheet.create({
 
 	card_summary_text1: {
 		color: colors.black,
-		fontFamily: "Inter-Regular",
-		fontSize: 12.5,
+		fontFamily: "Inter-Medium",
+		fontSize: 14,
+		fontWeight: '500'
 	},
 	card_summary_text2: {
-		color: colors.smail_text_color,
+		color: "#363636",
 		fontFamily: "Inter-Regular",
-		fontSize: 12.5,
+		fontSize: 12,
+		fontWeight: '400'
+	},
+	card_location_text: {
+		color: "#646464",
+		fontSize: 10,
+		fontWeight: '400',
+		fontFamily: 'Inter-Regular'
 	},
 	card_summary_text3: {
 		color: colors.black,
@@ -393,9 +506,9 @@ const styles = StyleSheet.create({
 	card_list_image_container_main: {
 		flexDirection: "row",
 		justifyContent: "space-between",
-		borderBottomWidth: 0.3,
+		//borderBottomWidth: 0.3,
 		borderColor: colors.smail_text_color,
-		paddingBottom: 10,
+		//paddingBottom: 10,
 	},
 
 	top_container_img_circle_second: {
@@ -406,6 +519,8 @@ const styles = StyleSheet.create({
 	card_list_image_container: {
 		flexDirection: "row",
 		gap: 10,
+		margin: 20,
+		marginBottom: 0
 	},
 
 	top_container_img_icon: {
@@ -438,15 +553,38 @@ const styles = StyleSheet.create({
 	},
 
 	card_list_container: {
-		// height: 200,
+		height: 126,
+		//width: "100%",
+		margin: 20,
 		marginBottom: 15,
-		borderLeftWidth: 5,
+		//borderLeftWidth: 5,
 		borderWidth: 0.5,
-		borderLeftColor: colors.accent_green,
-		borderColor: colors.smail_text_color,
-		padding: 10,
-		backgroundColor: colors.white,
-		borderRadius: 5,
+		//borderLeftColor: colors.accent_green,
+		borderColor: "#D5D5D5",
+		//padding: 10,
+		backgroundColor: "#FFFFFF",
+		borderRadius: 12,
+		// shadowColor: colors.black,
+		// shadowOffset: {
+		// 	width: 0,
+		// 	height: 1,
+		// },
+		// shadowOpacity: 0.15,
+		// shadowRadius: 2,
+		// elevation: 1,
+	},
+	card_list_container3: {
+		height: 126,
+		//width: "100%",
+		margin: 20,
+		marginBottom: 15,
+		//borderLeftWidth: 5,
+		borderWidth: 0.5,
+		//borderLeftColor: colors.accent_green,
+		borderColor: "#D91F11",
+		//padding: 10,
+		backgroundColor: "#FFFAFA",
+		borderRadius: 12,
 		// shadowColor: colors.black,
 		// shadowOffset: {
 		// 	width: 0,

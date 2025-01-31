@@ -6,8 +6,9 @@ import { ChevronDown } from '../../assets/svg/ChevronDown';
 import { ChevronUp } from '../../assets/svg/ChevronUp';
 
 const emojisWithIcons = [
-	{ title: 'Online' },
-	{ title: 'Face To Face' },
+	{ title: 'In-App Messaging' },
+	{ title: 'Video Consultations' },
+	{ title: 'Phone Calls' },
 ];
 
 
@@ -25,15 +26,15 @@ const ESelectDropdown = ({ setBookingChannel }: any) => {
 				return (
 					<View style={styles.dropdownButtonStyle}>
 						<Text style={styles.dropdownButtonTxtStyle}>
-							{(selectedItem && selectedItem.title) || 'Select channels'}
+							{(selectedItem && selectedItem.title) || 'Select channel'}
 						</Text>
-						{isOpened ? <ChevronDown /> : <ChevronUp />}
+						{isOpened ? <ChevronUp /> : <ChevronDown />}
 					</View>
 				);
 			}}
 			renderItem={(item, index, isSelected) => {
 				return (
-					<View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: colors.accent_green_light }) }}
+					<View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: colors.accent_green_light}) }}
 						key={index}>
 						<Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
 					</View>
@@ -50,9 +51,11 @@ export default ESelectDropdown;
 const styles = StyleSheet.create({
 	dropdownButtonStyle: {
 		width: '100%',
-		height: 50,
-		backgroundColor: '#E9ECEF',
-		borderRadius: 12,
+		height: 40,
+		//backgroundColor: '#E9ECEF',
+		borderRadius: 10,
+		borderWidth: 0.2,
+		borderColor: colors.smail_text_color,
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -60,9 +63,9 @@ const styles = StyleSheet.create({
 	},
 	dropdownButtonTxtStyle: {
 		flex: 1,
-		fontSize: 18,
-		fontWeight: '500',
-		color: '#151E26',
+		fontSize: 14,
+		fontWeight: '400',
+		color: '#646464',
 	},
 	dropdownButtonArrowStyle: {
 		fontSize: 28,
@@ -85,9 +88,10 @@ const styles = StyleSheet.create({
 	},
 	dropdownItemTxtStyle: {
 		flex: 1,
-		fontSize: 18,
-		fontWeight: '500',
-		color: '#151E26',
+		fontSize: 14,
+		fontWeight: '400',
+		color: colors.black,
+		margin: 10
 	},
 	dropdownItemIconStyle: {
 		fontSize: 28,

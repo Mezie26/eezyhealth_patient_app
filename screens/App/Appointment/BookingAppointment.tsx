@@ -1,4 +1,4 @@
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { colors } from '../../../css/colorsIndex'
 import * as Haptics from 'expo-haptics';
@@ -11,6 +11,7 @@ import BottomButton from '../../../components/BottomButton';
 import { ChevronDown } from '../../../assets/svg/ChevronDown';
 import { ChevronUp } from '../../../assets/svg/ChevronUp';
 
+
 const BookingAppointment = () => {
 	const toastRef: any = useRef(null);
 	const [selectedButtonIndex, setSelectedButtonIndex] = useState<any>(-1);
@@ -18,6 +19,7 @@ const BookingAppointment = () => {
 	const [bookingChannel, setBookingChannel] = useState("");
 	const [bookingSlot, setBookingSlot] = useState("");
 	const [day, setDay] = useState("");
+	const [consultationText, onChangeConsultationText] = useState("");
 	const navigation: any = useNavigation();
 	const route = useRoute();
 	// @ts-ignore
@@ -63,7 +65,7 @@ const BookingAppointment = () => {
 
 	const availableSlots = getAvailableSlots(day);
 
-	const renderContent = () => {
+	const RenderContent = () => {
 		return (
 			<View style={styles.content}>
 				{availableSlots?.length > 0 ? (
@@ -72,7 +74,7 @@ const BookingAppointment = () => {
 						const isSelected = selectedButtonIndex === index;
 
 						const itemStyle: any = {
-							backgroundColor: isSelected ? colors.accent_green : colors.accent_green_light,
+							backgroundColor: isSelected ? colors.accent_green : "#FCFCFC",
 						};
 
 						return (
@@ -85,7 +87,7 @@ const BookingAppointment = () => {
 									setBookingSlot(slot);
 								}}
 							>
-								<Text style={[styles.specialist_text, { color: isSelected ? colors.white : 'black' }]}>
+								<Text style={[styles.specialist_text, { color: isSelected ? colors.white : "#363636" }]}>
 									{formattedItem}
 								</Text>
 							</TouchableOpacity>
@@ -111,7 +113,8 @@ const BookingAppointment = () => {
 			return;
 		}
 
-		navigation.navigate('BillingDetails', { item, input, user, load: false, pricing });
+		navigation.navigate('UpdateVitals', { item, input, user, load: false, pricing });
+		//navigation.navigate('BillingDetails', { item, input, user, load: false, pricing });
 	};
 
 	return (
@@ -121,30 +124,45 @@ const BookingAppointment = () => {
 				<View style={styles.info_text_container_main}>
 					<View style={styles.info_text_container}>
 						<Text style={styles.info_text_information_one}>Book Appointment</Text>
-						<Text style={styles.info_text_information_text}>Select a suitable date and time slot below.</Text>
-						<Text style={styles.info_text_information_text}>Appointment Price - ₦{pricing[0]?.pricing}</Text>
+						{/*<Text style={styles.info_text_information_text}>Select a suitable date and time slot below.</Text>
+						<Text style={styles.info_text_information_text}>Appointment Price - ₦{pricing[0]?.pricing}</Text>*/}
 					</View>
 
 					<View style={styles.info_text_container}>
-						<Text style={styles.info_text_information_one}>Select a Channel</Text>
+						<Text style={styles.info_text_information1}>Communication Channel</Text>
 						<View style={styles.info_text_container_timeSlot}>
 							<ESelectDropdown setBookingChannel={setBookingChannel} />
 						</View>
 					</View>
 
 					<View>
-						<Text style={styles.info_text_information_one_main}>Booking Date</Text>
+						<Text style={styles.info_text_information_one_main}>Select Available Date</Text>
 						<TimeSlot setSelectedDate={setSelectedDate} selectedDate={selectedDate} />
 					</View>
 
-					<View style={styles.info_text_container_availability}>
-						<Text style={styles.info_text_information_one_main}>Available Slot</Text>
+					{/*<View style={styles.info_text_container_availability}>
+						<Text style={styles.info_text_information_one_main}>Select Available Time</Text>
 						<TouchableOpacity onPress={toggleSection} style={styles.header}>
 							<Text style={styles.headerText}>{day}</Text>
-							{isActive ? <ChevronDown /> : <ChevronUp />}
+							{isActive ? <ChevronUp /> : <ChevronDown />}
 						</TouchableOpacity>
 						{isActive && renderContent()}
+					</View>*/}
+					<View style={styles.info_text_container_availability}>
+					<Text style={styles.info_text_information_one_main}>Select Available Time</Text>
+						<RenderContent />
 					</View>
+					<View style={styles.consultation_box_container}>
+						<TextInput 
+							value={consultationText}
+							onChangeText={onChangeConsultationText}
+							style={styles.consultation_box_text}
+							placeholder='Reason for consultation'
+							multiline={true}
+							maxLength={300}
+							/>
+					</View>
+					<Text style={styles.consultation_text_count}>{consultationText.length}/300</Text>
 				</View>
 			</ScrollView>
 			{/* <View style={styles.container_back_next}>
@@ -154,7 +172,7 @@ const BookingAppointment = () => {
 					</Text>
 				</TouchableOpacity>
 			</View> */}
-			<BottomButton onPress={onSubmit} text={"Book Appointment"} />
+			<BottomButton onPress={onSubmit} text={"Continue"} />
 		</View>
 	);
 };
@@ -163,7 +181,30 @@ export default BookingAppointment;
 
 const styles = StyleSheet.create({
 
-
+	consultation_box_container: {
+		width: "100%",
+		height: 154,
+		borderColor: "#D5D5D5",
+		borderWidth: 0.5,
+		borderRadius: 12,
+		textAlignVertical: 'top',
+		//margin: 10,
+		//padding: 10
+	},
+	consultation_box_text: {
+		padding: 10,
+		textAlignVertical: 'top',
+		fontSize: 15,
+		fontWeight: 400,
+		fontFamily: "Inter-Regular"
+	},
+	consultation_text_count: {
+		marginTop: -15,
+		fontSize: 12,
+		fontWeight: 400,
+		color: "#646464",
+		textAlign: "right"
+	},
 	header: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
@@ -181,8 +222,12 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 	},
 	content: {
-		padding: 20,
-		backgroundColor: '#fff',
+		//padding: 20,
+		backgroundColor: '#ffffff',
+		flexDirection: "row",
+		flexWrap: "wrap",
+		gap: 12,
+		marginBottom: 10
 	},
 
 
@@ -202,20 +247,23 @@ const styles = StyleSheet.create({
 
 
 	specialist_text: {
-		color: colors.black,
+		color: "#363636",
+		fontSize: 12,
+		//fontFamily: "Inter-Regular",
+		fontWeight: "500",
 		textAlign: "center",
 	},
 	specialist_list_container: {
-		// width: 120, 
-		height: 35,
-		borderRadius: 20,
-		paddingHorizontal: 15,
+		width: 116, 
+		height: 42,
+		borderRadius: 12,
+		//paddingHorizontal: 12,
 		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
 		marginTop: 10,
-		borderWidth: 1,
-		borderColor: colors.grayColor,
+		borderWidth: 0.5,
+		borderColor: "#D5D5D5",
 		// shadowColor: "#000",
 		// shadowOffset: {
 		// 	width: 0,
@@ -240,17 +288,24 @@ const styles = StyleSheet.create({
 		// marginBottom: 10,
 	},
 	info_text_information_one: {
-		color: colors.smail_text_color,
+		color: "#363636",
+		fontSize: 14,
+		fontFamily: "Inter_500Medium",
+		//marginBottom: 10,
+	},
+	info_text_information1: {
+		color: "#171717",
 		fontSize: 14,
 		fontFamily: "Inter_500Medium",
 		marginBottom: 10,
+		marginTop: 10
 	},
 	info_text_information_one_main: {
-		color: colors.smail_text_color,
-		fontSize: 14,
+		color: colors.black,
+		fontSize: 12,
 		fontFamily: "Inter_500Medium",
 		// marginBottom: 10,
-		marginTop: 40,
+		//marginTop: 15,
 
 	},
 	info_text_information_text: {
@@ -262,7 +317,7 @@ const styles = StyleSheet.create({
 
 
 	info_text_container: {
-		marginTop: 20,
+		//marginTop: 20,
 	},
 
 

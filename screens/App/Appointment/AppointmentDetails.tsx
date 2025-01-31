@@ -4,8 +4,10 @@ import {
 	Text,
 	View,
 	ScrollView,
-	Image
+	Image,
+	TextInput
 } from "react-native";
+import { useState } from "react";
 import moment from "moment";
 import * as Haptics from 'expo-haptics';
 import { colors } from "../../../css/colorsIndex";
@@ -16,6 +18,8 @@ import { UserCircle } from "../../../assets/svg/UserCircle";
 import { ID } from "../../../assets/svg/ID";
 import { NewCalender } from "../../../assets/svg/NewCalender";
 import Toast from "@/components/Toast";
+import { DoctorProfilePic } from "@/assets/svg/DoctorProfile";
+import { Locations } from "@/assets/svg/Location";
 
 const AppointmentDetails = () => {
 	const navigation: any = useNavigation();
@@ -37,6 +41,8 @@ const AppointmentDetails = () => {
 		navigation.navigate('EnterVitals', { booking: item });
 	};
 
+	const [consultationText, onChangeConsultationText] = useState("");
+
 
 
 
@@ -50,28 +56,67 @@ const AppointmentDetails = () => {
 						showsVerticalScrollIndicator={false}
 						showsHorizontalScrollIndicator={false}>
 						<View style={styles.topboxContainer}>
-							<View style={styles.topboxTextContainer} >
+							{/*<View style={styles.topboxTextContainer} >
 								<Text style={styles.topboxTextContainer_text_nett}>You will receive a confirmation mail </Text>
-							</View>
+							</View>*/}
 
 							<View style={styles.booked_text_nett}>
-								<View>
+								{/*<View>
 									<Text style={styles.topboxTextContainer_text_nett}>Booked for</Text>
-								</View>
+								</View>*/}
 								<View style={styles.booked_text_container_main}>
 									<View style={styles.booked_text_container}>
 										{item.photo_url ? < Image
 											source={{ uri: item?.photo_url }}
 											style={styles.top_container_img_icon}
-										/> : <UserCircle />}
+										/> : <DoctorProfilePic />}
 
 									</View>
-									<View>
-										<Text style={styles.bookeding_text}>{item?.doctorName}</Text>
-										<Text style={styles.bookeding_text_two}>Consultation with  {item?.title}  {item?.doctorName}</Text>
+									<Text style={styles.bookeding_text}>Dr. {item?.doctorName}</Text>
+									<Text style={styles.bookeding_text_two}>Specialization??{item?.Specialization}</Text>
+									<View style={{flexDirection: 'row', margin: 5}}>
+										<Locations color="#646464"/>
+										<Text style={styles.bookeding_text_three}>{item?.hospital}</Text>
 									</View>
 								</View>
-								<View style={styles.booked_text_container_main_two}>
+								<View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+									<Text style={styles.header_text}>Date</Text>
+									<Text style={styles.bookeding_section_text_two_sub}>{moment.unix(item?.bookingDate?.seconds).format('Do MMMM, YYYY')}</Text>
+								</View>
+								<View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 15}}>
+									<Text style={styles.header_text}>Time</Text>
+									<Text style={styles.bookeding_section_text_two_sub}>{formattedItem}</Text>
+								</View>
+								<View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 15}}>
+									<Text style={styles.header_text}>Consultation Fee</Text>
+									<Text style={styles.bookeding_section_text_two_sub}>????</Text>
+								</View>
+								<View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 15}}>
+									<Text style={styles.header_text}>Booking Channel</Text>
+									<Text style={styles.bookeding_section_text_two_sub}>{item?.bookingChannel}</Text>
+								</View>
+
+								<Text style={styles.consultation_header_text}>Reason for Consultation</Text>
+								<View style={styles.consultation_box_container}>
+									<TextInput 
+										value={consultationText}
+										onChangeText={onChangeConsultationText}
+										style={styles.consultation_box_text}
+										placeholder='Reason for consultation'
+										multiline={true}
+										maxLength={300}
+									/>
+								</View>
+								<Text style={styles.consultation_text_count}>{consultationText.length}/300</Text>
+								<View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 130}}>
+									<TouchableOpacity style={styles.top_container_img_doctor_container2} onPress={() => handlePress2(item)}>
+										<Text style={styles.top_container_img_doctor_container_text2}>Reschedule</Text>
+									</TouchableOpacity>
+									<TouchableOpacity style={styles.top_container_img_doctor_container1} onPress={() => handlePress1(item)}>
+										<Text style={styles.top_container_img_doctor_container_text1}>Start Consultation</Text>
+									</TouchableOpacity>
+								</View>
+								{/*<View style={styles.booked_text_container_main_two}>
 									<Text style={styles.bookeding_section_two}>Patient Vitals</Text>
 									<View style={styles.bookeding_section_text_container}>
 										<UserCircle />
@@ -128,7 +173,7 @@ const AppointmentDetails = () => {
 										<Text style={styles.bookeding_section_text_two_sub}>Hospital</Text>
 									</View>
 									<Text style={styles.bookeding_text_two}>{item?.hospital}</Text>
-								</View>
+								</View>*/}
 							</View>
 						</View>
 					</ScrollView>
@@ -145,7 +190,79 @@ export default AppointmentDetails
 
 
 const styles = StyleSheet.create({
-
+	header_text: {
+		fontSize: 14,
+		fontFamily: "Inter-Medium",
+		fontWeight: '500',
+		color: "#171717",
+		marginTop: 10,
+		marginHorizontal: 20
+	},
+	consultation_header_text: {
+		fontSize: 14,
+		fontFamily: "Inter-Medium",
+		fontWeight: '500',
+		color: "#171717",
+		marginTop: 40,
+		marginHorizontal: 20
+	},
+	consultation_box_container: {
+		width: 380,
+		height: 154,
+		borderColor: "#D5D5D5",
+		borderWidth: 0.5,
+		borderRadius: 12,
+		textAlignVertical: 'top',
+		margin: 20,
+		//padding: 10
+	},
+	consultation_box_text: {
+		padding: 10,
+		textAlignVertical: 'top',
+		fontSize: 15,
+		fontWeight: 400,
+		fontFamily: "Inter-Regular"
+	},
+	consultation_text_count: {
+		marginTop: -15,
+		fontSize: 12,
+		fontWeight: 400,
+		color: "#646464",
+		textAlign: "right",
+		marginHorizontal: 10
+	},
+	top_container_img_doctor_container1: {
+		width: 182,
+		height: 40,
+		borderRadius: 12,
+		backgroundColor: "#44CE2D",
+		justifyContent: "center",
+		alignItems: "center",
+		margin: 10
+	},
+	top_container_img_doctor_container_text1: {
+		color: "#FFFFFF",
+		fontSize: 14,
+		fontWeight: 500,
+		fontFamily: "Inter-Medium"
+	},
+	top_container_img_doctor_container2: {
+		width: 182,
+		height: 40,
+		borderRadius: 12,
+		borderWidth: 0.5,
+		borderColor: "#D5D5D5",
+		backgroundColor: "#FFFFFF",
+		justifyContent: "center",
+		alignItems: "center",
+		margin: 10
+	},
+	top_container_img_doctor_container_text2: {
+		color: "#363636",
+		fontSize: 14,
+		fontWeight: 500,
+		fontFamily: "Inter-Medium"
+	},
 	bookingStatus_green: {
 		color: colors.accent_green,
 		padding: 5,
@@ -171,9 +288,9 @@ const styles = StyleSheet.create({
 		height: "100%",
 	},
 	top_container_img_icon: {
-		width: 42,
-		height: 42,
-		borderRadius: 50,
+		width: 88,
+		height: 88,
+		borderRadius: 100,
 	},
 
 	bookeding_section_text_container: {
@@ -221,16 +338,29 @@ const styles = StyleSheet.create({
 	},
 
 	bookeding_text_two: {
-		color: colors.smail_text_color,
-		fontSize: 12.5,
+		color: "#363636",
+		fontSize: 12,
 		fontFamily: "Inter-Regular",
-		marginTop: 5,
+		fontWeight: '400',
+		marginTop: 10,
+	},
+
+	bookeding_text_three: {
+		fontFamily: "Inter-Regular",
+		fontSize: 10,
+		fontWeight: '400',
+		color: "#646464",
+		marginTop: 2,
+		marginBottom: 30
 	},
 
 	bookeding_section_text_two_sub: {
-		color: colors.black,
-		fontSize: 12.5,
-		fontFamily: "Inter-Regular",
+		color: "#363636",
+		fontSize: 14,
+		fontFamily: "Inter-Medium",
+		fontWeight: '500',
+		marginHorizontal: 20,
+		marginTop: 9
 	},
 	bookeding_section_text_two: {
 		color: colors.black,
@@ -240,8 +370,9 @@ const styles = StyleSheet.create({
 	},
 	bookeding_text: {
 		color: colors.black,
-		fontSize: 12.5,
-		fontFamily: "Poppins-Bold",
+		fontSize: 14,
+		fontFamily: "Inter-Medium",
+		fontWeight: '500'
 	},
 
 	booked_text_container_main_two: {
@@ -251,29 +382,30 @@ const styles = StyleSheet.create({
 		paddingBottom: 30,
 	},
 	booked_text_container_main: {
-		flexDirection: 'row',
+		//flexDirection: 'row',
 		alignItems: 'center',
-		gap: 10,
-		marginTop: 20,
-		borderBottomWidth: 0.4,
-		borderBottomColor: colors.smail_text_color,
-		paddingBottom: 30,
+		justifyContent: 'center',
+		//gap: 10,
+		//marginTop: 20,
+		//borderBottomWidth: 0.4,
+		//borderBottomColor: colors.smail_text_color,
+		//paddingBottom: 30,
 	},
 
 	booked_text_container: {
-		borderWidth: 1,
-		borderColor: colors.accent_green,
-		width: 40,
-		height: 40,
-		borderRadius: 50,
-		flexDirection: "row",
+		//borderWidth: 1,
+		//borderColor: colors.accent_green,
+		width: 88,
+		height: 88,
+		borderRadius: 100,
+		//flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
 	},
 
 	booked_text_nett: {
-		marginTop: 20,
-		marginHorizontal: 10,
+		//marginTop: 20,
+		//marginHorizontal: 10,
 	},
 
 	topboxTextContainer_text_nett: {
@@ -397,4 +529,3 @@ const styles = StyleSheet.create({
 		marginTop: 15,
 	},
 });
-

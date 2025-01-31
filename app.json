@@ -14,14 +14,16 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.eezyhealth.eezyhealthpatient"
+      "bundleIdentifier": "com.eezyhealth.eezyhealthpatient",
+      "newArchEnabled": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.eezyhealth.eezyhealthpatient"
+      "package": "com.eezyhealth.eezyhealthpatient",
+      "newArchEnabled": true
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -37,6 +39,10 @@
     "runtimeVersion": "1.0.0",
     "updates": {
       "url": "https://u.expo.dev/375c9e2f-60f6-4c9e-95d6-6d22b783e349"
-    }
+    },
+    "plugins": [
+      "expo-font",
+      "expo-router"
+    ]
   }
 }

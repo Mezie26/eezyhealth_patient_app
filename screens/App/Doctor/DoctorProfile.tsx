@@ -10,6 +10,9 @@ import { DocterPhone } from '../../../assets/svg/DocterPhone';
 import { DocterVideo } from '../../../assets/svg/DocterVideo';
 import { DoctorMessage } from '../../../assets/svg/DoctorMessage';
 import { DoctorProfilePic } from '../../../assets/svg/DoctorProfile';
+import { CommunityIcon1 } from '@/assets/svg/CommunityIcon1'
+import { CommunityIcon2 } from '@/assets/svg/CommunityIcon2';
+import { StarIcon } from '@/assets/svg/StarIcon';
 
 
 const DoctorProfile = () => {
@@ -31,7 +34,7 @@ const DoctorProfile = () => {
 		} catch (error) {
 		}
 	}, [item]);
-	// console.log('item---item', JSON.stringify(details, null, 2));
+	console.log('item----item', JSON.stringify(details, null, 2));
 
 
 
@@ -92,11 +95,29 @@ const DoctorProfile = () => {
 							/>}
 					</View>
 					<View style={styles.info_icons_text_one_container}>
-						<Text style={styles.info_icons_text_one}>{ }.{details?.first_name} {details?.last_name}</Text>
+						<Text style={styles.info_icons_text_one}>Dr. {details?.first_name} {details?.last_name}</Text>
 						<Text style={styles.info_icons_text_two}>{details?.specialization}</Text>
+						<Text style={styles.info_icons_text_location}>{details.location}location??</Text>
 					</View>
-					<View style={styles.info_icons_text_one_container}>
-						<Text style={styles.info_icons_text_three}>{details?.experience_yrs} Years Experiece</Text>
+					<View style={{flexDirection: 'row', marginVertical: 5}}>
+						<View style={styles.doctor_details_card}>
+							<CommunityIcon1 />
+							<Text style={styles.doctor_details_card_text1}>1000+</Text>
+							<Text style={styles.doctor_details_card_text2}>Patients</Text>
+						</View>
+						<View style={styles.doctor_details_card}>
+							<CommunityIcon2 />
+							<Text style={styles.doctor_details_card_text1}>?? Years</Text>
+							<Text style={styles.doctor_details_card_text2}>Experience</Text>
+						</View>
+						<View style={styles.doctor_details_card}>
+							<StarIcon />
+							<Text style={styles.doctor_details_card_text1}>??</Text>
+							<Text style={styles.doctor_details_card_text2}>Ratings</Text>
+						</View>
+					</View>
+					{/*<View style={styles.info_icons_text_one_container}>
+						<Text style={styles.info_icons_text_three}>{details?.experience_yrs} Years Experience</Text>
 						<View style={styles.no_appointments_star_flex}>
 
 							<Rating rating={details?.rating || 0} />
@@ -113,34 +134,39 @@ const DoctorProfile = () => {
 						<TouchableOpacity style={styles.info_icons3} onPress={handleIcon} >
 							<DocterPhone />
 						</TouchableOpacity>
-					</View>
+					</View>*/}
 				</View>
 
 				<View style={styles.info_text_container_main}>
 					<View style={styles.info_text_container}>
-						<Text style={styles.info_text_information}>About</Text>
+						<Text style={styles.info_text_information}>About Doctor</Text>
 						<Text style={styles.info_text_information_text}>{details?.about}</Text>
 					</View>
 
 					<View style={styles.info_text_container}>
-						<Text style={styles.info_text_information}>Specialities</Text>
-						<Text style={styles.info_text_information_text}>General Practice, Pediatrics.</Text>
+						<Text style={styles.info_text_information}>Specialization</Text>
+						<View  style={{flexDirection: "row", gap: 10, marginTop: 10}}>
+							<Text style={styles.doctor_specialty}>{details?.specialization}</Text>
+							<Text style={styles.doctor_specialty}>Cardiologist??</Text>
+							<Text style={styles.doctor_specialty}>Cardiologist??</Text>
+						</View>
 					</View>
 
-					<View style={styles.info_text_container}>
-						<Text style={styles.info_text_information}>Consultation Channels</Text>
-						<Text style={styles.info_text_information_text}>Online & Face-to-Face.</Text>
+					<View style={styles.consultation_info_container}>
+						<Text style={styles.info_text_information}>Consultation Fee</Text>
+						<Text style={styles.info_text_information}>₦{pricing[0]?.pricing}</Text>
 					</View>
+					<Text style={styles.info_text_information}>Reviews</Text>
 
-					<View style={styles.info_text_container}>
+					{/*<View style={styles.consultation_info_container}>
 						<Text style={styles.info_text_information}>Price</Text>
 						<Text style={styles.info_text_information_text}>₦{pricing[0]?.pricing}</Text>
-					</View>
+					</View>*/}
 				</View>
 			</ScrollView>
 
 
-			<BottomButton onPress={handlePresss} text={"Book an Appointments"} />
+			<BottomButton onPress={handlePresss} text={"Book Appointment"} />
 		</View>
 	)
 }
@@ -148,31 +174,80 @@ const DoctorProfile = () => {
 export default DoctorProfile
 
 const styles = StyleSheet.create({
-
-
-
+	doctor_specialty: {
+		width: 100,
+		height: 28,
+		borderRadius: 12,
+		backgroundColor: "#F9FAFB",
+		fontSize: 12,
+		fontWeight: "400",
+		fontFamily: "Inter-Regular",
+		color: "#363636",
+		padding: 5,
+		textAlign: "center"
+	},
 	info_text_container_main: {
 		flexDirection: 'column',
-		gap: 40,
-		marginTop: 40,
+		gap: 30,
+		marginTop: 20,
 	},
 
 	info_text_information: {
-		color: colors.black,
-		fontSize: 16,
-		fontFamily: "Inter-Regular",
-		marginBottom: 10,
+		color: "#171717",
+		fontSize: 14,
+		fontWeight: "500",
+		fontFamily: "Inter-400Regular",
+		//marginBottom: 10,
 	},
 	info_text_information_text: {
-		color: colors.black,
-		fontSize: 14,
+		color: "#363636",
+		fontSize: 12,
 		fontFamily: "Inter-Regular",
-		marginBottom: 10,
+		fontWeight: "400",
+		//marginBottom: 10,
 	},
 
 
 	info_text_container: {
 
+	},
+
+	consultation_info_container: {
+		flexDirection: "row",
+		justifyContent: "space-between"
+	},
+
+	info_icons_text_location: {
+		fontSize: 10,
+		fontWeight: '400',
+		marginTop: 5,
+		color: "#646464"
+	},
+
+	doctor_details_card: {
+		width: 86,
+		height: 78,
+		borderWidth: 0.5,
+		borderRadius: 12,
+		borderColor: "#D5D5D5",
+		marginHorizontal: 10,
+		justifyContent: 'center',
+		alignItems: 'center',
+		//padding: 10
+	},
+
+	doctor_details_card_text1: {
+		fontSize: 14,
+		fontWeight: '500',
+		fontFamily: 'Inter-Regular',
+		color: "#363636",
+		padding: 7
+	},
+	doctor_details_card_text2: {
+		fontSize: 12,
+		fontWeight: '300',
+		fontFamily: 'Inter-Regular',
+		color: "#646464"
 	},
 
 	info_icons_text_three: {
@@ -187,15 +262,18 @@ const styles = StyleSheet.create({
 	},
 
 	info_icons_text_two: {
-		fontSize: 14,
-		color: colors.smail_text_color,
+		fontSize: 12,
+		color: "#363636",
 		fontFamily: "Inter_400Regular",
+		fontWeight: '400'
 	},
 
 	info_icons_text_one: {
 		fontSize: 14,
-		color: colors.black,
+		color: "#171717",
 		fontFamily: "Inter_400Regular",
+		marginBottom: 5,
+		fontWeight: "500"
 	},
 
 	info_icons1: {

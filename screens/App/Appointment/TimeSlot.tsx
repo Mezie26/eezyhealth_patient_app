@@ -33,9 +33,9 @@ const TimeSlot = ({ setSelectedDate, selectedDate }: any) => {
 					mainColor: colors.accent_green,
 				}}
 			/>
-			<Text style={styles.containerText}>
+			{/*<Text style={styles.containerText}>
 				SELECTED DATE: {selectedDate ? moment(selectedDate).format('YYYY-MM-DD') : 'No date selected'}
-			</Text>
+			</Text>*/}
 		</View>
 	);
 }
@@ -55,6 +55,6 @@ const styles = StyleSheet.create({
 		marginLeft: 5,
 	},
 	container: {
-		marginTop: 10,
+		marginBottom: -50,
 	},
 });

@@ -1,7 +1,7 @@
 import { SvgXml } from "react-native-svg";
 
-const successIcon = `<svg width="56" height="53" viewBox="0 0 56 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M19.5429 52.6737L14.8615 44.7893L5.99154 42.8181L6.8539 33.7018L0.817383 26.8029L6.8539 19.904L5.99154 10.7877L14.8615 8.81656L19.5429 0.932129L27.9201 4.50476L36.2973 0.932129L40.9787 8.81656L49.8487 10.7877L48.9863 19.904L55.0228 26.8029L48.9863 33.7018L49.8487 42.8181L40.9787 44.7893L36.2973 52.6737L27.9201 49.1011L19.5429 52.6737ZM25.333 35.5497L39.254 21.6288L35.8045 18.0561L25.333 28.5276L20.0357 23.3535L16.5862 26.8029L25.333 35.5497Z" fill="#44CE2D"/>
-</svg> 
-`;
+const successIcon = `<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="60" height="60" rx="30" fill="#91DD85"/>
+<path d="M16 34L23.2331 39.4248C23.6618 39.7463 24.2677 39.6728 24.607 39.2581L42 18" stroke="white" stroke-width="3" stroke-linecap="round"/>
+</svg>`;
 export const SuccessIcon = () => <SvgXml xml={successIcon} width="15%" height="15%" />;

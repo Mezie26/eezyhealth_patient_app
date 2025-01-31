@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Fontisto from 'react-native-vector-icons/Fontisto';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+//import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colors } from '../../../css/colorsIndex';
 import Rating from '../../../components/Rating';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import { Height } from '../Profile/Account';
 
 
 const DoctorList = ({ doctorsByRole, doctors, handlePress }: any) => {
@@ -24,27 +26,50 @@ const DoctorList = ({ doctorsByRole, doctors, handlePress }: any) => {
 	}, [doctorsByRole, doctors]);
 
 
+ 
+	console.log('item---item', JSON.stringify(mappedDoctors, null, 2));
+
 
 	// Render each doctor item
 	const renderItems = ({ item }: any) => (
 		<View style={styles.no_appointments_container_three_sub} key={item.uid}>
 			<View style={styles.no_appointments_star}>
+				<View style={{flexDirection: 'row'}}>
+				{!item?.photo_url ? (
+				<FontAwesome6 name="user-doctor" size={45} style={{marginLeft: 10}}  color={colors.smail_text_color} />
+						// <Icon name="medical-services" size={30} color={colors.smail_text_color} />
+					) : (
+						<Image
+							source={{ uri: "https://firebasestorage.googleapis.com/v0/b/eezyhealth-2023.appspot.com/o/profileImages%2FZ?alt=media&token=21ee0260-d2c5-42b3-af69-258593b96612"}}
+							style={styles.top_container_img_doctor}
+							resizeMode="contain"
+						/>
+					)}
 				<View style={styles.access_card_img_text_dr}>
-					<Text style={styles.access_card_img_text_one}>{item?.first_name}</Text>
-					<View style={styles.access_card_img_text_three_container}>
-						<MaterialIcons name="location-pin" size={11} color={colors.accent_green} />
-						<Text style={styles.access_card_img_text_three}>{item?.location}</Text>
-					</View>
+					<Text style={styles.access_card_img_text_one}>Dr {item?.first_name} {item?.last_name}</Text>
 					<Text style={styles.access_card_img_text_two}>{item?.specialization}</Text>
-				</View>
-				<View style={styles.no_appointments_star_flex}>
-
-					{/* Rating */}
+					{/*<View style={styles.access_card_img_text_three_container}>
+						<Icon name="location-on" size={16} color={colors.accent_green} />
+						<Text style={styles.access_card_img_text_three}>{item?.location}</Text>
+					</View>*/}
 					<Rating rating={item?.rating || 0} />
 				</View>
+				</View>
+				<TouchableOpacity
+					style={styles.top_container_img_doctor_container}
+					onPress={() => handlePress(item)}
+				>
+					<Text style={styles.top_container_img_doctor_container_text}>
+						View Profile
+					</Text>
+				</TouchableOpacity>
+				
 			</View>
-
-			<View style={styles.no_appointments_star_flex_two}>
+			{/*<View style={styles.no_appointments_star_flex}>
+					{/* Rating */}
+					{/*<Rating rating={item?.rating || 0} />
+			</View>*/}
+			{/*<View style={styles.no_appointments_star_flex_two}>
 				<View style={styles.no_appointments_star_doctor}>
 					<View style={styles.container_active_doctor}>
 						<View style={styles.container_active_doctor_color_one}>
@@ -54,31 +79,14 @@ const DoctorList = ({ doctorsByRole, doctors, handlePress }: any) => {
 							<Text style={styles.container_active_doctor_text}>Active</Text>
 						</View>
 					</View>
-					{!item?.photo_url ? (
-						<Fontisto name="doctor" size={50} color={colors.smail_text_color} />
-					) : (
-						<Image
-							source={{ uri: item?.photo_url }}
-							style={styles.top_container_img_doctor}
-							resizeMode="cover"
-						/>
-					)}
 				</View>
-				<TouchableOpacity
-					style={styles.top_container_img_doctor_container}
-					onPress={() => handlePress(item)}
-				>
-					<Text style={styles.top_container_img_doctor_container_text}>
-						View Doctor
-					</Text>
-				</TouchableOpacity>
-			</View>
+			</View>*/}
 		</View>
 	);
 
 	return (
 		<FlatList
-			data={mappedDoctors}
+			data={doctors}
 			scrollEnabled={false}
 			renderItem={renderItems}
 			keyExtractor={(item, index) => index.toString()}
@@ -95,28 +103,38 @@ const styles = StyleSheet.create({
 	access_card_img_text_three_container: {
 		flexDirection: "row",
 		alignItems: "center",
-		gap: 5,
+		gap: 1,
+		marginLeft: -3,
 	},
 	access_card_img_text_one: {
 		color: colors.black,
-		fontSize: 12,
+		fontSize: 14,
 		fontFamily: 'Inter-Regular',
-		marginBottom: 5,
+		fontWeight: '500',
+		marginBottom: 7,
+		textAlign: 'left'
 	},
 	access_card_img_text_two: {
 		color: colors.black,
 		fontSize: 12,
 		fontFamily: 'Inter-Regular',
-		marginBottom: 5,
+		fontWeight: '500',
+		marginBottom: 7,
 	},
 	access_card_img_text_three: {
 		color: colors.black,
-		fontSize: 12,
+		fontSize: 13,
 		fontFamily: 'Inter-Regular',
 	},
 
 	access_card_img_text_dr: {
 		marginTop: 0,
+		marginLeft: 20,
+		marginRight: 25,
+		height: 66,
+		width: 164
+		//textAlign: 'left',
+		//justifyContent: 'space-evenly'
 	},
 	access_card_img_text: {
 		marginTop: 20,
@@ -159,64 +177,75 @@ const styles = StyleSheet.create({
 	},
 
 	top_container_img_doctor_container_text: {
-		color: colors.black,
+		color: colors.accent_green,
 		fontSize: 13,
+		marginTop: 15,
+		//marginLeft: 40,
+		//textAlign: 'right',
+		//alignContent: 'flex-end',
+		//alignItems: 'flex-end',
+		//alignSelf: 'flex-start',
 	},
 
 	top_container_img_doctor_container: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: colors.white,
-		borderWidth: 1,
-		borderColor: colors.border_color,
-		borderRadius: 10,
+		//flexDirection: 'row',
+		alignItems: 'flex-end',
+		//justifyContent: 'flex-end',
+		//backgroundColor: colors.white,
+		//borderWidth: 1,
+		//borderColor: colors.border_color,
+		//borderRadius: 10,
 		paddingHorizontal: 10
 	},
 	top_container_img_doctor: {
-		width: 80,
-		height: 100,
-		borderRadius: 10,
+		width: 48,
+		height: 48,
+		borderRadius: 12,
+		//marginRight: 20,
+		marginLeft: 10
 	},
 	no_appointments_star_doctor: {
 		width: 80,
-		height: 100,
+		height: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
 		position: 'relative',
 	},
 
 	no_appointments_star_flex_two: {
-		flexDirection: 'column',
-		alignItems: 'center',
-		justifyContent: 'center',
-		gap: 10
+		//flexDirection: 'column',
+		//alignItems: 'center',
+		//justifyContent: 'center',
+		//gap: 10
 
 	},
 
 	no_appointments_star_flex: {
-		flexDirection: "row",
-		alignItems: 'center',
-		width: 100,
+		//flexDirection: "row",
+		//alignItems: 'center',
+		//width: 100,
+		//marginTop: 5
 	},
 
 	no_appointments_star: {
-		flexDirection: 'column',
+		flexDirection: 'row',
 		justifyContent: 'space-between',
+		marginTop: 7
 
 	},
 
 	no_appointments_container_three_sub: {
 		width: '100%',
+		height: 106,
 		paddingHorizontal: 10,
-		paddingVertical: 20,
+		paddingVertical: 10,
 		borderRadius: 10,
-		backgroundColor: colors.white,
-		flexDirection: 'row',
-		justifyContent: "space-between",
+		//backgroundColor: colors.white,
+		//flexDirection: 'row',
+		//justifyContent: "space-between",
 		marginBottom: 20,
-		borderWidth: 1,
-		borderColor: colors.grayColor,
+		borderWidth: 0.5,
+		borderColor: colors.doctorContainerColor,
 	},
 
 	no_appointments_container_three: {

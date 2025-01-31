@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Dimensions, SafeAreaView, Platform } from 'react-native'
 import React, { useEffect } from 'react'
 import { colors } from '../../../css/colorsIndex'
 import { SmallVerify } from '../../../assets/svg/SmailVerify'
@@ -42,15 +42,15 @@ const Account = () => {
 	};
 
 	return (
-		<ScrollView style={styles.container}>
-			<ProfileColorImage />
+		<SafeAreaView style={styles.container}>
+			{/*<ProfileColorImage />*/}
 			<View style={styles.top_container_main}>
-				<View style={styles.top_nav_container}>
+				{/*<View style={styles.top_nav_container}>
 					<Text style={styles.top_nav_title}>Profile</Text>
-				</View>
+				</View>*/}
 				<View style={styles.top_container}>
-					<View style={styles.top_container_sub}>
-						<View style={styles.top_container_img}>
+					{/*<View style={styles.top_container_sub}>
+						<View style={styles.top_container_img}>*/}
 							<View style={styles.top_container_img_sub}>
 								<View style={styles.top_container_img_circle}>
 									{!user?.photo_url ? (
@@ -59,53 +59,58 @@ const Account = () => {
 										<Image style={styles.image} source={{ uri: user?.photo_url }} />
 									)}
 								</View>
-								<View>
-									<Text style={styles.profile_text1}>
-										{!user?.display_name ? "N/A" : `${user?.display_name}`}
-									</Text>
-									<Text style={styles.profile_text2}>
+								<Text style={styles.profile_text1}>
+									{!user?.display_name ? "N/A" : `${user?.display_name}`}
+								</Text>
+									{/*<Text style={styles.profile_text2}>
 										{!user?.email ? "N/A" : user?.email}
-									</Text>
-								</View>
+									</Text>*/}
 							</View>
-							<View style={styles.profile_text_img}>
+							{/*<View style={styles.profile_text_img}>
 								<SmallVerify />
 							</View>
 						</View>
 						<TouchableOpacity style={styles.profile_text_img_btn} onPress={() => navigation.navigate("EditAccount")}>
 							<Text style={styles.profile_text_img_btn_text}>Profile Info</Text>
 						</TouchableOpacity>
-					</View>
+					</View>*/}
 				</View>
 			</View>
 			{/* List section */}
 			<View style={styles.logput_container_main}>
 				<View>
+					<TouchableOpacity style={styles.list_item_container} onPress={() => navigation.navigate("EditAccount")}>
+						<View style={styles.list_item_image_container}>
+							<Medical />
+							<Text style={styles.list_item_text}>Profile Information</Text>
+						</View>
+						<AngleRight />
+					</TouchableOpacity>
 					<TouchableOpacity style={styles.list_item_container} onPress={() => navigation.navigate("Medicalinfo")}>
 						<View style={styles.list_item_image_container}>
 							<Medical />
-							<Text>Medical Information</Text>
+							<Text style={styles.list_item_text}>Medical Information</Text>
 						</View>
 						<AngleRight />
 					</TouchableOpacity>
 					<TouchableOpacity style={styles.list_item_container} onPress={() => navigation.navigate("PaymentHistory")}>
 						<View style={styles.list_item_image_container}>
 							<Creditcard />
-							<Text>Payment History</Text>
+							<Text style={styles.list_item_text}>Payment History</Text>
 						</View>
 						<AngleRight />
 					</TouchableOpacity>
 					<TouchableOpacity style={styles.list_item_container} onPress={() => navigation.navigate("VitalsHistory")}>
 						<View style={styles.list_item_image_container}>
 							<Activity />
-							<Text>Vitals History</Text>
+							<Text style={styles.list_item_text}>Vitals History</Text>
 						</View>
 						<AngleRight />
 					</TouchableOpacity>
 					<TouchableOpacity style={styles.list_item_container} onPress={() => navigation.navigate("AboutUs")}>
 						<View style={styles.list_item_image_container}>
 							<Infocirlceo />
-							<Text>About Us</Text>
+							<Text style={styles.list_item_text}>About Us</Text>
 						</View>
 						<AngleRight />
 					</TouchableOpacity>
@@ -117,7 +122,7 @@ const Account = () => {
 					<Text style={styles.logout_container_text}>Logout</Text>
 				</TouchableOpacity>
 			</View>
-		</ScrollView>
+		</SafeAreaView>
 	);
 };
 
@@ -126,9 +131,10 @@ export default Account;
 
 const styles = StyleSheet.create({
 	image: {
-		width: 43,
-		height: 43,
-		borderRadius: 50,
+		width: 100,
+		height: 100,
+		borderRadius: 64,
+		resizeMode: 'cover'
 	},
 
 	top_nav_title: {
@@ -181,11 +187,19 @@ const styles = StyleSheet.create({
 	list_item_container: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		padding: 10,
-		marginBottom: 10,
+		//padding: 10,
+		//marginBottom: 10,
 		borderBottomWidth: 0.3,
 		borderBottomColor: colors.smail_text_color,
 		justifyContent: 'space-between',
+		height: 72
+	},
+
+	list_item_text: {
+		fontSize: 14,
+		fontWeight: "500",
+		fontFamily: "Inter-Medium",
+		color: "#171717"
 	},
 
 	profile_text_img_btn_text: {
@@ -214,8 +228,11 @@ const styles = StyleSheet.create({
 
 	profile_text1: {
 		color: colors.black,
-		fontSize: 14,
-		fontFamily: "Inter-Regularr"
+		fontSize: 16,
+		fontFamily: "Inter-Medium",
+		fontWeight: "500",
+		textAlign: "center",
+		margin: 15
 	},
 
 	profile_text2: {
@@ -226,9 +243,9 @@ const styles = StyleSheet.create({
 
 
 	top_container_img_circle: {
-		width: 47.42,
-		height: 49.68,
-		borderRadius: 50,
+		width: 100,
+		height: 100,
+		borderRadius: 64,
 		backgroundColor: colors.white,
 		alignItems: 'center',
 		justifyContent: 'center',
@@ -238,20 +255,21 @@ const styles = StyleSheet.create({
 	},
 
 	top_container_img_sub: {
-		flexDirection: "row",
+		//flexDirection: "row",
 		alignItems: "center",
-		gap: 10,
+		justifyContent: "center",
+		//gap: 10,
 	},
 	top_container_img: {
 		width: "100%",
-		flexDirection: "row",
-		alignItems: "flex-end",
+		//flexDirection: "row",
+		alignItems: "center",
 		justifyContent: "space-between",
 	},
 	top_container_main: {
-		position: 'absolute',
-		width: '100%',
-		height: '100%',
+		//position: 'absolute',
+		//width: '100%',
+		//height: '100%',
 		marginTop: 40,
 	},
 	top_container_sub: {
@@ -273,7 +291,7 @@ const styles = StyleSheet.create({
 	},
 	top_container: {
 		marginHorizontal: 10,
-		flexDirection: "row",
+		//flexDirection: "row",
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
@@ -286,8 +304,9 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		flexGrow: 1,
-		backgroundColor: colors.white,
-		position: 'relative',
+		paddingTop: Platform.OS === "android" ? 40 : 10,
+		backgroundColor: colors.background,
+		//position: 'relative',
 	},
 });
 

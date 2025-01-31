@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, ActivityIndicator } from "react-native"
+import { StyleSheet, View, ActivityIndicator, } from "react-native"
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import CarouselCardItem, { ITEM_WIDTH, SLIDER_WIDTH } from './CarouselCardItem'
 import { colors } from '../../css/colorsIndex';

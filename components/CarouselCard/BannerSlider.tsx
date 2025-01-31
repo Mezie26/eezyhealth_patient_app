@@ -1,9 +1,9 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import CarouselCards from './CarouselCards';
 
 
-const Banner = ({ loading, data, navigation }: any) => {
+const BannerSlider = ({ loading, data, navigation }: any) => {
     return (
         <View style={styles.container}>
             <CarouselCards
@@ -15,7 +15,7 @@ const Banner = ({ loading, data, navigation }: any) => {
     );
 }
 
-export default Banner
+export default BannerSlider
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',

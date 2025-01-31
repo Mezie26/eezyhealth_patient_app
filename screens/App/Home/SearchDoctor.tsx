@@ -11,6 +11,8 @@ import { TextInput } from 'react-native-paper';
 import Rating from '../../../components/Rating';
 import { Doctor } from '../../../assets/svg/Doctor';
 import { Locations } from '../../../assets/svg/Location';
+import { DotIcon } from '@/assets/svg/DotIcon';
+import { FontAwesome6 } from '@expo/vector-icons';
 
 
 const SearchDoctor = () => {
@@ -27,9 +29,12 @@ const SearchDoctor = () => {
 	const { search } = route?.params || {}
 
 
+	const handlePress1 = (item: any) => {
+		navigation.navigate('BookingAppointment', { item: item });
+		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+	};
 
-
-	const handlePress = (item: any) => {
+	const handlePress2 = (item: any) => {
 		navigation.navigate('DoctorProfile', { item: item });
 		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 	};
@@ -127,20 +132,39 @@ const SearchDoctor = () => {
 	const renderItems = ({ item }: any) => (
 		<View style={styles.no_appointments_container_three_sub} key={item}>
 			<View style={styles.no_appointments_star}>
-				<View style={styles.access_card_img_text_dr}>
-					<Text style={styles.access_card_img_text_one}>{item?.first_name}</Text>
-					<View style={styles.access_card_img_text_three_container}>
-						<Locations />
-						<Text style={styles.access_card_img_text_three}>{item?.location}</Text>
+				<View style={{flexDirection: "row"}}>
+					{!item?.photo_url ? (
+						<FontAwesome6 name="user-doctor" size={45} style={{marginLeft: 10}}  color={colors.smail_text_color} />
+					) : (
+						<Image
+						source={{ uri: item?.photo_url }}
+						style={styles.top_container_img_doctor}
+						resizeMode="cover"
+					/>
+					)}
+					<View style={styles.doctors_details_text_container}>
+							<Text style={styles.access_card_img_text_one}>Dr {item?.first_name} {item?.last_name}</Text>
+							<View style={{flexDirection: "row"}}>
+								<Text style={styles.access_card_img_text_two}>{item?.specialization}</Text>
+								<View style={{marginTop: 10}}>
+									<DotIcon />
+								</View>
+								<Text style={styles.access_card_img_text_two}>?? Years Experience</Text>
+							</View>
+							<View style={styles.access_card_img_text_three_container}>
+								<View style={{marginTop: 5, marginLeft: 7}}>
+									<Locations color="#222222"/>
+								</View>
+								<Text style={styles.access_card_img_text_three}>{item?.hospital}</Text>
+							</View>
 					</View>
-					<Text style={styles.access_card_img_text_two}>{item?.specialization}</Text>
 				</View>
-				<View style={styles.no_appointments_star_flex}>
+				<View style={{alignItems: "flex-end", marginHorizontal: 10}}>
 					<Rating rating={item?.rating || 0} />
 				</View>
 			</View>
 			<View style={styles.no_appointments_star_flex_two}>
-				<View style={styles.no_appointments_star_doctor}>
+				{/*<View style={styles.no_appointments_star_doctor}>
 					<View style={styles.container_active_doctor}>
 						<View style={styles.container_active_doctor_color_one}>
 							<View style={styles.container_active_doctor_color_two}>
@@ -150,14 +174,12 @@ const SearchDoctor = () => {
 							<Text style={styles.container_active_doctor_text}>Active</Text>
 						</View>
 					</View>
-					<Image
-						source={{ uri: item?.photo_url }}
-						style={styles.top_container_img_doctor}
-						resizeMode="contain"
-					/>
-				</View>
-				<TouchableOpacity style={styles.top_container_img_doctor_container} onPress={() => handlePress(item)}>
-					<Text style={styles.top_container_img_doctor_container_text}>View Doctor</Text>
+				</View>*/}
+				<TouchableOpacity style={styles.top_container_img_doctor_container1} onPress={() => handlePress1(item)}>
+					<Text style={styles.top_container_img_doctor_container_text1}>Book Appointment</Text>
+				</TouchableOpacity>
+				<TouchableOpacity style={styles.top_container_img_doctor_container2} onPress={() => handlePress2(item)}>
+					<Text style={styles.top_container_img_doctor_container_text2}>View Doctor</Text>
 				</TouchableOpacity>
 			</View>
 		</View>
@@ -214,6 +236,7 @@ const SearchDoctor = () => {
 							contentContainerStyle={styles.flatListContent}
 						/>}
 				</View>
+				<Text style={styles.list_of_doctors_heading}>List of Doctors</Text>
 				<ScrollView>
 					<View style={styles.no_appointments_container_three}>
 						{!isLoading || filteredDoctors?.length > 0 && (
@@ -256,28 +279,35 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		height: 50,
 		borderRadius: 10,
+		marginHorizontal: 10
 	},
 	specialist_text: {
-		color: colors.black,
+		color: "#363636",
 		textAlign: "center",
+		fontSize: 14,
+		fontWeight: '400',
+		fontFamily: "Inter-Regular"
+
 	},
 	specialist_list_container: {
-		width: 150,
-		height: 45,
+		width: 158,
+		height: 48,
 		backgroundColor: colors.white,
-		borderRadius: 10,
+		borderRadius: 12,
 		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
 		marginTop: 10,
-		borderWidth: 1,
-		borderColor: colors.grayColor,
+		borderWidth: 0.5,
+		borderColor: "#D5D5D5",
+		//marginHorizontal: 10
 	},
 
 	specialist_container_list: {
 		flexDirection: "row",
 		gap: 20,
-		marginBottom: 10,
+		marginBottom: 5,
+		marginHorizontal: 10
 	},
 	flatListContent: {
 		gap: 10,
@@ -290,23 +320,42 @@ const styles = StyleSheet.create({
 		marginTop: 100,
 	},
 
+	list_of_doctors_heading: {
+		fontSize: 14,
+		fontFamily: "Inter-Regular",
+		fontWeight: "500",
+		color: "#171717",
+		marginHorizontal: 20,
+		marginVertical: 15
+	},
+
+	doctors_details_text_container: {
+		//flexDirection: 'column',
+		//marginHorizontal: 10
+	},
 	// Start card styles
 	access_card_img_text_three: {
-		color: colors.black,
-		fontSize: 12,
-		fontFamily: 'Inter-Regular'
+		color: "#646464",
+		fontSize: 10,
+		fontFamily: 'Inter-Regular',
+		fontWeight: "400",
+		marginTop: 6
 	},
 
 	access_card_img_text_two: {
-		color: colors.black,
+		color: "#363636",
 		fontSize: 12,
 		fontFamily: 'Inter-Regular',
-		marginBottom: 5,
+		//marginBottom: 5,
+		fontWeight: "400",
+		marginHorizontal: 10,
+		marginTop: 5
 	},
 	access_card_img_text_three_container: {
 		flexDirection: "row",
-		alignItems: "center",
-		gap: 5,
+		//alignItems: "center",
+		//gap: 5,
+		marginTop: 5
 	},
 
 	container_active_doctor_text: {
@@ -319,24 +368,45 @@ const styles = StyleSheet.create({
 		backgroundColor: colors.accent_green,
 	},
 	top_container_img_doctor: {
-		width: 80,
-		height: 150,
-		borderRadius: 10,
+		width: 40,
+		height: 40,
+		borderRadius: 64,
+		marginLeft: 10
 	},
-	top_container_img_doctor_container_text: {
-		color: colors.black,
-		fontSize: 13,
+	top_container_img_doctor_container_text2: {
+		color: "#44CE2D",
+		fontSize: 14,
+		fontWeight: 500,
+		fontFamily: "Inter-Regular"
 	},
 
-	top_container_img_doctor_container: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: colors.white,
-		borderWidth: 1,
-		borderColor: colors.border_color,
-		borderRadius: 10,
-		paddingHorizontal: 10
+	top_container_img_doctor_container2: {
+		width: 162,
+		height: 40,
+		borderRadius: 12,
+		borderWidth: 0.5,
+		borderColor: "#44CE2D",
+		backgroundColor: "#FFFFFF",
+		justifyContent: "center",
+		alignItems: "center",
+		margin: 10
+	},
+
+	top_container_img_doctor_container_text1: {
+		color: "#FFFFFF",
+		fontSize: 14,
+		fontWeight: 500,
+		fontFamily: "Inter-Regular"
+	},
+
+	top_container_img_doctor_container1: {
+		width: 162,
+		height: 40,
+		borderRadius: 12,
+		backgroundColor: "#44CE2D",
+		justifyContent: "center",
+		alignItems: "center",
+		margin: 10
 	},
 
 	container_active_doctor_color_one: {
@@ -355,9 +425,12 @@ const styles = StyleSheet.create({
 
 	access_card_img_text_one: {
 		color: colors.black,
-		fontSize: 12,
+		fontSize: 14,
+		fontWeight: '500',
 		fontFamily: 'Inter-Regular',
-		marginBottom: 5,
+		marginHorizontal: 10,
+		//marginVertical: 5
+		//marginBottom: 5,
 	},
 	container_active_doctor: {
 		top: 10,
@@ -372,15 +445,16 @@ const styles = StyleSheet.create({
 	},
 	no_appointments_container_three_sub: {
 		width: '100%',
+		height: 158,
 		paddingHorizontal: 10,
 		paddingVertical: 20,
-		borderRadius: 10,
-		backgroundColor: colors.white,
-		flexDirection: 'row',
-		justifyContent: "space-between",
+		borderRadius: 12,
+		backgroundColor: "#F9FAFB",
+		//flexDirection: 'row',
+		//justifyContent: "space-between",
 		marginBottom: 20,
-		borderWidth: 1,
-		borderColor: colors.grayColor,
+		//borderWidth: 1,
+		//borderColor: colors.grayColor,
 	},
 	no_appointments_star_doctor: {
 		width: 80,
@@ -391,19 +465,20 @@ const styles = StyleSheet.create({
 	},
 
 	no_appointments_star_flex_two: {
-		flexDirection: 'column',
-		alignItems: 'center',
-		justifyContent: 'center',
+		flexDirection: 'row',
+		//alignItems: 'center',
+		//justifyContent: 'center',
 	},
 
 	no_appointments_star_flex: {
-		flexDirection: "row",
-		alignItems: 'center',
+		//flexDirection: "row",
+		//alignItems: 'center',
 	},
 
 	no_appointments_star: {
-		flexDirection: 'column',
-		justifyContent: 'space-between',
+		flexDirection: 'row',
+		justifyContent: "space-between",
+		//alignItems: "flex-end"
 
 	},
 	//End card styles
@@ -433,8 +508,8 @@ const styles = StyleSheet.create({
 	},
 
 	no_appointments_container_three: {
-		marginTop: 20,
-		marginHorizontal: 10,
+		//marginTop: 10,
+		marginHorizontal: 20,
 	},
 
 
@@ -484,7 +559,7 @@ const styles = StyleSheet.create({
 
 	container: {
 		flexGrow: 1,
-		backgroundColor: "#F0F4F8",
+		backgroundColor: colors.background,
 	}
 })
 

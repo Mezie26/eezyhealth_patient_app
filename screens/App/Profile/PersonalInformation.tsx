@@ -8,6 +8,7 @@ import { colors } from "@/css/colorsIndex";
 const PersonalInformation = () => {
     const dispatch = useAppDispatch();
     const { user } = useAppSelector((state: any) => state.auth);
+    console.log("item--item", JSON.stringify(user, null, 2))
     useEffect(() => {
         dispatch(login());
     }, [dispatch]); // Only dispatch is a dependency

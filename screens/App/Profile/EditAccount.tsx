@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, TouchableOpacity, Text, View, Image, Alert, ActivityIndicator } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View, Image, Alert, ActivityIndicator, TextInput } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { colors } from '../../../css/colorsIndex';
 import FormInput from '../../../components/Input/FormInput';
@@ -16,6 +16,9 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useAppDispatch, useAppSelector } from '../../../hooks/useStore';
 import { login, reset } from '../../../features/authSlice';
 import { Pencil } from '../../../assets/svg/Pencil';
+import { CameraIcon } from '@/assets/svg/CameraIcon';
+import DateOfBirth from '@/components/Input/DateOfBirthInput';
+import GenderDropdown from '@/components/Input/GenderDropDown';
 
 const EditAccount = () => {
 	const toastRef: any = useRef(null);
@@ -27,6 +30,7 @@ const EditAccount = () => {
 	const [selectedImage, setSelectedImage] = useState(null);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [isImage, setIsImage] = useState<boolean>(false);
+	//const [gender, setGender] = useState("")
 	// @ts-ignore
 	const [input, setInput] = useState<any>({
 		display_name: '',
@@ -40,6 +44,7 @@ const EditAccount = () => {
 		first_name: '',
 		last_name: '',
 		photo_url: '',
+		gender: ''
 	});
 
 
@@ -107,7 +112,9 @@ const EditAccount = () => {
 					first_name: user?.first_name || '',
 					uid: user?.uid || '',
 					photo_url: user?.photo_url || '',
+					gender: user?.gender || ''
 				});
+				console.log("item--item", JSON.stringify(getUserInfoFromStorage, null, 2))
 			}
 		} catch (error) {
 		}
@@ -144,6 +151,7 @@ const EditAccount = () => {
 					date_of_birth: input.date_of_birth || '',
 					uid: input.uid || '',
 					photo_url: isImage ? photoUrl : input.photo_url,  // Update photo_url if photoUrl is provided
+					gender: input.gender || ''
 				};
 				// Update the user document in Firestore
 				await updateDoc(userDocRef, updateData);
@@ -186,14 +194,69 @@ const EditAccount = () => {
 				<View style={styles.InformationIconContainer_main}>
 					<View style={styles.InformationIconContainer}>
 						<TouchableOpacity style={styles.badgeontainer} onPress={pickImage} >
-							<Pencil />
+							<CameraIcon />
 						</TouchableOpacity>
 						{selectedImage && <Image source={{ uri: selectedImage }} style={styles.image} />}
 					</View>
 				</View>
 
 				{/* Personal Information Section */}
-				<View style={styles.PersonalInformationView}>
+				<View>
+					<Text style={styles.inputBoxHeader}>First name</Text>
+					<TextInput
+					value={input?.first_name}
+					onChangeText={(text: any) => handleChange('first_name', text)}
+					style={styles.inputBoxText}/>
+				</View>
+				<View>
+					<Text style={styles.inputBoxHeader}>Last name</Text>
+					<TextInput
+					value={input?.last_name}
+					onChangeText={(text: any) => handleChange('last_name', text)}
+					style={styles.inputBoxText}/>
+				</View>
+				<View>
+					<Text style={styles.inputBoxHeader}>Gender</Text>
+					<GenderDropdown setGender = {(text: any) => handleChange('gender', text)}/>
+				</View>
+				<View>
+					<Text style={styles.inputBoxHeader}>Contact Information</Text>
+					<TextInput
+					value={input?.phone_number}
+					onChangeText={(text: any) => handleChange('phone_number', text)}
+					style={styles.inputBoxText}/>
+				</View>
+				<View>
+					<Text style={styles.inputBoxHeader}>Email</Text>
+					<TextInput
+					value={input?.email}
+					onChangeText={(text: any) => handleChange('email', text)}
+					style={styles.inputBoxText}/>
+				</View>
+				<View>
+					<Text style={styles.inputBoxHeader}>Date of Birth</Text>
+					<DateOfBirth
+						label="Date of Birth"
+						value={input?.date_of_birth}
+						onChangeText={(text: any) => handleChange('date_of_birth', text)} error={''} />
+				</View>
+				<View>
+					<Text style={styles.inputBoxHeader}>Address</Text>
+					<TextInput
+					value={input?.address}
+					onChangeText={(text: any) => handleChange('address', text)}
+					style={styles.inputBoxText}/>
+				</View>
+				<View>
+					<Text style={styles.inputBoxHeader}>HMO</Text>
+					<TextInput
+					value={input?.hmo}
+					onChangeText={(text: any) => handleChange('hmo', text)}
+					style={styles.inputBoxText}/>
+				</View>
+
+				{/* Personal Information Section */}
+				{/*<View style={styles.PersonalInformationView}>
 					<View style={styles.modalTextInput}>
 
 						<View style={styles.modalTextInputCOl}>
@@ -234,7 +297,7 @@ const EditAccount = () => {
 						<View style={styles.modalTextInputdate}>
 							<DateInput
 								label="Date of Birth"
-								value={input.date_of_birth}
+								value={input?.date_of_birth}
 								onChangeText={(text: any) => handleChange('date_of_birth', text)} error={''} />
 						</View>
 						<View style={[styles.modalTextInputCOl, styles.modalTextBirth]}>
@@ -252,7 +315,7 @@ const EditAccount = () => {
 							/>
 						</View>
 					</View>
-				</View>
+				</View>*/}
 			</KeyboardAwareScrollView >
 			<View style={styles.container_back_next}>
 				<TouchableOpacity style={styles.buttonContainer} onPress={handleUpdate}  >
@@ -261,7 +324,7 @@ const EditAccount = () => {
 							<ActivityIndicator
 								color='white'
 								size={20} /> :
-							"Edit"}
+							"Save"}
 					</Text>
 				</TouchableOpacity>
 			</View>
@@ -273,6 +336,28 @@ export default EditAccount;
 
 
 const styles = StyleSheet.create({
+	inputBoxHeader: {
+		fontSize: 14,
+		fontFamily: "Inter-Medium",
+		fontWeight: 500,
+		color: "#171717",
+		marginHorizontal: 15
+	},
+	inputBoxText: {
+		height: 40,
+    	margin: 15,
+    	marginTop: 10,
+    	marginBottom: 20,
+    	borderWidth: 1,
+    	padding: 10,
+    	borderColor: "#D5D5D5",
+    	backgroundColor: "#FFFFFF",
+    	borderRadius: 12,
+		fontSize: 14,
+		fontWeight: 400,
+		fontFamily: "Inter-Regular",
+		color: "#363636"
+	},
 	container_back_next: {
 		flexDirection: "row",
 		alignItems: "center",
@@ -291,19 +376,19 @@ const styles = StyleSheet.create({
 		zIndex: 100
 	},
 	buttonText: {
-		fontStyle: 'normal',
+		fontFamily: "Inter-Regular",
 		fontWeight: '500',
 		fontSize: 14,
-		lineHeight: 18,
+		lineHeight: 20,
 		letterSpacing: 0.005,
 		color: '#FFFFFF',
 	},
 	buttonContainer: {
 		width: "100%",
-		height: 40,
+		height: 48,
 		padding: 10,
 		backgroundColor: colors.accent_green,
-		borderRadius: 90,
+		borderRadius: 12,
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -316,12 +401,12 @@ const styles = StyleSheet.create({
 	},
 	badgeontainer: {
 		position: 'absolute',
-		top: 50,
-		right: -10,
+		top: 70,
+		right: -7,
 		width: 25,
 		height: 25,
 		borderRadius: 10,
-		backgroundColor: colors.accent_green,
+		//backgroundColor: colors.accent_green,
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -346,9 +431,10 @@ const styles = StyleSheet.create({
 	},
 
 	image: {
-		width: 72,
-		height: 72,
-		borderRadius: 100,
+		width: 80,
+		height: 80,
+		borderRadius: 40,
+		resizeMode: "cover"
 	},
 	profile_text_img_btn_text: {
 		color: colors.white,
@@ -375,6 +461,7 @@ const styles = StyleSheet.create({
 		marginBottom: 20,
 		gap: 20,
 		marginTop: 20,
+		justifyContent: "center"
 	},
 
 
@@ -478,13 +565,13 @@ const styles = StyleSheet.create({
 
 	InformationIconContainer: {
 
-		width: 80,
-		height: 80,
+		width: 100,
+		height: 103.96,
 		backgroundColor: colors.accent_green_light,
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderRadius: 100,
+		borderRadius: 64,
 		borderWidth: 1,
 		borderColor: colors.accent_green,
 	},

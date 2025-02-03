@@ -147,8 +147,8 @@ const DoctorProfile = () => {
 						<Text style={styles.info_text_information}>Specialization</Text>
 						<View  style={{flexDirection: "row", gap: 10, marginTop: 10}}>
 							<Text style={styles.doctor_specialty}>{details?.specialization}</Text>
-							<Text style={styles.doctor_specialty}>Cardiologist??</Text>
-							<Text style={styles.doctor_specialty}>Cardiologist??</Text>
+							<Text style={styles.doctor_specialty}>Specialty??</Text>
+							<Text style={styles.doctor_specialty}>Speciality??</Text>
 						</View>
 					</View>
 
@@ -197,13 +197,14 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		fontWeight: "500",
 		fontFamily: "Inter-400Regular",
-		//marginBottom: 10,
+		marginBottom: 10,
 	},
 	info_text_information_text: {
 		color: "#363636",
 		fontSize: 12,
 		fontFamily: "Inter-Regular",
 		fontWeight: "400",
+		lineHeight: 20
 		//marginBottom: 10,
 	},
 

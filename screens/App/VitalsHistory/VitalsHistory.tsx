@@ -30,6 +30,7 @@ const VitalsHistory = () => {
 			try {
 				const data: any = await getPatientVitalsHistory(user?.uid); // Pass userId to the function
 				setVitalsHistory(data);
+				console.log("item-||-item", JSON.stringify(data, null, 2))
 			} catch (error) {
 				console.error("Error loading vitals history:", error);
 			} finally {

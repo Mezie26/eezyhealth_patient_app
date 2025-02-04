@@ -3,6 +3,7 @@ import moment from 'moment';
 import React from 'react';
 import { getRandomColor } from '../../../helper';
 import { theme } from '../../../css/global';
+import { PaymentIcon } from '@/assets/svg/PaymentIcon';
 
 
 const Card = ({ value, i }: any) => {
@@ -14,9 +15,10 @@ const Card = ({ value, i }: any) => {
 			key={i} >
 			<View style={styles.price_image_container_main}>
 				{/* Avatar Container */}
-				<View style={[styles.price_image_container3, { backgroundColor: randomColor }]}>
+				{/*<View style={[styles.price_image_container3, { backgroundColor: randomColor }]}>
 					<Text style={styles.price_image_inside}>{value?.initials}</Text>
-				</View>
+				</View>*/}
+				<PaymentIcon />
 				<View style={styles.price_container_Main}>
 					<View style={styles.price_container}>
 						<Text style={styles.price_container_text}>	{value?.data?.authorization?.brand}</Text>

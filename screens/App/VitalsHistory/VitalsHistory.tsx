@@ -25,12 +25,13 @@ const VitalsHistory = () => {
 	};
 
 	useEffect(() => {
+		//console.log("userid", user.uid)
 		// Fetch vitals history data when the component mounts
 		const fetchVitalsHistory = async () => {
 			try {
-				const data: any = await getPatientVitalsHistory(user?.uid); // Pass userId to the function
+				const data: any = await getPatientVitalsHistory("3wu8rn5CE7OBIGNKzWH13z8ewY43"); // Pass userId to the function
 				setVitalsHistory(data);
-				console.log("item-||-item", JSON.stringify(data, null, 2))
+				//console.log("item-||-item", JSON.stringify(data, null, 2))
 			} catch (error) {
 				console.error("Error loading vitals history:", error);
 			} finally {
@@ -133,6 +134,7 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 	},
 	container_sub: {
+		flex: 1,
 		padding: 20,
 	},
 	container: {

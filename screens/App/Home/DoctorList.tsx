@@ -27,7 +27,7 @@ const DoctorList = ({ doctorsByRole, doctors, handlePress }: any) => {
 
 
  
-	console.log('item---item', JSON.stringify(mappedDoctors, null, 2));
+	//console.log('item---item', JSON.stringify(mappedDoctors, null, 2));
 
 
 	// Render each doctor item

@@ -35,7 +35,7 @@ const Medicalinfo = () => {
 				const data: any = await getSurveyById({ uid });
 				setSurveyData(data);
 				setisLoading(false);
-				console.log("item-|-item", JSON.stringify(data, null, 2))
+				//console.log("item-|-item", JSON.stringify(data, null, 2))
 			} catch (err: any) {
 				setError(err.message);
 				setisLoading(false);

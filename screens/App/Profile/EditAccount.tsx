@@ -114,7 +114,7 @@ const EditAccount = () => {
 					photo_url: user?.photo_url || '',
 					gender: user?.gender || ''
 				});
-				console.log("item--item", JSON.stringify(getUserInfoFromStorage, null, 2))
+				//console.log("item--item", JSON.stringify(getUserInfoFromStorage, null, 2))
 			}
 		} catch (error) {
 		}

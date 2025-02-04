@@ -104,7 +104,7 @@ const Account = () => {
 						</View>
 						<AngleRight />
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.list_item_container} onPress={() => navigation.navigate("")}>
+					<TouchableOpacity style={styles.list_item_container} onPress={() => navigation.navigate("Security")}>
 						<View style={styles.list_item_image_container}>
 							<SecurityIcon />
 							<Text style={styles.list_item_text}>Security</Text>

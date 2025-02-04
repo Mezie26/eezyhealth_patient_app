@@ -60,7 +60,7 @@ const Appointments = () => {
 		:index === 2 && (bookings && bookings.filter((booking: { bookingStatus: string; }) => booking?.bookingStatus === 'Declined'))
 
 
-console.log('index-index',index)
+//console.log('index-index',index)
 
 	useEffect(() => {
 		setIndex(0);

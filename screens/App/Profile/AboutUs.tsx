@@ -4,6 +4,7 @@ import { colors } from '../../../css/colorsIndex';
 import { Locations } from '../../../assets/svg/Location';
 import { Phone } from '../../../assets/svg/Phone';
 import { Info } from '../../../assets/svg/Info';
+import { InfoLightIcon1 } from '@/assets/svg/InfoLightIcon1';
 
 
 const AboutUs = () => {
@@ -17,7 +18,7 @@ const AboutUs = () => {
       <View style={styles.aboutLine} />
       <View style={styles.textAddress}>
         <View style={styles.locationCover}>
-          <Locations />
+          <Locations color={"#363636"} />
         </View>
         <View style={styles.address}>
           <Text style={styles.address1}>75 Opebi Road, Ikeja, Lagos State</Text>
@@ -35,7 +36,7 @@ const AboutUs = () => {
       </View>
       <View style={styles.textAddress}>
         <View style={styles.locationCover}>
-          <Info />
+          <InfoLightIcon1 />
         </View>
         <View>
           <TouchableOpacity style={styles.address} onPress={() => Linking.openURL('mailto:iinfo@outcess.com')}>
@@ -56,17 +57,25 @@ const styles = StyleSheet.create({
 
   infoContainer: {
     paddingTop: Platform.OS === 'android' ? 30 : 0,
-    flex: 1
+    flex: 1,
+    backgroundColor: "#FFFFFF"
   },
 
   address1: {
     fontSize: 14,
-    fontFamily: 'Poppins-Regular'
+    fontFamily: 'Inter-Medium',
+    fontWeight: "500",
+    color: "#363636"
+
   },
   address: {
     fontSize: 14,
     marginRight: 60,
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'Inter-Medium',
+    color: "#363636",
+    fontWeight: "500",
+    lineHeight: 20,
+    ///marginTop: 1
   },
 
   locationIcon: {
@@ -76,14 +85,14 @@ const styles = StyleSheet.create({
   },
 
   locationCover: {
-
-    marginLeft: 40,
-    marginRight: 15,
+    marginTop: 3,
+    marginLeft: 20,
+    marginRight: 5,
   },
 
   textAddress: {
     flexDirection: 'row',
-    paddingTop: 40,
+    marginTop: 25,
   },
 
   aboutLine: {
@@ -91,25 +100,32 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginLeft: 40,
     marginRight: 40,
-    marginTop: 20,
+    marginTop: 10,
   },
 
 
 
 
   AboutUsText: {
-    marginLeft: 40,
-    marginTop: 40,
-    fontWeight: '900',
-    fontSize: 30,
-    fontFamily: 'Poppins-ExtraBold'
+    //marginLeft: 40,
+    marginHorizontal: 25,
+    marginVertical: 20,
+    fontWeight: '500',
+    fontSize: 14,
+    fontFamily: 'Inter-Medium',
+    color: "#171717",
+    lineHeight: 20
   },
   AboutUsSubText: {
-    marginLeft: 40,
-    marginRight: 40,
+    //marginLeft: 40,
+    margin: 25,
     marginTop: 5,
     fontSize: 14,
-    fontFamily: 'Poppins-Regular'
+    fontFamily: 'Inter-Regular',
+    fontWeight: "500",
+    lineHeight: 24,
+    letterSpacing: -0.5,
+    color: "#363636"
 
   }
 })

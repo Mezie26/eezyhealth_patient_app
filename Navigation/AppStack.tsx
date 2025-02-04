@@ -45,6 +45,7 @@ import AppointmentReview from '@/screens/App/Appointment/AppointmentReview';
 import CancelledAppointmentDetails from '@/screens/App/Appointment/CancelledAppointmentDetails';
 import SuccessAppointmentReview from '@/screens/SuccessScreens/SuccessAppointmentReview';
 import PersonalInformation from '@/screens/App/Profile/PersonalInformation';
+import Security from '@/screens/App/Profile/Security';
 
 
 
@@ -298,6 +299,16 @@ function RootNavigator() {
             </View>
           ),
         }} />
+        < Stack.Screen name="Security" component={Security}
+        options={{
+          title: 'Security', headerLeft: () => (
+            <TouchableOpacity onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              navigation.goBack();
+            }}>
+              <Back />
+            </TouchableOpacity>
+          )}}/>
       < Stack.Screen name="AboutUs" component={AboutUs}
         options={{
           title: 'Company Info', headerLeft: () => (

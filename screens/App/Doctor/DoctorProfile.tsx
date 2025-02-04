@@ -34,7 +34,7 @@ const DoctorProfile = () => {
 		} catch (error) {
 		}
 	}, [item]);
-	console.log('item----item', JSON.stringify(details, null, 2));
+	//console.log('item----item', JSON.stringify(details, null, 2));
 
 
 

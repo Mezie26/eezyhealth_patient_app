@@ -8,6 +8,8 @@ import { PaymentIcon } from '@/assets/svg/PaymentIcon';
 
 const Card = ({ value, i }: any) => {
 	const randomColor = getRandomColor();
+	//console.log("item-|-item", JSON.stringify(value, null, 2))
+
 	return (
 
 		<TouchableOpacity
@@ -21,14 +23,11 @@ const Card = ({ value, i }: any) => {
 				<PaymentIcon />
 				<View style={styles.price_container_Main}>
 					<View style={styles.price_container}>
-						<Text style={styles.price_container_text}>	{value?.data?.authorization?.brand}</Text>
-						<Text style={styles.price_time_text}>{moment(value?.createAt).format('LLL')}</Text>
+						<Text style={styles.price_container_text}>Dr. ??</Text>
+						<Text style={styles.sold_box_text}>	₦{value?.data?.amount}</Text>
 					</View>
 					<View style={styles.sold_container}>
-						<Text style={styles.sold_container_text}>	{value?.data?.authorization?.bank}</Text>
-						<View style={styles.sold_box_text_sup}>
-							<Text style={styles.sold_box_text}>	₦{value?.data?.amount}</Text>
-						</View>
+						<Text style={styles.price_time_text}>{moment(value?.createAt).format('LLL')}</Text>
 					</View>
 				</View>
 			</View>
@@ -43,22 +42,23 @@ export { Card };
 const styles = StyleSheet.create({
 	price_container_Main: {
 		flexDirection: 'column',
-		gap: 5,
+		//gap: 5,
 		width: '83%',
 	},
 	price_container: {
 		flexDirection: 'row',
 		flexWrap: 'wrap',
 		justifyContent: 'space-between',
+		//alignItems: "center"
 	},
 	price_container_text: {
-		fontStyle: 'normal',
-		fontWeight: '700',
+		fontFamily: "Inter-Regular",
+		fontWeight: '400',
 		fontSize: 14,
-		lineHeight: 17,
+		lineHeight: 22,
 		display: 'flex',
 		alignItems: 'center',
-		color: '#212121',
+		color: '#000000',
 		alignSelf: 'stretch',
 	},
 	sold_container: {
@@ -115,12 +115,12 @@ const styles = StyleSheet.create({
 	},
 
 	sold_box_text: {
-		fontStyle: 'normal',
+		fontFamily: "Inter-Regular",
 		fontWeight: '400',
-		fontSize: 12,
-		lineHeight: 17,
-		letterSpacing: 0.2,
-		color: theme.colors.black,
+		fontSize: 14,
+		lineHeight: 22,
+		letterSpacing: 0.5,
+		color: "#171717",
 		textAlign: 'center',
 	},
 
@@ -134,16 +134,19 @@ const styles = StyleSheet.create({
 	},
 
 	price_time_text: {
-		fontStyle: 'normal',
+		fontFamily: "Inter-Regular",
 		fontWeight: '400',
 		fontSize: 12,
-		lineHeight: 17,
-		letterSpacing: 0.2,
-		color: theme.colors.black,
+		lineHeight: 20,
+		letterSpacing: 0.5,
+		color: "#646464",
+		textAlign: 'center',
 	},
 
 	price_image_container_main_item: {
-		gap: 12,
+		//gap: 12,
+		height: 62,
+		justifyContent: "space-between",
 		backgroundColor: '#EEEEEE',
 		shadowColor: 'rgba(4, 6, 15, 0.05)',
 		shadowOffset: { width: 0, height: 4 },

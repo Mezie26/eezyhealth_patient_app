@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Dimensions, SafeAreaView, Platform } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Dimensions, SafeAreaView, Platform, Alert } from 'react-native'
 import React, { useEffect } from 'react'
 import { colors } from '../../../css/colorsIndex'
 import { SmallVerify } from '../../../assets/svg/SmailVerify'
@@ -31,7 +31,41 @@ const Account = () => {
 
 
 	const navigation: any = useNavigation();
-	// Function to handle logout
+
+	const deleteAlert = () => {
+		Alert.alert("Warning!", "Your Account will be permanently Deleted! We will not be able to get back your data.", [
+			{
+				text: "Yes",
+				onPress: () => {deleteAccount},
+				style: "destructive"
+			},
+			{
+				text: "No",
+				onPress: () => console.log("Cancel pressed"),
+			}
+		])
+	};
+
+
+	//Function to permanently delete account
+	const deleteAccount = () => {};
+
+
+	const logoutAlert = () => {
+		Alert.alert("Logout", "Are you sure you want to logout?", [
+			{
+				text: "Cancel",
+				onPress: () => console.log("Cancel Pressed")
+			},
+			{
+				text: "Logout",
+				onPress: handleLogout,
+				style: "destructive"
+			}
+		])
+	}
+
+	// Function to logout account
 	const handleLogout = async () => {
 		try {
 			await AsyncStorage.clear();
@@ -125,7 +159,7 @@ const Account = () => {
 						</View>
 						<AngleRight />
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.list_item_container} onPress={() => navigation.navigate("")}>
+					<TouchableOpacity style={styles.list_item_container} onPress={deleteAlert}>
 						<View style={styles.list_item_image_container}>
 							<TrashIcon />
 							<Text style={styles.list_item_text}>Delete account</Text>
@@ -133,10 +167,12 @@ const Account = () => {
 						<AngleRight />
 					</TouchableOpacity>
 				</View>
-				<TouchableOpacity style={styles.logout_container} onPress={handleLogout}>
-					<Logout />
-					<Text style={styles.logout_container_text}>Logout</Text>
-				</TouchableOpacity>
+				<View style={{justifyContent: "center", alignItems: "center"}}>
+					<TouchableOpacity style={styles.logout_container} onPress={logoutAlert}>
+						<Logout />
+						<Text style={styles.logout_container_text}>Logout</Text>
+					</TouchableOpacity>
+				</View>
 			</View>
 			</ScrollView>
 		</SafeAreaView>
@@ -188,8 +224,9 @@ const styles = StyleSheet.create({
 		backgroundColor: "#BD0606",
 		borderRadius: 12,
 		//paddingHorizontal: 10,
-		marginTop: 30,
+		marginTop: 25,
 		marginHorizontal: 15,
+		//marginBottom: 60
 	},
 
 	list_item_image_container: {
@@ -288,7 +325,7 @@ const styles = StyleSheet.create({
 		//position: 'absolute',
 		//width: '100%',
 		//height: '100%',
-		marginTop: 40,
+		marginTop: 20,
 	},
 	top_container_sub: {
 
@@ -322,7 +359,7 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		flexGrow: 1,
-		paddingTop: Platform.OS === "android" ? 40 : 10,
+		paddingTop: Platform.OS === "android" ? 10 : 10,
 		backgroundColor: colors.background,
 		//position: 'relative',
 	},

@@ -55,9 +55,11 @@ const Security = () => {
           <Ionicons name={showConfirmNewPassword ? "eye-off" : "eye"} size={24} color="gray" />
         </TouchableOpacity>
        </View>
-       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Update Password</Text>
-       </TouchableOpacity>
+       <View style={{justifyContent: "center", alignItems: "center"}}>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Update Password</Text>
+        </TouchableOpacity>
+       </View>
     </View>
   );
 };

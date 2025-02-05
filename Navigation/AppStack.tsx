@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, Text, useColorScheme } from 'react-native'; // Don't forget to import Text
+import { Platform, Text, useColorScheme, Button } from 'react-native'; // Don't forget to import Text
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TouchableOpacity, StyleSheet, View } from 'react-native';
@@ -61,7 +61,8 @@ function RootNavigator() {
       headerShown: true,
       //headerStyle: { backgroundColor: Colors[colorScheme].TopTab },
       //headerTintColor: Colors[colorScheme].headerTintColor,
-      headerTitleStyle: { fontWeight: 'bold', fontFamily: 'Inter-Regular', },
+      headerTitleStyle: { fontWeight: '500', fontFamily: 'Inter-Regular', color: "#171717" },
+      headerTitleAlign: "center",
     }}>
      
       <Stack.Screen name="Home" component={BottomTabNavigator} options={{ headerShown: false }} />
@@ -76,19 +77,13 @@ function RootNavigator() {
               <Text>ddd</Text>
               {/* <Back/> */}
             </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <View style={styles.imageHeader2}>
-              <EezyLogo
-              />
-            </View>
-          ),
+          )
         }} />
       <Stack.Screen name="NotificationScreen" component={NotificationScreen} options={{title: "Notifications"}} />
       <Stack.Screen name="UpdateVitals" component={UpdateVitals} options={{title: "Update Vitals"}} />
       <Stack.Screen name="UpcomingAppointmentDetails" component={UpcomingAppointmentDetails}  
-      options={{
-        title: '', headerLeft: () => (
+        options={{
+        title: 'Appointment Details', headerLeft: () => (
           <TouchableOpacity onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
             navigation.goBack();
@@ -98,7 +93,7 @@ function RootNavigator() {
         )}}/>
       <Stack.Screen name="CompletedAppointmentDetails" component={CompletedAppointmentDetails} 
       options={{
-        title: '', headerLeft: () => (
+        title: 'Appointment Details', headerLeft: () => (
           <TouchableOpacity onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
             navigation.goBack();
@@ -128,7 +123,7 @@ function RootNavigator() {
         )}}/>
       <Stack.Screen name="CancelledAppointmentDetails" component={CancelledAppointmentDetails} 
       options={{
-        title: '', headerLeft: () => (
+        title: 'Appointment Details', headerLeft: () => (
           <TouchableOpacity onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
             navigation.goBack();
@@ -139,14 +134,15 @@ function RootNavigator() {
 
       <Stack.Screen name="PersonalInformation" component={PersonalInformation} 
       options={{
-        title: '', headerLeft: () => (
+        title: 'Personal Information', headerLeft: () => (
           <TouchableOpacity onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
             navigation.goBack();
           }}>
             <Back />
           </TouchableOpacity>
-        )}}/>
+        )
+        }}/>
       
 
       <Stack.Screen name="SearchDoctor" component={SearchDoctor}
@@ -158,13 +154,7 @@ function RootNavigator() {
             }}>
               <Back />
             </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <View style={styles.imageHeader2}>
-              <EezyLogo
-              />
-            </View>
-          ),
+          )
         }} />
       <Stack.Screen name="DoctorOfTheMonth" component={DoctorOfTheMonth}
         options={{
@@ -175,13 +165,7 @@ function RootNavigator() {
             }}>
               <Back />
             </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <View style={styles.imageHeader2}>
-              <EezyLogo
-              />
-            </View>
-          ),
+          )
         }} />
       <Stack.Screen
         name="DoctorProfile"
@@ -197,13 +181,7 @@ function RootNavigator() {
             >
               <Back />
             </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <View style={styles.imageHeader2}>
-              <EezyLogo
-              />
-            </View>
-          ),
+          )
         }}
       />
 
@@ -216,13 +194,7 @@ function RootNavigator() {
             }}>
               <Back />
             </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <View style={styles.imageHeader2}>
-              <EezyLogo
-              />
-            </View>
-          ),
+          )
         }} />
       < Stack.Screen name="BookingAppointment" component={BookingAppointment}
         options={{
@@ -233,13 +205,7 @@ function RootNavigator() {
             }}>
               <Back />
             </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <View style={styles.imageHeader2}>
-              <EezyLogo
-              />
-            </View>
-          ),
+          )
         }} />
       <Stack.Screen name="Questionaire" component={Questionaire} options={{ headerShown: false }} />
       <Stack.Screen name="SuccessQuestionaire" component={SuccessQuestionaire} options={{ headerShown: false }} />
@@ -247,20 +213,14 @@ function RootNavigator() {
 
       <Stack.Screen name="Medicalinfo" component={Medicalinfo}
         options={{
-          title: 'Medical Infomation', headerLeft: () => (
+          title: 'Medical Information', headerLeft: () => (
             <TouchableOpacity onPress={() => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
               navigation.goBack();
             }}>
               <Back />
             </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <View style={styles.imageHeader2}>
-              <EezyLogo
-              />
-            </View>
-          ),
+          )
         }} />
       < Stack.Screen name="BillingDetails" component={BillingDetails}
         options={{
@@ -271,13 +231,7 @@ function RootNavigator() {
             }}>
               <Back />
             </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <View style={styles.imageHeader2}>
-              <EezyLogo
-              />
-            </View>
-          ),
+          )
         }} />
 
 
@@ -291,13 +245,7 @@ function RootNavigator() {
             }}>
               <Back />
             </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <View style={styles.imageHeader2}>
-              <EezyLogo
-              />
-            </View>
-          ),
+          )
         }} />
         < Stack.Screen name="Security" component={Security}
         options={{
@@ -318,12 +266,7 @@ function RootNavigator() {
             }}>
               <Back />
             </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <View style={styles.imageHeader2}>
-              <EezyLogo />
-            </View>
-          ),
+          )
         }} />
       < Stack.Screen name="EditAccount" component={EditAccount}
         options={{
@@ -334,13 +277,7 @@ function RootNavigator() {
             }}>
               <Back />
             </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <View style={styles.imageHeader2}>
-              <EezyLogo
-              />
-            </View>
-          ),
+          )
         }} />
       < Stack.Screen
         name="AppointmentDetails"
@@ -354,13 +291,7 @@ function RootNavigator() {
             }}>
               <Back />
             </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <View style={styles.imageHeader2}>
-              <EezyLogo
-              />
-            </View>
-          ),
+          )
         }}
       />
       <Stack.Group screenOptions={{ presentation: 'modal' }} >
@@ -375,13 +306,7 @@ function RootNavigator() {
               }}>
                 <Back />
               </TouchableOpacity>
-            ),
-            headerRight: () => (
-              <View style={styles.imageHeader2}>
-                <EezyLogo
-                />
-              </View>
-            ),
+            )
           }} />
         < Stack.Screen name="VitalsLogging" component={VitalsLogging}
           options={{
@@ -392,13 +317,7 @@ function RootNavigator() {
               }}>
                 <Back />
               </TouchableOpacity>
-            ),
-            headerRight: () => (
-              <View style={styles.imageHeader2}>
-                <EezyLogo
-                />
-              </View>
-            ),
+            )
           }} />
 
         < Stack.Screen name="RescheduleBooking" component={RescheduleBooking}
@@ -410,13 +329,7 @@ function RootNavigator() {
               }}>
                 <Back />
               </TouchableOpacity>
-            ),
-            headerRight: () => (
-              <View style={styles.imageHeader2}>
-                <EezyLogo
-                />
-              </View>
-            ),
+            )
           }} />
         < Stack.Screen name="SuccessReschedule" component={SuccessReschedule}
           options={{
@@ -427,12 +340,7 @@ function RootNavigator() {
               }}>
                 <Back />
               </TouchableOpacity>
-            ),
-            headerRight: () => (
-              <View style={styles.imageHeader2}>
-                <EezyLogo />
-              </View>
-            ),
+            )
           }} />
       </Stack.Group>
     </Stack.Navigator >
@@ -513,6 +421,8 @@ function BottomTabNavigator() {
       tabBar={props => <CustomTabBar {...props} />}
       screenOptions={{
         headerShown: true,
+        headerTitleAlign: "center",
+        headerTitleStyle: {fontFamily: "Inter-Medium", fontWeight: "500", fontSize: 18 },
         tabBarStyle: {
           height: Platform.OS === 'android' ? 60 : 80,
           paddingBottom: Platform.OS === 'android' ? 10 : 30,
@@ -545,12 +455,6 @@ function BottomTabNavigator() {
         options={{
           title: 'Appointments',
           headerShown: true,
-          headerRight: () => (
-            <View style={styles.imageHeader2}>
-              <EezyLogo
-              />
-            </View>
-          ),
           tabBarIcon: ({ color, size }) => (
             <AppointmentIcon size={size} color={color} secondaryColor={color} />
           ),
@@ -562,11 +466,6 @@ function BottomTabNavigator() {
         options={{
           title: 'Message',
           headerShown: true,
-          headerRight: () => (
-            <View style={styles.imageHeader2}>
-              <EezyLogo />
-            </View>
-          ),
           tabBarIcon: ({ size, color }) => (
             <MessageIcon size={size} color={color} secondaryColor={color} />
           ),
@@ -577,7 +476,7 @@ function BottomTabNavigator() {
         component={Account}
         options={{
           title: 'Account',
-          headerShown: false,
+          headerShown: true,
           tabBarIcon: ({ color, size }) => (
             <SettingsIcon size={size} color={color} secondaryColor={color} />
           ),

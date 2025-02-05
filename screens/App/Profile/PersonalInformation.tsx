@@ -31,7 +31,6 @@ const PersonalInformation = () => {
 
     return(
         <View style={styles.container}>
-            <Text style={styles.headerText}>Personal Information</Text>
             <View style={styles.profileContainer}>
                 <View style={styles.profilePhotoContainer}>
                     {!user?.photo_url ? (
@@ -80,12 +79,13 @@ export default PersonalInformation;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: "#FFFFFF"
     },
     profileContainer: {
         alignItems: "center",
 		justifyContent: "center",
-        marginBottom: 20
+        marginVertical: 20,
     },
     headerText: {
         fontSize: 14,

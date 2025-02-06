@@ -6,12 +6,12 @@ import { TouchableOpacity, StyleSheet, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { useNavigation } from '@react-navigation/native';
 import DoctorProfile from '../screens/App/Doctor/DoctorProfile';
-import { AppointmentIcon } from '@/assets/svg/Appointments';
+import { AppointmentIcon } from '@/assets/svg/AppointmentIcon';
 import { Back } from '@/assets/svg/Back';
 import { EezyLogo } from '@/assets/svg/EezyLogo';
-import { HomeIcon } from '@/assets/svg/Home';
+import { HomeIcon } from '@/assets/svg/HomeIcon';
 import { MessageIcon } from '@/assets/svg/MessageIcon';
-import { SettingsIcon } from '@/assets/svg/SettingsIcon';
+import { AccountIcon, ProfileIcon, SettingsIcon } from '@/assets/svg/AccountIcon';
 import AppointmentDetails from '@/screens/App/Appointment/AppointmentDetails';
 import BookingAppointment from '@/screens/App/Appointment/BookingAppointment';
 import RescheduleBooking from '@/screens/App/Appointment/RescheduleBooking';
@@ -404,7 +404,7 @@ function BottomTabNavigator() {
               onLongPress={onLongPress}
               style={{ flex: 1, alignItems: 'center' }}
             >
-              {Icon({ color: isFocused ? Colors[colorScheme].buttonTab : Colors[colorScheme].inactiveTab, size: 20 })}
+              {Icon({ color: isFocused ? Colors[colorScheme].buttonTab : Colors[colorScheme].inactiveTab, size: isFocused ? 25 : 23 })}
               <Text style={{ color: isFocused ? Colors[colorScheme].buttonTab : Colors[colorScheme].inactiveTab, fontSize: 12 }}>
                 {label}
               </Text>
@@ -453,10 +453,10 @@ function BottomTabNavigator() {
         name="Appointments"
         component={Appointments}
         options={{
-          title: 'Appointments',
+          title: 'Appointment',
           headerShown: true,
           tabBarIcon: ({ color, size }) => (
-            <AppointmentIcon size={size} color={color} secondaryColor={color} />
+            <AppointmentIcon size={size} color={color} secondaryColor={color} color1={color} color2={color} />
           ),
         }}
       />
@@ -478,7 +478,7 @@ function BottomTabNavigator() {
           title: 'Account',
           headerShown: true,
           tabBarIcon: ({ color, size }) => (
-            <SettingsIcon size={size} color={color} secondaryColor={color} />
+            <AccountIcon size={size} color={color} secondaryColor={color} />
           ),
         }}
       />

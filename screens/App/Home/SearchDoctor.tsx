@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator } from 'react-native'
+import { FlatList, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator, TextInput } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { colors } from '../../../css/colorsIndex';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -7,12 +7,13 @@ import { getDoctorsCollection } from '../../../hooks/getDoctors';
 import { getSpecializationCollection } from '../../../hooks/getSpecialization';
 import { getDoctorsBySpecialization } from '../../../hooks/getDoctorsBySpecialization';
 import Toast from '../../../components/Toast';
-import { TextInput } from 'react-native-paper';
+//import { TextInput } from 'react-native-paper';
 import Rating from '../../../components/Rating';
 import { Doctor } from '../../../assets/svg/Doctor';
 import { Locations } from '../../../assets/svg/Location';
 import { DotIcon } from '@/assets/svg/DotIcon';
 import { FontAwesome6 } from '@expo/vector-icons';
+import { Search } from '@/assets/svg/Search';
 
 
 const SearchDoctor = () => {
@@ -56,6 +57,7 @@ const SearchDoctor = () => {
 			.then(data => {
 				setSpecialization(data); // Process the specialization data here
 				setIsLoading(false);
+				//console.log(data)
 			})
 			.catch(error => {
 				toastRef.current.error(error);
@@ -104,6 +106,7 @@ const SearchDoctor = () => {
 			.then(data => {
 				setDoctors(data); // Process the Doctors data here
 				setIsLoadingd(false);
+				//console.log("item--item", JSON.stringify(data, null, 2))
 			})
 			.catch(error => {
 				toastRef.current.error(error.message);
@@ -116,18 +119,21 @@ const SearchDoctor = () => {
 
 
 
-	const renderItem = ({ item }: { item: any }) => (
+	const renderItem = ({ item }: { item: any }) => {
+		const isSelected = item.name === selectedItem;
+		return (
 		<TouchableOpacity
-			style={styles.specialist_list_container}
+			style={[styles.specialist_list_container, isSelected && styles.selectedItem]}
 			onPress={() => {
 				setSelectedItem(item?.name); // Update the state with the selected item
 				Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 				handleSearchedFeedback(item?.name)
+				//console.log(item)
 			}}
 		>
-			<Text style={styles.specialist_text}>{item?.name}</Text>
+			<Text style={[styles.specialist_text, isSelected && styles.selectedItemText]}>{item?.name}</Text>
 		</TouchableOpacity>
-	);
+	)};
 
 	const renderItems = ({ item }: any) => (
 		<View style={styles.no_appointments_container_three_sub} key={item}>
@@ -149,7 +155,7 @@ const SearchDoctor = () => {
 								<View style={{marginTop: 10}}>
 									<DotIcon />
 								</View>
-								<Text style={styles.access_card_img_text_two}>?? Years Experience</Text>
+								<Text style={styles.access_card_img_text_two}>{item?.experience_yrs} Years Experience</Text>
 							</View>
 							<View style={styles.access_card_img_text_three_container}>
 								<View style={{marginTop: 5, marginLeft: 7}}>
@@ -204,7 +210,7 @@ const SearchDoctor = () => {
 				</View> */}
 
 				<View style={styles.searchContainer}>
-					<TextInput
+					{/*<TextInput
 						mode="outlined"
 						label="Doctor, Health, issues, Location"
 						style={styles.text_input}
@@ -218,6 +224,13 @@ const SearchDoctor = () => {
 						activeOutlineColor="#43CE2E"
 						autoCapitalize="none"
 						autoCorrect={false}
+					/>*/}
+					<Search />
+					<TextInput 
+					value={result}
+					onChangeText={handleSpecializationChange}
+					style={styles.inputBoxText}
+					placeholder='Find a Doctor'
 					/>
 				</View>
 				<View style={styles.specialist_container_list}>
@@ -274,7 +287,7 @@ export default SearchDoctor
 
 const styles = StyleSheet.create({
 	text_input: {
-		backgroundColor: "#F0F4F8",
+		backgroundColor: "#FCFCFC",
 		fontFamily: "Inter-Regular",
 		fontSize: 14,
 		height: 50,
@@ -300,7 +313,16 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		borderWidth: 0.5,
 		borderColor: "#D5D5D5",
-		//marginHorizontal: 10
+		marginBottom: 25
+	},
+
+	selectedItem: {
+		backgroundColor: "#FCFCFC", // Change color when selected
+		borderColor: "#44CE2D"
+	  },
+
+	selectedItemText: {
+		color: "#44CE2D"
 	},
 
 	specialist_container_list: {
@@ -326,7 +348,8 @@ const styles = StyleSheet.create({
 		fontWeight: "500",
 		color: "#171717",
 		marginHorizontal: 20,
-		marginVertical: 15
+		marginVertical: 15,
+		marginTop: 7
 	},
 
 	doctors_details_text_container: {
@@ -514,9 +537,27 @@ const styles = StyleSheet.create({
 
 
 	searchContainer: {
-		marginHorizontal: 10,
-		marginTop: 10,
-		marginBottom: 10,
+		height: 40,
+		backgroundColor: "#FCFCFC",
+		borderRadius: 12,
+		borderWidth: 0.5,
+		borderColor: "#D5D5D5",
+		flexDirection: 'row',
+		//justifyContent: 'space-between',
+		alignItems: 'center',
+		padding: 5,
+		marginBottom: 20,
+		marginTop: 30,
+		marginHorizontal: 20
+	},
+
+	inputBoxText: {
+		fontSize: 14,
+		fontWeight: 400,
+		fontFamily: "Inter-Regular",
+		color: "#171717",
+		paddingHorizontal: 10,
+		width: 350
 	},
 
 	dashboard_calender_text: {

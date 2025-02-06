@@ -36,7 +36,7 @@ export const Colors: any = {
    tint: '#ffffff',
    tabIconDefault: '#ffffff',
    tabIconSelected: '#ffffff',
-   inactiveTab: '#575454',
+   inactiveTab: '#171717',
    borderColor: '#cccccc',
   },
  };

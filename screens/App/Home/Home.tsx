@@ -600,8 +600,10 @@ const styles = StyleSheet.create({
 	},
 
 	specialist_text: {
-		color: colors.accent_green,
+		color: "#363636",
 		textAlign: "center",
+		fontWeight: "400",
+		fontSize: 14
 	},
 	specialist_list_container: {
 		width: 158,
@@ -614,7 +616,7 @@ const styles = StyleSheet.create({
 		//marginTop: 10,
 		marginBottom: 30,
 		borderWidth: 1,
-		borderColor: colors.accent_green,
+		borderColor: "#D5D5D5",
 	},
 
 	find_a_specialist_container: {
@@ -754,7 +756,7 @@ const styles = StyleSheet.create({
 	settings: {
 		borderColor: '#ECEEF1',
 		borderWidth: 0,
-		color: colors.smail_text_color,
+		color: "#D1D1D1",
 		marginLeft: 10
 	},
 
@@ -769,8 +771,10 @@ const styles = StyleSheet.create({
 
 	inputContainer: {
 		height: 40,
-		backgroundColor: "#ECEEF1",
+		backgroundColor: "#FCFCFC",
 		borderRadius: 12,
+		borderWidth: 0.5,
+		borderColor: "#D5D5D5",
 		flexDirection: 'row',
 		//justifyContent: 'space-between',
 		alignItems: 'center',

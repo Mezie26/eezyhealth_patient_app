@@ -1,5 +1,6 @@
 import { collection, query, where, getDocs } from 'firebase/firestore'; 
 import { db } from '../shared/firebase';
+import { Alert } from 'react-native';
 
 export const getDoctorsBySpecialization = async ({ specialization }:any) => { 
   try {
@@ -9,7 +10,8 @@ export const getDoctorsBySpecialization = async ({ specialization }:any) => {
     const doctorsData = snapshot.docs.map(doc => doc.data());
     
     if (doctorsData.length === 0) {
-      throw new Error('No doctors found for the specified specialization');
+      //throw new Error('No doctors found for the specified specialization');
+      Alert.alert("Message", "No doctors found for the specified specialization")
     }
 
     return doctorsData;

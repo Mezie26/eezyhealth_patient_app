@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 }, // Matches x: 0px, y: 1px
     shadowOpacity: 0.05, // Convert #1018280D (D = ~5% opacity in hex)
     shadowRadius: 2, // Approximate blur radius
-    elevation: 2, // For Android
+    //elevation: 2, // For Android
   },
   input: {
     width: 320,

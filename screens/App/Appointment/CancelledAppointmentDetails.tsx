@@ -5,7 +5,9 @@ import {
 	View,
 	ScrollView,
 	Image,
-	TextInput
+	TextInput,
+	useWindowDimensions,
+	Dimensions
 } from "react-native";
 import { useState } from "react";
 import moment from "moment";
@@ -22,6 +24,7 @@ import { DoctorProfilePic } from "@/assets/svg/DoctorProfile";
 import { Locations } from "@/assets/svg/Location";
 import BottomButton from "@/components/BottomButton";
 import { InfoLightIcon } from "@/assets/svg/InfoLightIcon";
+
 
 const CancelledAppointmentDetails = () => {
 	const navigation: any = useNavigation();
@@ -93,6 +96,7 @@ const CancelledAppointmentDetails = () => {
 
 export default CancelledAppointmentDetails;
 
+const {width} = Dimensions.get("window");
 
 
 const styles = StyleSheet.create({
@@ -105,12 +109,13 @@ const styles = StyleSheet.create({
 		marginHorizontal: 20
 	},
     medical_summary_container: {
-        width: 370,
+        width: width * 0.9,
         height: 130,
         borderRadius: 12,
         borderWidth: 0.5,
         borderColor: "#D5D5D5",
-        margin: 20,
+        //margin: 20,
+		marginHorizontal: width * 0.03,
         marginTop: 10,
         marginBottom: 0,
         // Shadow for iOS
@@ -119,7 +124,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.15,
         shadowRadius: 4,
         // Elevation for Android
-        elevation: 4,
+        //elevation: 4,
     },
     medical_summary_text: {
         fontSize: 12,

@@ -33,7 +33,7 @@ const PersonalInformation = () => {
         <View style={styles.container}>
             <View style={styles.profileContainer}>
                 <View style={styles.profilePhotoContainer}>
-                    {!user?.photo_url ? (
+                    {user?.photo_url ? (
                         <UserCircle />
                     ) : (
                     <Image style={styles.image} source={{ uri: user?.photo_url }} />

@@ -1,7 +1,7 @@
 import { StarIcon2 } from "@/assets/svg/StarIcon2";
 import BottomButton from "@/components/BottomButton";
 import { useState } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 
@@ -38,6 +38,8 @@ const AppointmentReview = () => {
 
 export default AppointmentReview;
 
+const {width} = Dimensions.get("window")
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
         color: "#363636"
     },
     inputBoxContainer: {
-		width: 390,
+		width: width * 0.9,
 		height: 128,
 		borderColor: "#D5D5D5",
 		borderWidth: 0.5,

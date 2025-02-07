@@ -32,7 +32,7 @@ const VitalsHistory = () => {
 			try {
 				const data: any = await getPatientVitalsHistory("3wu8rn5CE7OBIGNKzWH13z8ewY43"); // Pass userId to the function
 				setVitalsHistory(data);
-				console.log("item-||-item", JSON.stringify(data, null, 2))
+				//console.log("item-||-item", JSON.stringify(data, null, 2))
 			} catch (error) {
 				console.error("Error loading vitals history:", error);
 			} finally {
@@ -104,7 +104,7 @@ const VitalsHistory = () => {
 									keyExtractor={(vital, index) => index.toString()}
 									renderItem={({ item: vital, index }: any) => (
 										<View style={[styles.card, { backgroundColor: getBackgroundColor(index) }]}>
-											<View style={{flexDirection: "row", marginBottom: 9}}>
+											<View style={{flexDirection: "row", marginBottom: 4, alignItems: "center"}}>
 												<CalenderIcon4 color={getTextColors(index)} />
 												<Text style={[styles.date, { color: getTextColors(index) }]}>{new Date(vital.date.seconds * 1000).toLocaleDateString()}</Text>
 											</View>

@@ -28,7 +28,8 @@ export default function Headline({ bookings, displayName }: any) {
         <View style={styles.dashboard_profile_container}>
           <TouchableOpacity style={styles.dashboard_profile} onPress={handleprofile}>
             {/* @ts-ignore  */}
-            {!displayName?.photo_url ? <FontAwesome5 name="user-alt" size={15} color={colors.smail_text_color} /> : <Image
+            {displayName?.photo_url ? <FontAwesome5 name="user-alt" size={15} color={colors.smail_text_color} /> 
+            : <Image
               style={styles.image}		// @ts-ignore 
               source={{ uri: displayName?.photo_url }}
             />}

@@ -19,7 +19,7 @@ export const button = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5, // for Android
+    //elevation: 5, // for Android
 	},
 	
 	 login_account_text: {

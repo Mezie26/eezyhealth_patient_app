@@ -21,7 +21,7 @@ const SearchDoctor = () => {
 	const navigation: any = useNavigation();
 	const [specialization, setSpecialization] = useState({});
 	const [result, setResult] = useState('');
-	const [selectedItem, setSelectedItem] = useState('');
+	const [selectedItem, setSelectedItem] = useState(null);
 	const [doctors, setDoctors] = useState<any>([]);
 	const [isLoadingd, setIsLoadingd] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
@@ -42,12 +42,15 @@ const SearchDoctor = () => {
 
 
 	const handleSpecializationChange = (text: any) => {
+		//getDoctorsCollection();
+		//setDoctors(doctors)
 		setResult(text)
 	};
 
 	const filteredDoctors = doctors?.filter((doctor: { specialization: string; }) =>
 		doctor?.specialization?.toLowerCase().includes(result?.toLowerCase())
 	);
+	//console.log("item-13-item", JSON.stringify(filteredDoctors, null, 2))
 
 
 
@@ -57,7 +60,7 @@ const SearchDoctor = () => {
 			.then(data => {
 				setSpecialization(data); // Process the specialization data here
 				setIsLoading(false);
-				//console.log(data)
+				//console.log("item-|-item", JSON.stringify(data, null, 2))
 			})
 			.catch(error => {
 				toastRef.current.error(error);
@@ -72,17 +75,19 @@ const SearchDoctor = () => {
 			.then(data => {
 				setDoctors(data); // Process the Doctors data here
 				setIsLoadingd(false);
+				//console.log("item-12-item", JSON.stringify(data, null, 2))
 			})
 			.catch(error => {
 				toastRef.current.error(error);
 				Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error)
 				setIsLoadingd(false);
 			});
-	}, []);
+	}, [result]);
 
 	useEffect(() => {
 		if (search !== undefined) {
 			setIsLoadingd(true);
+			setSelectedItem(search);
 			getDoctorsBySpecialization({ specialization: search })
 				.then(data => {
 					setDoctors(data); // Process the Doctors data here
@@ -152,7 +157,7 @@ const SearchDoctor = () => {
 							<Text style={styles.access_card_img_text_one}>Dr {item?.first_name} {item?.last_name}</Text>
 							<View style={{flexDirection: "row"}}>
 								<Text style={styles.access_card_img_text_two}>{item?.specialization}</Text>
-								<View style={{marginTop: 10}}>
+								<View style={{marginTop: 11.7}}>
 									<DotIcon />
 								</View>
 								<Text style={styles.access_card_img_text_two}>{item?.experience_yrs} Years Experience</Text>
@@ -227,10 +232,11 @@ const SearchDoctor = () => {
 					/>*/}
 					<Search />
 					<TextInput 
-					value={result}
-					onChangeText={handleSpecializationChange}
-					style={styles.inputBoxText}
-					placeholder='Find a Doctor'
+						value={result}
+						onChangeText={handleSpecializationChange}
+						style={styles.inputBoxText}
+						placeholder='Find a Doctor'
+						clearButtonMode='always'
 					/>
 				</View>
 				<View style={styles.specialist_container_list}>
@@ -557,7 +563,8 @@ const styles = StyleSheet.create({
 		fontFamily: "Inter-Regular",
 		color: "#171717",
 		paddingHorizontal: 10,
-		width: 350
+		width: 350,
+		height: 40
 	},
 
 	dashboard_calender_text: {

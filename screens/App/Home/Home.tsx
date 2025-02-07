@@ -257,10 +257,13 @@ const Home = () => {
 						<View style={styles.doctor_image_container}>
 							{data?.doctorMonth?.map((item: any, index: React.Key | null | undefined) => (
 								<>
-								  <Image 
-								  key={index} 
-								  source={{ uri: item?.photo_url }}
-								  style={styles.top_container_img_icon}/>
+								  <View style={{height: 170, width: "100%", flex: 1}}>
+								  	<Image 
+								  		key={index} 
+								  		source={{ uri: item?.photo_url, cache: "force-cache" }}
+								  		style={styles.top_container_img_icon}
+									/>
+								  </View>
 								  <View style={styles.doctor_description_container}>
 								  <Text style={styles.doctor_inside_one_one}>Dr {item?.doctorName}</Text>
 								  <Text style={styles.doctor_inside_one_two}>{item?.specialization}</Text>
@@ -661,10 +664,12 @@ const styles = StyleSheet.create({
 
 	doctor_hospital_profile_container: {
 		flexDirection: 'row',
-		//justifyContent: 'space-between',
+		//alignItems: "center",
+		textAlign: "center",
+		//justifyContent: 'center',
 		//marginBottom: 15,
 		margin: 10,
-		marginTop: 5,
+		marginTop: 3,
 		//marginBottom: 5
 	},
 
@@ -673,9 +678,10 @@ const styles = StyleSheet.create({
 		color: colors.black,
 		fontSize: 12,
 		fontWeight: '400',
-		//marginTop: 10,
+		//marginTop: -2,
 		fontFamily: "Inter-Regular",
 		marginLeft: 2,
+		textAlign: "center",
 		//marginTop: 3
 		//justifyContent: 'space-between'
 	},
@@ -741,11 +747,12 @@ const styles = StyleSheet.create({
 
 
 	top_container_img_icon: {
-		width: '100%',
+		width: "100%",
 		height: 170,
 		//borderRadius: 10,
 		resizeMode: 'stretch',
 		overflow: 'hidden',
+		//flex: 1
 	},
 
 	doctor_container: {

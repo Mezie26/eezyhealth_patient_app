@@ -5,7 +5,8 @@ import {
 	View,
 	ScrollView,
 	Image,
-	TextInput
+	TextInput,
+    Dimensions
 } from "react-native";
 import { useState } from "react";
 import moment from "moment";
@@ -110,7 +111,7 @@ const CompletedAppointmentDetails = () => {
 
 export default CompletedAppointmentDetails;
 
-
+const {width} = Dimensions.get("window")
 
 const styles = StyleSheet.create({
 	header_text: {
@@ -122,12 +123,13 @@ const styles = StyleSheet.create({
 		marginHorizontal: 20
 	},
     medical_summary_container: {
-        width: 370,
+        width: width * 0.9,
         height: 220,
         borderRadius: 12,
         borderWidth: 0.5,
         borderColor: "#D5D5D5",
         margin: 20,
+        marginHorizontal: width * 0.03,
         marginBottom: 0,
         // Shadow for iOS
         shadowColor: "#000",
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.15,
         shadowRadius: 4,
         // Elevation for Android
-        elevation: 4,
+        //elevation: 1,
     },
     medical_summary_header: {
         fontSize: 14,
@@ -184,7 +186,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.15,
         shadowRadius: 4,
         // Elevation for Android
-        elevation: 4,
+        //elevation: 4,
     },
     no_medical_summary_text: {
         fontSize: 14,
@@ -202,20 +204,21 @@ const styles = StyleSheet.create({
         width: 300
     },
     payment_info_container: {
-        width: 370,
+        width: width * 0.9,
         height: 60,
         borderRadius: 12,
         borderWidth: 0.5,
         borderColor: "#D5D5D5",
         margin: 20,
         marginBottom: 150,
+        marginHorizontal: width * 0.03,
         // Shadow for iOS
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.15,
         shadowRadius: 4,
         // Elevation for Android
-        elevation: 4,
+        //elevation: 4,
     },
     consultation_container: {
         flexDirection: 'row',

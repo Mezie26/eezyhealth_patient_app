@@ -94,7 +94,7 @@ export const styles = StyleSheet.create({
 		},
 		shadowOpacity: 0.1,
 		shadowRadius: 6.27,
-		elevation: 10,
+		//elevation: 10,
 	},
 	message: {
 		fontSize: 16,

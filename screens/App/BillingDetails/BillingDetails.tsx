@@ -22,6 +22,7 @@ import axios from "axios";
 import { UserCircle } from "../../../assets/svg/UserCircle";
 import { CalenderIcon2 } from "@/assets/svg/CalenderIcon2";
 import { SwitchIcon } from "@/assets/svg/SwitchIcon";
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 const BillingDetails = () => {
 	const navigation: any = useNavigation();
@@ -210,7 +211,7 @@ const BillingDetails = () => {
 					<View style={styles.booked_text_nett}>
 						<Text style={styles.topboxTextContainer_text_nett}>Booking Info</Text>
 						<View style={styles.booked_text_container_main_two}>
-							<View style={{flexDirection: "row", marginTop: 17, marginLeft: 15}}>
+							<View style={{flexDirection: "row", marginTop: 10, marginLeft: 15}}>
 								<CalenderIcon2 />
 								<Text style={styles.bookeding_section_two}>Date and Time</Text>
 							</View>
@@ -241,7 +242,8 @@ const BillingDetails = () => {
 						<Text style={styles.topboxTextContainer_text_nett}>Doctor Info</Text>
 						<View style={styles.doctor_info_container}>
 							<View style={styles.booked_text_container}>
-								{!item?.photo_url ? <UserCircle /> : <Image
+								{!item?.photo_url ? <FontAwesome6 name="user-doctor" size={24} color="black" /> 
+								: <Image
 									style={styles.image}		// @ts-ignore 
 									source={{ uri: item?.photo_url }}
 								/>}
@@ -254,7 +256,7 @@ const BillingDetails = () => {
 						</View>
 						<Text style={styles.topboxTextContainer_text_nett}>Payment Info</Text>
 						<View style={styles.payment_info_box_container}>
-							<View style={{flexDirection: 'row', margin: 18, justifyContent: 'space-between'}}>
+							<View style={{flexDirection: 'row', margin: 14, justifyContent: 'space-between', alignItems: "center"}}>
 								<Text style={styles.consultation_text}>Consultation Fee</Text>
 								<Text style={styles.consultation_fee}>₦{pricing[0]?.pricing}</Text>
 							</View>
@@ -456,7 +458,9 @@ const styles = StyleSheet.create({
 		borderWidth: 0.5,
 		borderRadius: 12,
 		borderColor: "#D5D5D5",
-		marginBottom: 20
+		marginBottom: 20,
+		//alignItems: "center",
+		//justifyContent: "center"
 	},
 
 	consultation_text: {
@@ -470,7 +474,8 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		fontWeight: '500',
 		fontFamily: 'Inter-Medium',
-		color: colors.black
+		color: colors.black,
+		lineHeight: 20
 	},
 
 	bookeding_section_text_two_sub: {

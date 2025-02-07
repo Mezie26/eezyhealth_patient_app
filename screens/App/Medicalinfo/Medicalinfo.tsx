@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
 		shadowOffset: { width: 0, height: 1 }, // Matches the (x, y) offset
     	shadowOpacity: 0.15, // Approximate opacity from #00000026
     	shadowRadius: 4, // Approximate blur radius
-    	elevation: 4, // Android-specific shadow
+    	//elevation: 4, // Android-specific shadow
 	},
 	headerText: {
 		color: "#363636",

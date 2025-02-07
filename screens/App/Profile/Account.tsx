@@ -73,7 +73,8 @@ const Account = () => {
 			dispatch(logoutUser());
 			// Provide haptic feedback for logout
 			await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-			// Navigate to the login screen or any other appropriate screen 
+			// Navigate to the login screen or any other appropriate screen
+			navigation.navigate("OnboardingScreen")
 		} catch (error) {
 		}
 	};
@@ -91,7 +92,7 @@ const Account = () => {
 						<View style={styles.top_container_img}>*/}
 							<View style={styles.top_container_img_sub}>
 								<View style={styles.top_container_img_circle}>
-									{!user?.photo_url ? (
+									{user?.photo_url ? (
 										<UserCircle />
 									) : (
 										<Image style={styles.image} source={{ uri: user?.photo_url }} />
@@ -342,7 +343,7 @@ const styles = StyleSheet.create({
 		},
 		shadowOpacity: 0.25,
 		shadowRadius: 3.84,
-		elevation: 5,
+		//elevation: 5,
 	},
 	top_container: {
 		marginHorizontal: 10,

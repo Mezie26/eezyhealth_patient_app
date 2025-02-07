@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions } from "react-native";
 import React, { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
@@ -105,6 +105,9 @@ export default function UpdateVitals() {
     )
 };
 
+const {width} = Dimensions.get("window")
+
+
 const styles= StyleSheet.create({
     container: {
         flex: 1,
@@ -141,14 +144,18 @@ const styles= StyleSheet.create({
     nextButtonContainer: {
         //marginTop: 160
         position: "absolute",
-        bottom: 20
+        bottom: 20,
+        justifyContent: "center",
+        alignItems: "center",
+        //marginHorizontal: 35
     },
     nextButton: {
-        width: 380,
+        width: width * 0.9,
         height: 48,
         backgroundColor: "#44CE2D",
         borderRadius: 12,
-        margin: 20,
+        //margin: 20,
+        marginHorizontal: width * 0.05,
         justifyContent: "center",
         alignItems: "center",
     },

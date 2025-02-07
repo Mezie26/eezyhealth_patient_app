@@ -87,7 +87,7 @@ const Appointments = () => {
 		navigation.navigate('CancelledAppointmentDetails', { item: message, user: user });
 	};
 
-	const hasData = Object.keys(bookings).length > 0;
+	const hasData = Object.keys(bookings ?? {}).length > 0;
 
 
 	return (
@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
 
 	},
 	titleStyle: {
-		marginHorizontal: 20,
+		marginHorizontal: 10,
 	},
 
 
@@ -509,6 +509,7 @@ const styles = StyleSheet.create({
 		//borderBottomWidth: 0.3,
 		borderColor: colors.smail_text_color,
 		//paddingBottom: 10,
+		marginTop: -5
 	},
 
 	top_container_img_circle_second: {
@@ -564,6 +565,7 @@ const styles = StyleSheet.create({
 		//padding: 10,
 		backgroundColor: "#FFFFFF",
 		borderRadius: 12,
+		//alignItems: "center",
 		// shadowColor: colors.black,
 		// shadowOffset: {
 		// 	width: 0,

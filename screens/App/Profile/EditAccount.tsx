@@ -19,6 +19,7 @@ import { Pencil } from '../../../assets/svg/Pencil';
 import { CameraIcon } from '@/assets/svg/CameraIcon';
 import DateOfBirth from '@/components/Input/DateOfBirthInput';
 import GenderDropdown from '@/components/Input/GenderDropDown';
+import { UserCircle } from '@/assets/svg/UserCircle';
 
 const EditAccount = () => {
 	const toastRef: any = useRef(null);
@@ -68,6 +69,7 @@ const EditAccount = () => {
 			aspect: [4, 3],
 			quality: 1,
 		});
+		
 
 		if (!result.cancelled) {
 			setSelectedImage(result.assets[0].uri);
@@ -196,7 +198,7 @@ const EditAccount = () => {
 						<TouchableOpacity style={styles.badgeontainer} onPress={pickImage} >
 							<CameraIcon />
 						</TouchableOpacity>
-						{selectedImage && <Image source={{ uri: selectedImage }} style={styles.image} />}
+						{selectedImage !== null ? <UserCircle/> : <UserCircle/>}
 					</View>
 				</View>
 

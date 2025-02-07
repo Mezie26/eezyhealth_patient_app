@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
 		fontWeight: '500',
 		fontFamily: 'Inter-Regular',
 		color: "#363636",
-		padding: 7
+		//padding: 2
 	},
 	doctor_details_card_text2: {
 		fontSize: 12,

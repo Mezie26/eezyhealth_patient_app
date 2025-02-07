@@ -1,4 +1,4 @@
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Dimensions } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { colors } from '../../../css/colorsIndex'
 import * as Haptics from 'expo-haptics';
@@ -179,17 +179,20 @@ const BookingAppointment = () => {
 
 export default BookingAppointment;
 
+const {width} = Dimensions.get("window")
+
 const styles = StyleSheet.create({
 
 	consultation_box_container: {
-		width: "100%",
+		width: width * 0.9,
 		height: 154,
 		borderColor: "#D5D5D5",
 		borderWidth: 0.5,
 		borderRadius: 12,
 		textAlignVertical: 'top',
+		//marginHorizontal: width * 0.03,
 		//margin: 10,
-		//padding: 10
+		//padding: 10,
 	},
 	consultation_box_text: {
 		padding: 10,
@@ -222,12 +225,13 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 	},
 	content: {
-		//padding: 20,
+		//padding: 16,
 		backgroundColor: '#ffffff',
 		flexDirection: "row",
 		flexWrap: "wrap",
-		gap: 12,
-		marginBottom: 10
+		gap: 10,
+		marginBottom: 10,
+		justifyContent: "center"
 	},
 
 

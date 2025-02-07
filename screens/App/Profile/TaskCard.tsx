@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
 		shadowOpacity: 1,
 		shadowRadius: 60,
 		borderRadius: 8,
-		elevation: 4,
+		//elevation: 4,
 		marginBottom: 20,
 	},
 

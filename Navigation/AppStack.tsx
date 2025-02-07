@@ -11,7 +11,7 @@ import { Back } from '@/assets/svg/Back';
 import { EezyLogo } from '@/assets/svg/EezyLogo';
 import { HomeIcon } from '@/assets/svg/HomeIcon';
 import { MessageIcon } from '@/assets/svg/MessageIcon';
-import { AccountIcon, ProfileIcon, SettingsIcon } from '@/assets/svg/AccountIcon';
+import { AccountIcon } from '@/assets/svg/AccountIcon';
 import AppointmentDetails from '@/screens/App/Appointment/AppointmentDetails';
 import BookingAppointment from '@/screens/App/Appointment/BookingAppointment';
 import RescheduleBooking from '@/screens/App/Appointment/RescheduleBooking';
@@ -57,7 +57,7 @@ function RootNavigator() {
   const colorScheme = useColorScheme();
 
   return (
-    <Stack.Navigator initialRouteName="Home" screenOptions={{
+    <Stack.Navigator screenOptions={{
       headerShown: true,
       //headerStyle: { backgroundColor: Colors[colorScheme].TopTab },
       //headerTintColor: Colors[colorScheme].headerTintColor,
@@ -359,9 +359,9 @@ function BottomTabNavigator() {
     return (
       <View style={{
         flexDirection: 'row',
-        height: Platform.OS === 'android' ? 60 : 80,
+        height: Platform.OS === 'android' ? 60 : 75,
         paddingBottom: Platform.OS === 'android' ? 10 : 30,
-        paddingTop: 15,
+        //paddingTop: 15,
         backgroundColor: Colors[colorScheme].background, // Use dynamic color scheme
         borderTopWidth: 0.5, // Add top border
         borderTopColor: Colors[colorScheme].borderColor, // Set top border color
@@ -404,10 +404,13 @@ function BottomTabNavigator() {
               onLongPress={onLongPress}
               style={{ flex: 1, alignItems: 'center' }}
             >
-              {Icon({ color: isFocused ? Colors[colorScheme].buttonTab : Colors[colorScheme].inactiveTab, size: isFocused ? 25 : 23 })}
+              {isFocused && <View style={styles.indicator} />}
+              <View style={{alignItems: "center", marginTop: 5}}>
+              {Icon({ color: isFocused ? Colors[colorScheme].buttonTab : Colors[colorScheme].inactiveTab, size: isFocused ? 24 : 23 })}
               <Text style={{ color: isFocused ? Colors[colorScheme].buttonTab : Colors[colorScheme].inactiveTab, fontSize: 12 }}>
                 {label}
               </Text>
+              </View>
             </TouchableOpacity>
           );
         })}
@@ -426,10 +429,11 @@ function BottomTabNavigator() {
         tabBarStyle: {
           height: Platform.OS === 'android' ? 60 : 80,
           paddingBottom: Platform.OS === 'android' ? 10 : 30,
-          paddingTop: 10,
+          //paddingTop: 10,
         },
         tabBarLabelStyle: {
-          fontSize: 10,
+          fontSize: 14,
+          fontWeight: "bold"
         },
         tabBarIconStyle: {
           width: 20,
@@ -498,6 +502,13 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 50,
+  },
+  indicator: {
+    width: 30,
+    height: 3,
+    backgroundColor: "#44CE2D",
+    marginBottom: -4,
+    borderRadius: 2,
   },
 });
 

@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
 		//borderWidth: 1,
 		//borderColor: colors.border_color,
 		//borderRadius: 10,
-		paddingHorizontal: 10
+		//paddingHorizontal: 10
 	},
 	top_container_img_doctor: {
 		width: 48,

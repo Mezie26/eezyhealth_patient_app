@@ -12,7 +12,7 @@ import { CardImage } from '@rneui/base/dist/Card/Card.Image';
 const UpcomingAppointmentCard = () => {
     return (
         <View>
-            <View style={{flexDirection: 'row', marginTop: 20, margin: 10, justifyContent: 'space-between'}}>
+            <View style={{flexDirection: 'row', marginTop: 10, margin: 10, justifyContent: 'space-between', alignItems: "center"}}>
 				<View style={{flexDirection: 'row'}}>
                     <FontAwesome6 name="user-doctor" size={45} style={styles.CardImageIcon}  color={colors.smail_text_color} />
                     {/*<Image

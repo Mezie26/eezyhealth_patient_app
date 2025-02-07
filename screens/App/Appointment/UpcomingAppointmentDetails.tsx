@@ -5,7 +5,8 @@ import {
 	View,
 	ScrollView,
 	Image,
-	TextInput
+	TextInput,
+	Dimensions
 } from "react-native";
 import { useState } from "react";
 import moment from "moment";
@@ -187,7 +188,7 @@ const UpcomingAppointmentDetails = () => {
 
 export default UpcomingAppointmentDetails;
 
-
+const {width} = Dimensions.get("window")
 
 const styles = StyleSheet.create({
 	header_text: {
@@ -207,13 +208,14 @@ const styles = StyleSheet.create({
 		marginHorizontal: 20
 	},
 	consultation_box_container: {
-		width: 380,
+		width: width * 0.9,
 		height: 154,
 		borderColor: "#D5D5D5",
 		borderWidth: 0.5,
 		borderRadius: 12,
 		textAlignVertical: 'top',
 		margin: 20,
+		marginHorizontal: width * 0.03,
 		//padding: 10
 	},
 	consultation_box_text: {

@@ -40,8 +40,8 @@ const Security = () => {
         <TouchableOpacity onPress={() => setShowNewPassword(!showNewPassword)}>
           <Ionicons name={showNewPassword ? "eye-off" : "eye"} size={24} color="gray" />
         </TouchableOpacity>
-       </View>
-       <Text style={styles.label}>Confirm New Password</Text>
+      </View>
+      <Text style={styles.label}>Confirm New Password</Text>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -54,12 +54,12 @@ const Security = () => {
         <TouchableOpacity onPress={() => setShowConfirmNewPassword(!showConfirmNewPassword)}>
           <Ionicons name={showConfirmNewPassword ? "eye-off" : "eye"} size={24} color="gray" />
         </TouchableOpacity>
-       </View>
-       <View style={{justifyContent: "center", alignItems: "center"}}>
+      </View>
+      <View style={{justifyContent: "center", alignItems: "center"}}>
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Update Password</Text>
         </TouchableOpacity>
-       </View>
+      </View>
     </View>
   );
 };

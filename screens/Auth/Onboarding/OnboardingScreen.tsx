@@ -7,6 +7,12 @@ import ONBOARDING4 from '../../../assets/onboarding/ONBOARDING4';
 import ONBOARDING3 from '../../../assets/onboarding/ONBOARDING3';
 import ONBOARDING2 from '../../../assets/onboarding/ONBOARDING2';
 import ONBOARDING1 from '../../../assets/onboarding/ONBOARDING1';
+import OnboardingImage1 from '@/assets/onboarding/OnboardingImage1';
+import OnboardingImage2 from '@/assets/onboarding/OnboardingImage2';
+import OnboardingImage3 from '@/assets/onboarding/OnboardingImage3';
+import OnboardingImage4 from '@/assets/onboarding/OnboardingImage4';
+import BottomButton from '@/components/BottomButton';
+import { useNavigation } from '@react-navigation/native';
 
 
 const { width, height } = Dimensions.get('window');
@@ -24,40 +30,33 @@ const images: ImageData[] = [
 	{
 		id: '11',
 		ids: '42',
-		image: <ONBOARDING1 width={width} height={height} />,
+		image: <OnboardingImage1 width={width} height={height} />,
 		type: 'svg',
 		title: 'Find the best doctors in your vicinity',
-		subtitle: 'With the help of our intelligent algorithm you can locate the best doctors within your vicinity with total ease',
+		subtitle: 'With the help of our intelligent algorithm you can locate the best doctors within your vicinity with  total ease',
 	},
 	{
 		id: '23',
 		ids: '54',
-		image: <ONBOARDING2 width={width} height={height} />,
+		image: <OnboardingImage2 width={width} height={height} />,
 		type: 'svg',
-		title: 'Waiting can be annoying',
-		subtitle: 'Say goodbye to annoying long queues at the hospital and easily book and consult any medical practitioner of your choice on eezyhealth',
+		title: 'Say goodbye to long waits.',
+		subtitle: 'Book appointments and consult with top doctors conveniently on eezyhealth.',
 	},
 	{
 		id: '35',
 		ids: '67',
-		image: <ONBOARDING3 width={width} height={height} />,
+		image: <OnboardingImage3 width={width} height={height} />,
 		type: 'svg',
 		title: 'Schedule online appointments',
-		subtitle: 'Connect with your preferred doctor based on ratings and reviews and book your appointments hassle-free',
-	},
-	{
-		id: '32',
-		ids: '62',
-		image: <ONBOARDING4 width={width} height={height} />,
-		type: 'svg',
-		title: 'Engage with patients globally',
-		subtitle: 'With the help of our intelligent algorithm you can locate the best doctors within your vicinity with total ease',
+		subtitle: 'Find and book appointments with doctors you trust, based on real patient reviews.',
 	}
 ];
 
 export default function OnboardingScreen() {
 	const scrollRef = useRef<ScrollView | null>(null);
 	const [selectedIndex, setSelectedIndex] = useState<number>(0);
+	const navigation: any = useNavigation();
 
 	useEffect(() => {
 		const intervalId = setInterval(() => {
@@ -109,30 +108,37 @@ export default function OnboardingScreen() {
 					/>
 				))}
 			</View>
-			<OnboardingButton />
+			{/*<OnboardingButton />*/}
+			<BottomButton onPress={()=> navigation.navigate('SignUp')} text={"Get Started"}/>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
 	title_two: {
-		color: colors.black,
-		fontWeight: "bold",
-		fontSize: 18,
-		fontFamily: 'Inter-Regular',
+		color: "#171717",
+		fontWeight: "500",
+		fontSize: 16,
+		fontFamily: 'Inter-Medium',
 		textAlign: "center",
 		paddingBottom: 20,
+		lineHeight: 24,
+		letterSpacing: -0.5
 	},
 	backgroundImage: {
 		alignItems: 'center',
 		width: width,
+		marginTop: 200,
+		marginBottom: 50,
 	},
 	title: {
-		color: colors.smail_text_color,
+		color: "#646464",
 		fontSize: 14,
-		fontWeight: 'bold',
+		fontWeight: "400",
 		textAlign: "center",
 		fontFamily: 'Inter-Regular',
+		lineHeight: 22,
+		letterSpacing: -0.5
 	},
 	titleViewContainer: {
 		position: "absolute",

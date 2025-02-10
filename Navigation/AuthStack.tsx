@@ -34,7 +34,7 @@ const AuthStack = () => {
   return (
     <Stack.Navigator initialRouteName="OnboardingScreen" screenOptions={{ headerShown: false }}>
       {screens.map((screen) => (
-        <Stack.Screen key={screen.name} name={screen.name} component={screen.component} />
+        <Stack.Screen key={screen.name} name={screen.name} component={screen.component}  />
       ))}
     </Stack.Navigator>
   );

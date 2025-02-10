@@ -5,7 +5,7 @@ import FormInput from "../../components/Input/FormInput";
 import { auth, db, storage } from "../../shared/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { addDoc, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
-import { StyleSheet, Text, View, Image, Alert, ActivityIndicator, Platform } from 'react-native'
+import { StyleSheet, Text, View, Image, Alert, ActivityIndicator, Platform, TextInput, Dimensions } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -17,6 +17,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { ArrowBack } from "../../assets/svg/ArrowBack";
 import { CircleImage } from "../../assets/svg/CircleImage";
 import BottomButton from "../../components/BottomButton";
+import { EezyLogo } from "@/assets/svg/EezyLogo";
+import { Ionicons } from "@expo/vector-icons";
 
 
 const SignUp = () => {
@@ -58,6 +60,8 @@ const SignUp = () => {
 	const [formErrors, setFormErrors] = useState<any>({});
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLoading1, setIsLoading1] = useState(false);
+	const [showNewPassword, setShowNewPassword] = useState(false);
+	const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
 
 
 
@@ -363,17 +367,97 @@ const SignUp = () => {
 
 	return (
 		<View style={styles.scrollViewContainer}>
-			<TouchableOpacity style={styles.arrowBackcontainer} onPress={handleBack}>
+			{/*<TouchableOpacity style={styles.arrowBackcontainer} onPress={handleBack}>
 				<ArrowBack />
 				<Text style={styles.arrowBackText}>Back</Text>
-			</TouchableOpacity>
+			</TouchableOpacity>*/}
+			<View style={{justifyContent: "center", alignItems: "center", marginTop: 70, gap: 10}}>
+				<EezyLogo />
+				<Text style={styles.headerText}>Sign Up</Text>
+			</View>
 			<KeyboardAwareScrollView
 				contentContainerStyle={styles.container}
 				enableOnAndroid={true}
 				extraScrollHeight={80}
 				keyboardShouldPersistTaps="handled"
 				enableAutomaticScroll={Platform.OS === 'ios'}>
-				<View style={styles.arrowColorContainer}>
+				<View style={{flexDirection: "row", margin: 15}}>
+					<Text style={styles.inputBoxHeader}>First Name</Text><Text style={{color: "#BD0606"}}>*</Text>
+				</View>
+				<TextInput
+				value={input.first_name}
+				onChangeText={(text: any) => handleChanges('first_name', text)}
+				style={styles.inputBox}
+				placeholder="Enter First name"
+				clearButtonMode="always"
+				/>
+				<View style={{flexDirection: "row", margin: 15}}>
+					<Text style={styles.inputBoxHeader}>Last Name</Text><Text style={{color: "#BD0606"}}>*</Text>
+				</View>
+				<TextInput
+				value={input.last_name}
+				onChangeText={(text: any) => handleChanges('last_name', text)}
+				style={styles.inputBox}
+				placeholder="Enter Last name"
+				clearButtonMode="always"
+				/>
+				<View style={{flexDirection: "row", margin: 15}}>
+					<Text style={styles.inputBoxHeader}>Email</Text><Text style={{color: "#BD0606"}}>*</Text>
+				</View>
+				<TextInput
+				value={input.email}
+				onChangeText={(text: any) => handleChanges('email', text)}
+				style={styles.inputBox}
+				placeholder="Enter your email"
+				clearButtonMode="always"
+				keyboardType="email-address"
+				/>
+				<View style={{flexDirection: "row", margin: 15}}>
+					<Text style={styles.inputBoxHeader}>Mobile Number</Text><Text style={{color: "#BD0606"}}>*</Text>
+				</View>
+				<TextInput
+				value={input.phone_number}
+				onChangeText={(text: any) => handleChanges('phone_number', text)}
+				style={styles.inputBox}
+				placeholder="Enter mobile number"
+				clearButtonMode="always"
+				keyboardType="numeric"
+				maxLength={11}
+				/>
+				<View style={{flexDirection: "row", margin: 15}}>
+					<Text style={styles.inputBoxHeader}>Password</Text><Text style={{color: "#BD0606"}}>*</Text>
+				</View>
+				<View style={styles.inputContainer}>
+        			<TextInput
+          				style={styles.input}
+          				secureTextEntry={!showNewPassword}
+          				value={input.password}
+          				onChangeText={(text: any) => handleChanges('password', text)}
+          				placeholder="Create a password"
+          				placeholderTextColor="#D1D1D1"
+        			/>
+        			<TouchableOpacity onPress={() => setShowNewPassword(!showNewPassword)}>
+          				<Ionicons name={showNewPassword ? "eye-off" : "eye"} size={24} color="gray" />
+        			</TouchableOpacity>
+      			</View>
+				<View style={{flexDirection: "row", margin: 15}}>
+					<Text style={styles.inputBoxHeader}>Confirm New Password</Text><Text style={{color: "#BD0606"}}>*</Text>
+				</View>
+				<View style={styles.inputContainer}>
+					<TextInput
+						style={styles.input}
+						secureTextEntry={!showConfirmNewPassword}
+						value={input.confirmPassword}
+						onChangeText={(text: any) => handleChanges('confirmPassword', text)}
+						placeholder="Confirm password"
+						placeholderTextColor="#D1D1D1"
+					/>
+					<TouchableOpacity onPress={() => setShowConfirmNewPassword(!showConfirmNewPassword)}>
+						<Ionicons name={showConfirmNewPassword ? "eye-off" : "eye"} size={24} color="gray" />
+					</TouchableOpacity>
+				</View>
+				
+				{/*<View style={styles.arrowColorContainer}>
 					<View style={next >= 1 ? styles.arrowColorLine : styles.arrowColorLine2}></View>
 					<View style={next >= 2 ? styles.arrowColorLine : styles.arrowColorLine2}></View>
 					<View style={next >= 3 ? styles.arrowColorLine : styles.arrowColorLine2}></View>
@@ -532,10 +616,21 @@ const SignUp = () => {
 								</View>
 							</View>
 					}
+				</View>*/}
+				<Text style={styles.termsAndConditionsText}>By clicking sign up, I hereby agree to and accept all the Terms & conditions</Text>
+				<TouchableOpacity style={styles.signUpButton} onPress={() => navigation.navigate('')}>
+					<Text style={styles.signUpButtonText}>Sign Up</Text>
+				</TouchableOpacity>
+
+				<View style={{flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 10}}>
+					<Text style={styles.logInTitle}>Already have an Account? </Text>
+					<TouchableOpacity onPress={() =>navigation.navigate('Login')}>
+						<Text style={styles.logInButton}>Log In</Text>
+					</TouchableOpacity>
 				</View>
 
 			</KeyboardAwareScrollView>
-			<View  >
+			{/*<View  >
 				{next === 1 && (
 					<BottomButton onPress={handleCreateUser} text={"Continue"} isLoading={isLoading} />)}
 				{next === 2 && (
@@ -544,7 +639,7 @@ const SignUp = () => {
 				{next === 3 && (
 					<BottomButton onPress={handleUpdate} text={"Upload"} isLoading={isLoading} />
 				)}
-			</View>
+			</View>*/}
 		</View>
 	);
 };
@@ -553,7 +648,97 @@ export default SignUp
 
 // onPress = { next === 3 ? handlePress : () => setNext(next + 1)}
 
+const {width} = Dimensions.get("window")
+
 const styles = StyleSheet.create({
+	headerText: {
+		fontSize: 16,
+		fontFamily: "Inter-Medium",
+		fontWeight: "500",
+		color: "#171717",
+		lineHeight: 24,
+		letterSpacing: -0.5
+	},
+	inputBoxHeader: {
+		fontSize: 14,
+		fontWeight: "500",
+		fontFamily: "Inter-Medium",
+		color: "#171717",
+		lineHeight: 20
+	},
+	inputBox: {
+		width: width * 0.9,
+		height: 44,
+		borderRadius: 12,
+		marginHorizontal: width * 0.03,
+		borderWidth: 0.5,
+		borderColor: "#D5D5D5",
+		paddingVertical: 10,
+		paddingHorizontal: 14,
+	},
+	inputContainer: {
+		width: width * 0.9,
+		marginHorizontal: width * 0.03,
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
+		borderWidth: 0.5,
+		borderColor: "#D5D5D5",
+		borderRadius: 12,
+		paddingHorizontal: 10,
+		backgroundColor: "#fff", // Ensure a background color
+	},
+	input: {
+		width: 320,
+		height: 40,
+		fontSize: 14,
+		fontWeight: "400",
+		fontFamily: "Inter-Regular",
+	},
+	termsAndConditionsText: {
+		fontSize: 14,
+		fontWeight: "400",
+		color: "#363636",
+		lineHeight: 22,
+		margin: 20,
+		marginTop: 10,
+		paddingHorizontal: 10
+	},
+	signUpButton: {
+		width: width * 0.9,
+		height: 40,
+		marginHorizontal: width * 0.03,
+		borderRadius: 12,
+		borderWidth: 0.5,
+		borderColor: "#44CE2D",
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: "#44CE2D"
+	},
+	signUpButtonText: {
+		fontSize: 14,
+		fontWeight: "500",
+		lineHeight: 24,
+		color: "#FFFFFF"
+	},
+	logInTitle: {
+		fontSize: 14,
+		fontWeight: "400",
+		fontFamily: "Inter-Regular",
+		lineHeight: 22,
+		letterSpacing: -0.5,
+		color: "#363636"
+	},
+	logInButton: {
+		fontSize: 14,
+		fontWeight: "500",
+		fontFamily: "Inter-Medium",
+		color: "#44CE2D",
+		lineHeight: 20,
+		letterSpacing: -0.5
+	},
+
+
 	formInput: {
 		gap: 10,
 	},
@@ -683,6 +868,7 @@ const styles = StyleSheet.create({
 	scrollViewContainer: {
 		flexGrow: 1,
 		paddingBottom: 80,
+		backgroundColor: "#FFFFFF"
 	},
 
 

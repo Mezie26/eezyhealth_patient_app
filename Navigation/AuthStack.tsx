@@ -11,6 +11,8 @@ import SuccessOkay from '@/screens/SuccessScreens/SuccessOkay';
 import SucessVerification from '@/screens/SuccessScreens/SucessVerification';
 import AppStack from './AppStack';
 import SplashScreen from '@/screens/SplashScreen';
+import MedicalRecord from '@/screens/Auth/MedicalRecord';
+import CurrentMedication from '@/screens/Auth/CurrentMedication';
 
 
 const Stack = createNativeStackNavigator();
@@ -23,6 +25,8 @@ const AuthStack = () => {
     { name: 'OnboardingScreen', component: OnboardingScreen },
     { name: 'Login', component: Login },
     { name: 'SignUp', component: SignUp },
+    { name: 'MedicalRecord', component: MedicalRecord},
+    { name: 'CurrentMedication', component: CurrentMedication},
     { name: 'Verification', component: Verification },
     { name: 'SucessVerification', component: SucessVerification },
     { name: 'SuccessCreated', component: SuccessCreated },

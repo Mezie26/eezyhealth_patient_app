@@ -618,11 +618,11 @@ const SignUp = () => {
 					}
 				</View>*/}
 				<Text style={styles.termsAndConditionsText}>By clicking sign up, I hereby agree to and accept all the Terms & conditions</Text>
-				<TouchableOpacity style={styles.signUpButton} onPress={() => navigation.navigate('')}>
+				<TouchableOpacity style={styles.signUpButton} onPress={() => navigation.navigate('MedicalRecord')}>
 					<Text style={styles.signUpButtonText}>Sign Up</Text>
 				</TouchableOpacity>
 
-				<View style={{flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 10}}>
+				<View style={{flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 20}}>
 					<Text style={styles.logInTitle}>Already have an Account? </Text>
 					<TouchableOpacity onPress={() =>navigation.navigate('Login')}>
 						<Text style={styles.logInButton}>Log In</Text>

@@ -6,6 +6,8 @@ import {
   View,
   TouchableOpacity,
   ActivityIndicator,
+  TextInput,
+  Dimensions
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FormInput from "../../components/Input/FormInput";
@@ -22,6 +24,8 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { StreamChat } from 'stream-chat';
 import axios from 'axios';
+import { EezyLogo } from "@/assets/svg/EezyLogo";
+import { Ionicons } from "@expo/vector-icons";
 
 const Login = () => {
   const toastRef: any = useRef(null);
@@ -30,6 +34,7 @@ const Login = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState<any>(true);
+  const [showPassword, setShowPassword] = useState(false);
   // Initialize Stream Chat client
   const apiKey = '4g6sfwegs7he';
   const client: any = StreamChat.getInstance(apiKey);
@@ -157,10 +162,34 @@ const Login = () => {
       <Toast ref={toastRef} />
       <View style={styles.container_main}>
         <View style={styles.titleContainer}>
-          <Text style={styles.titleContainer_login_text}> Welcome</Text>
-          <Text style={styles.titleContainer_login_text2}> Login to continue</Text>
+          <EezyLogo />
+          <Text style={styles.titleContainer_login_text}>Welcome back</Text>
+          <Text style={styles.titleContainer_login_text2}>Welcome back! Please enter your details.</Text>
         </View>
-        <View style={styles.address}>
+        <Text style={styles.inputBoxHeader}>Email</Text>
+        <TextInput
+          value={email}
+          onChangeText={(userEmail: React.SetStateAction<string>) => setEmail(userEmail)}
+          style={styles.inputBox}
+          placeholder="Enter your email"
+          clearButtonMode="always"
+          keyboardType="email-address"
+        />
+        <Text style={styles.inputBoxHeader}>Password</Text>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+          	secureTextEntry={!showPassword}
+          	value={password}
+          	onChangeText={setPassword}
+          	placeholder="Enter password"
+          	placeholderTextColor="#D1D1D1"
+        	/>
+        	<TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+          	<Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color="gray" />
+        	</TouchableOpacity>
+      	</View>
+        {/*<View style={styles.address}>
           <FormInput
             label="Email Address"
             labelValue={email}
@@ -176,26 +205,25 @@ const Login = () => {
           onPress={togglePasswordVisiblity}
           iconType="lock"
           secureTextEntry={true}
-        />
+        />*/}
         <View style={styles.address_login}>
+        <TouchableOpacity onPress={() => { navigation.navigate('ForgetPassword'); Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium) }}>
+            <Text style={styles.login_forgot_text}>Forgot Password</Text>
+        </TouchableOpacity>
           <TouchableOpacity style={[button.login_account, styles.login_account]} onPress={loginHandler}>
             <Text style={button.login_account_text}>
               {isLoading ?
                 <ActivityIndicator
                   color='white'
                   size={20} /> :
-                "Login"}
+                "Sign In"}
             </Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.login_forgot_text_container}>
-          <TouchableOpacity onPress={() => { navigation.navigate('ForgetPassword'); Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium) }}>
-            <Text style={styles.login_forgot_text}>Forgot Password?</Text>
-          </TouchableOpacity>
           <View style={styles.login_account_signup}>
-            <Text style={styles.login_account_text1}>Don’t have an account?
-            </Text>
+            <Text style={styles.login_account_text1}>Don’t have an account?</Text>
             <TouchableOpacity onPress={() => {
               navigation.navigate('SignUp');
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -211,9 +239,47 @@ const Login = () => {
 };
 export default Login;
 
-
+const {width} = Dimensions.get("window")
 
 const styles = StyleSheet.create({
+  inputBoxHeader: {
+		fontSize: 14,
+		fontWeight: "500",
+		fontFamily: "Inter-Medium",
+		color: "#171717",
+		lineHeight: 20,
+    margin: 20
+	},
+  inputBox: {
+		width: width * 0.9,
+		height: 44,
+		borderRadius: 12,
+		marginHorizontal: width * 0.03,
+		borderWidth: 0.5,
+		borderColor: "#D5D5D5",
+		paddingVertical: 10,
+		paddingHorizontal: 14,
+	},
+	inputContainer: {
+		width: width * 0.9,
+		marginHorizontal: width * 0.03,
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
+		borderWidth: 0.5,
+		borderColor: "#D5D5D5",
+		borderRadius: 12,
+		paddingHorizontal: 10,
+		backgroundColor: "#fff", // Ensure a background color
+	},
+	input: {
+		width: 320,
+		height: 40,
+		fontSize: 14,
+		fontWeight: "400",
+		fontFamily: "Inter-Regular",
+	},
+
   address_login: {
     marginTop: 20,
   },
@@ -222,11 +288,11 @@ const styles = StyleSheet.create({
   },
 
   login_account: {
-    height: 50,
-    marginTop: 10
+    //height: 40,
+    //marginTop: 10
   },
   container_main: {
-    margin: 30,
+    margin: 10,
   },
 
 
@@ -256,14 +322,20 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   login_account_text2: {
-    color: "#43CE2E",
+    color: "#44CE2D",
     fontFamily: "Inter-Medium",
-    fontSize: 16,
+    fontSize: 14,
+    fontWeight: "500",
+    //lineHeight: 20,
+    letterSpacing: -0.5
   },
   login_account_text1: {
-    color: "#A7A9AC",
+    color: "#363636",
     fontFamily: "Inter-Regular",
     fontSize: 14,
+    fontWeight: 400,
+    lineHeight: 22,
+    letterSpacing: -0.5
   },
 
   login_account_signup: {
@@ -276,27 +348,42 @@ const styles = StyleSheet.create({
 
 
   titleContainer_login_text2: {
-    color: "#BABABA",
+    color: "#363636",
     fontSize: 14,
+    fontFamily: "Inter-Regular",
+    fontWeight: "400",
+    lineHeight: 22,
+    marginTop: 10
   },
 
   login_forgot_text: {
-    color: "#BABABA",
-    fontSize: 16,
+    color: "#44CE2D",
+    fontSize: 14,
+    fontFamily: "Inter-Medium",
+    fontWeight: "500",
+    lineHeight: 20,
+    letterSpacing: -0.5,
+    marginBottom: 10,
+    marginHorizontal: 10,
+    textAlign: "right"
   },
 
 
   titleContainer_login_text: {
-    fontSize: 28,
-    color: "#000"
+    fontSize: 16,
+    fontFamily: "Inter-Medium",
+    color: "#171717",
+    fontWeight: "500",
+    lineHeight: 24,
+    marginTop: 20
   },
 
   titleContainer: {
-    margin: 70,
+    marginTop: 70,
     justifyContent: "center",
     flexDirection: "column",
     alignItems: "center",
-    gap: 10,
+    //gap: 10,
   },
 
   signOutContainerTwoSubtextSign: {

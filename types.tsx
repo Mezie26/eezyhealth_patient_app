@@ -23,6 +23,8 @@ export type RootStackParamList = {
   Home: undefined;
   OnboardingScreen: undefined;
   SignUp: undefined;
+  MedicalRecord: undefined;
+  CurrentMedication: undefined;
   Login: undefined;
   Verification: undefined;
   SucessVerification: undefined;

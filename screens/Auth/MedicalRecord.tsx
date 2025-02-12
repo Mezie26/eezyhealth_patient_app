@@ -19,7 +19,7 @@ const MedicalRecord = () => {
 
     return(
         <View style={styles.container}>
-            <TouchableOpacity style={styles.backButton} onPress={() =>{navigation.navigate('SignUp')}}>
+            <TouchableOpacity style={styles.backButton} onPress={() =>navigation.goBack()}>
                 <Back />
             </TouchableOpacity>
             <View style={{justifyContent: "center", alignItems: "center", marginBottom: 30}}>

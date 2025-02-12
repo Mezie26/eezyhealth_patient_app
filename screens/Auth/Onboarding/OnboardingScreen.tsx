@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
 	backgroundImage: {
 		alignItems: 'center',
 		width: width,
-		marginTop: 200,
+		marginTop: 150,
 		marginBottom: 50,
 	},
 	title: {

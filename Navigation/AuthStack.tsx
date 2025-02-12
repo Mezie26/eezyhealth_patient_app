@@ -13,6 +13,10 @@ import AppStack from './AppStack';
 import SplashScreen from '@/screens/SplashScreen';
 import MedicalRecord from '@/screens/Auth/MedicalRecord';
 import CurrentMedication from '@/screens/Auth/CurrentMedication';
+import Allergies from '@/screens/Auth/Allergies';
+import PastSurgeries from '@/screens/Auth/PastSurgeries';
+import FamilyHistory from '@/screens/Auth/FamilyHistory';
+import LifestyleInformation from '@/screens/Auth/LifestyleInformation';
 
 
 const Stack = createNativeStackNavigator();
@@ -27,6 +31,10 @@ const AuthStack = () => {
     { name: 'SignUp', component: SignUp },
     { name: 'MedicalRecord', component: MedicalRecord},
     { name: 'CurrentMedication', component: CurrentMedication},
+    { name: 'Allergies', component: Allergies},
+    { name: 'PastSurgeries', component: PastSurgeries},
+    { name: 'FamilyHistory', component: FamilyHistory},
+    { name: 'LifestyleInformation', component: LifestyleInformation},
     { name: 'Verification', component: Verification },
     { name: 'SucessVerification', component: SucessVerification },
     { name: 'SuccessCreated', component: SuccessCreated },

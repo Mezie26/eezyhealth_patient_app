@@ -25,6 +25,10 @@ export type RootStackParamList = {
   SignUp: undefined;
   MedicalRecord: undefined;
   CurrentMedication: undefined;
+  Allergies: undefined;
+  PastSurgeries: undefined;
+  FamilyHistory: undefined;
+  LifestyleInformation: undefined;
   Login: undefined;
   Verification: undefined;
   SucessVerification: undefined;

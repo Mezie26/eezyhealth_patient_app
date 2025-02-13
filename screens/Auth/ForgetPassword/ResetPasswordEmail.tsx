@@ -2,18 +2,15 @@ import { ActivityIndicator, SafeAreaView, StyleSheet, Text, TouchableOpacity, Vi
 import React, { useRef, useState } from 'react'
 import { colors } from '../../../css/colorsIndex';
 import { useNavigation } from '@react-navigation/native';
-import FormInput from '../../../components/Input/FormInput';
-import { Key } from '../../../assets/svg/Key';
 import { auth } from '../../../shared/firebase';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as Haptics from 'expo-haptics';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import Toast from '../../../components/Toast';
-import { Back } from '../../../assets/svg/Back';
-import { PasswordIcon } from '@/assets/svg/PasswordIcon';
 import { Back1 } from '@/assets/svg/Back1';
+import { EmailIcon } from '@/assets/svg/EmailIcon';
 
-const ForgetPassword = () => {
+const ResetPasswordEmail = () => {
 	const toastRef: any = useRef(null);
 	const navigation: any = useNavigation();
 	const [email, setEmail] = React.useState('');
@@ -32,7 +29,7 @@ const ForgetPassword = () => {
 				alert("Password reset email sent");
 				Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
 				setTimeout(() => {
-					navigation.navigate('ResetPasswordEmail');
+					navigation.navigate('SuccessOkay');
 				}, 1000);
 			})
 			.catch((error) => {
@@ -53,37 +50,32 @@ const ForgetPassword = () => {
 					<View style={styles.top_container}>
 
 						<View style={styles.top_icon_container}>
-							<PasswordIcon />
+							<EmailIcon />
 						</View>
-						<Text style={styles.top_icon_container_verify}>Forgot Password?</Text>
+						<Text style={styles.top_icon_container_verify}>Check your email</Text>
 						<Text style={styles.top_icon_verification}>
-							No worries, we’ll send you reset instructions.
+							We sent a password reset link to email
 						</Text>
 					</View>
 
 					<View style={styles.email_input_container}>
-						<Text style={styles.input_box_header}>Email</Text>
-						<TextInput
-							value={email}
-							onChangeText={(userEmail: React.SetStateAction<string>) => setEmail(userEmail)}
-							style={styles.input_box}
-							placeholder="Enter your email"
-						/>
-						{/*<FormInput label="Email Address"
-							labelValue={email}
-							onChangeText={(userEmail: React.SetStateAction<string>) => setEmail(userEmail)}
-							keyboardType="email-address" />*/}
 						<TouchableOpacity
 							style={styles.login_account}
-							onPress={resetPassword}
 							disabled={isLoading}>
 							<Text style={styles.login_account_text}>
 								{isLoading ?
 									<ActivityIndicator
 										color='white'
 										size={20} /> :
-									"Reset Password"}
+									"Open email app"}
 							</Text>
+						</TouchableOpacity>
+					</View>
+
+					<View style={{flexDirection: "row", marginTop: 40, justifyContent: "center", alignItems: "center"}}>
+						<Text style={styles.resend_text}>Didn’t receive the email? </Text>
+						<TouchableOpacity>
+							<Text style={styles.resend_text1}>Click to resend</Text>
 						</TouchableOpacity>
 					</View>
 
@@ -99,7 +91,7 @@ const ForgetPassword = () => {
 	)
 }
 
-export default ForgetPassword;
+export default ResetPasswordEmail;
 
 const {width} = Dimensions.get("window")
 
@@ -110,26 +102,21 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 	},
 
-	input_box_header: {
+	resend_text: {
 		fontSize: 14,
-		fontFamily: "Inter-Medium",
-		fontWeight: "500",
-		color: "#171717",
-		lineHeight: 20,
-		letterSpacing: -0.5,
-		marginHorizontal: 23
+		fontWeight: "400",
+		fontFamily: "Inter-Regular",
+		color: "#363636",
+		lineHeight: 22,
+		letterSpacing: -0.5
 	},
-
-	input_box: {
-		width: width * 0.9,
-		height: 44,
-		borderRadius: 12,
-		marginHorizontal: width * 0.05,
-		borderWidth: 0.5,
-		borderColor: "#D5D5D5",
-		paddingVertical: 10,
-		paddingHorizontal: 14,
-        marginVertical: 10
+	resend_text1: {
+		fontSize: 14,
+		fontWeight: "500",
+		fontFamily: "Inter-Medium",
+		color: "#44CE2D",
+		lineHeight: 22,
+		letterSpacing: -0.5
 	},
 
 	login_account: {

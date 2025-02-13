@@ -35,6 +35,7 @@ export type RootStackParamList = {
   SuccessOkay: undefined;
   ForgetPasswordEmail: undefined;
   ForgetPassword: undefined;
+  ResetPasswordEmail: undefined;
   CreateNewPassword: undefined;
   Message: undefined;
   Chat: undefined;

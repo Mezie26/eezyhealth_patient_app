@@ -17,6 +17,7 @@ import Allergies from '@/screens/Auth/Allergies';
 import PastSurgeries from '@/screens/Auth/PastSurgeries';
 import FamilyHistory from '@/screens/Auth/FamilyHistory';
 import LifestyleInformation from '@/screens/Auth/LifestyleInformation';
+import ResetPasswordEmail from '@/screens/Auth/ForgetPassword/ResetPasswordEmail';
 
 
 const Stack = createNativeStackNavigator();
@@ -40,6 +41,7 @@ const AuthStack = () => {
     { name: 'SuccessCreated', component: SuccessCreated },
     { name: 'SuccessOkay', component: SuccessOkay },
     { name: 'ForgetPassword', component: ForgetPassword },
+    { name: 'ResetPasswordEmail', component: ResetPasswordEmail },
     { name: 'ForgetpasswordSuccess', component: ForgetpasswordSuccess },
     { name: 'Home', component: AppStack },
   ];

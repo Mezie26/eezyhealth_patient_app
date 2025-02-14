@@ -74,8 +74,7 @@ function RootNavigator() {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
               navigation.goBack();
             }}>
-              <Text>ddd</Text>
-              {/* <Back/> */}
+              <Back/>
             </TouchableOpacity>
           )
         }} />

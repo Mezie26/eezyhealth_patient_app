@@ -1,14 +1,16 @@
-import { ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React from 'react';
+import { ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Dimensions } from 'react-native';
+import React, { useState } from 'react';
 import moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
 import { theme } from '../../../css/global';
 import { getContrastingColor, getRandomColor } from '../../../helper';
 import { useChatClient } from '../../../shared/ChatClientContext';
 import { Chatbubbles } from '../../../assets/svg/Chatbubbles';
+import { SearchIcon } from '@/assets/svg/SearchIcon';
 
 const ChannelListScreen = ({ bookings }: any) => {
 	const navigation = useNavigation();
+	const[searchText, setSearchText] = useState("");
 	const chatClient = useChatClient();
 
 	// Function to categorize chats based on the date
@@ -77,6 +79,16 @@ const ChannelListScreen = ({ bookings }: any) => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView contentContainerStyle={styles.scrollViewContent}>
+				<View style={styles.searchContainer}>
+					<SearchIcon />
+					<TextInput 
+						value={searchText}
+						onChangeText={setSearchText}
+						style={styles.inputBoxText}
+						placeholder='Search'
+						clearButtonMode='always'
+					/>
+				</View>
 				{hasData ? (
 					<View style={styles.chat_container_main_notice}>
 						{Object.keys(chatGroups).map((group, i) => (
@@ -95,18 +107,18 @@ const ChannelListScreen = ({ bookings }: any) => {
 												{/* Avatar Container */}
 												<View style={[styles.price_image_container3, { backgroundColor: randomColor }]}>
 													<Text style={styles.price_image_inside}>{chat?.initials}</Text>
-													<View style={[styles.price_image_circle, { backgroundColor: contrastingColor }]} />
+													{/*<View style={[styles.price_image_circle, { backgroundColor: contrastingColor }]} />*/}
 												</View>
 												<View style={styles.price_container_Main}>
 													<View style={styles.price_container}>
-														<Text style={styles.price_container_text}>{chat?.doctorName}</Text>
+														<Text style={styles.price_container_text}>Dr. {chat?.doctorName}</Text>
 														<Text style={styles.price_time_text}>{moment(chat?.createAt).format('LLL')}</Text>
 													</View>
 													<View style={styles.sold_container}>
 														<Text style={styles.sold_container_text}>{chat?.specialization}</Text>
-														<View style={styles.sold_box_text_sup}>
+														{/*<View style={styles.sold_box_text_sup}>
 															<Text style={styles.sold_box_text}>{chat?.count}</Text>
-														</View>
+														</View>*/}
 													</View>
 												</View>
 											</View>
@@ -131,9 +143,34 @@ const ChannelListScreen = ({ bookings }: any) => {
 export default ChannelListScreen;
 
 
+const {width} = Dimensions.get("window")
 
 
 const styles = StyleSheet.create({
+	searchContainer: {
+		height: 44,
+		width: width * 0.9,
+		backgroundColor: "#FFFFFF",
+		borderRadius: 8,
+		borderWidth: 0.5,
+		borderColor: "#D0D5DD",
+		flexDirection: 'row',
+		//justifyContent: 'space-between',
+		alignItems: 'center',
+		padding: 10,
+		marginBottom: 50,
+		marginTop: 30,
+		//marginHorizontal: width * 0.05
+	},
+	inputBoxText: {
+		fontSize: 14,
+		fontWeight: 400,
+		fontFamily: "Inter-Regular",
+		color: "#171717",
+		paddingHorizontal: 10,
+		width: 350,
+		height: 40
+	},
 	emptyStateContainer: {
 		flex: 1,
 		justifyContent: 'center',
@@ -200,37 +237,41 @@ const styles = StyleSheet.create({
 		fontWeight: '400',
 		fontSize: 12,
 		lineHeight: 17,
-		letterSpacing: 0.2,
+		letterSpacing: -0.5,
 		color: theme.colors.white,
 		textAlign: 'center',
 	},
 
 	sold_container_text: {
-		fontStyle: 'normal',
+		fontFamily: "Inter-Regular",
 		fontWeight: '400',
 		fontSize: 12,
-		lineHeight: 17,
-		letterSpacing: 0.2,
-		color: '#616161',
+		lineHeight: 20,
+		letterSpacing: -0.5,
+		color: '#646464',
 	},
 
 	price_time_text: {
-		fontStyle: 'normal',
+		fontFamily: "Inter-Regular",
 		fontWeight: '400',
 		fontSize: 12,
-		lineHeight: 17,
-		letterSpacing: 0.2,
+		lineHeight: 20,
+		letterSpacing: -0.5,
 		color: theme.colors.black,
 	},
 
 	price_image_container_main_item: {
+		height: 102,
 		gap: 12,
-		backgroundColor: '#EEEEEE',
+		paddingVertical: 10,
+		//backgroundColor: '#EEEEEE',
 		shadowColor: 'rgba(4, 6, 15, 0.05)',
 		shadowOffset: { width: 0, height: 4 },
 		shadowOpacity: 1,
 		shadowRadius: 60,
-		borderRadius: 8,
+		borderBottomWidth: 1,
+		borderColor: "#EAECF0"
+		//borderRadius: 8,
 		//elevation: 4,
 	},
 
@@ -256,9 +297,9 @@ const styles = StyleSheet.create({
 	},
 
 	price_image_container3: {
-		width: 48,
-		height: 48,
-		borderRadius: 50,
+		width: 40,
+		height: 40,
+		borderRadius: 100,
 		backgroundColor: '#02393E',
 		flexDirection: 'row',
 		alignItems: 'center',
@@ -285,7 +326,7 @@ const styles = StyleSheet.create({
 
 	price_container_Main: {
 		flexDirection: 'column',
-		gap: 5,
+		//gap: 5,
 		width: '83%',
 	},
 	price_container: {
@@ -294,14 +335,14 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 	},
 	price_container_text: {
-		fontStyle: 'normal',
-		fontWeight: '700',
+		fontFamily: "Inter-Medium",
+		fontWeight: '500',
 		fontSize: 14,
-		lineHeight: 17,
-		display: 'flex',
+		lineHeight: 20,
+		//display: 'flex',
 		alignItems: 'center',
-		color: '#212121',
-		alignSelf: 'stretch',
+		color: '#171717',
+		//alignSelf: 'stretch',
 	},
 	sold_container: {
 		flexDirection: 'row',

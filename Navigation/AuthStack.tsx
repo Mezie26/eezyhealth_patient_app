@@ -18,6 +18,8 @@ import PastSurgeries from '@/screens/Auth/PastSurgeries';
 import FamilyHistory from '@/screens/Auth/FamilyHistory';
 import LifestyleInformation from '@/screens/Auth/LifestyleInformation';
 import ResetPasswordEmail from '@/screens/Auth/ForgetPassword/ResetPasswordEmail';
+import SetNewPassword from '@/screens/Auth/ForgetPassword/SetNewPassword';
+import SuccessPasswordReset from '@/screens/Auth/ForgetPassword/SuccessPasswordReset';
 
 
 const Stack = createNativeStackNavigator();
@@ -41,7 +43,9 @@ const AuthStack = () => {
     { name: 'SuccessCreated', component: SuccessCreated },
     { name: 'SuccessOkay', component: SuccessOkay },
     { name: 'ForgetPassword', component: ForgetPassword },
+    { name: 'SetNewPassword', component: SetNewPassword },
     { name: 'ResetPasswordEmail', component: ResetPasswordEmail },
+    { name: 'SuccessPasswordReset', component: SuccessPasswordReset },
     { name: 'ForgetpasswordSuccess', component: ForgetpasswordSuccess },
     { name: 'Home', component: AppStack },
   ];

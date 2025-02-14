@@ -1,4 +1,4 @@
-import { ActivityIndicator, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, TextInput, Dimensions } from 'react-native'
+import { ActivityIndicator, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { colors } from '../../../css/colorsIndex';
 import { useNavigation } from '@react-navigation/native';
@@ -7,10 +7,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import * as Haptics from 'expo-haptics';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import Toast from '../../../components/Toast';
-import { Back1 } from '@/assets/svg/Back1';
-import { EmailIcon } from '@/assets/svg/EmailIcon';
+import { SuccessIcon1 } from '@/assets/svg/SuccessIcon1';
 
-const ResetPasswordEmail = () => {
+const SuccessPasswordReset = () => {
 	const toastRef: any = useRef(null);
 	const navigation: any = useNavigation();
 	const [isLoading, setisLoading] = useState(false);
@@ -31,39 +30,26 @@ const ResetPasswordEmail = () => {
 					<View style={styles.top_container}>
 
 						<View style={styles.top_icon_container}>
-							<EmailIcon />
+							<SuccessIcon1 />
 						</View>
-						<Text style={styles.top_icon_container_verify}>Check your email</Text>
+						<Text style={styles.top_icon_container_verify}>Password reset</Text>
 						<Text style={styles.top_icon_verification}>
-							We sent a password reset link to email
+                            Your password has been successfully reset. Click below to log in.
 						</Text>
 					</View>
 
 					<View style={styles.email_input_container}>
 						<TouchableOpacity
 							style={styles.login_account}
+                            onPress={()=> navigation.navigate('Login')}
 							disabled={isLoading}>
 							<Text style={styles.login_account_text}>
 								{isLoading ?
 									<ActivityIndicator
 										color='white'
 										size={20} /> :
-									"Open email app"}
+									"Continue"}
 							</Text>
-						</TouchableOpacity>
-					</View>
-
-					<View style={{flexDirection: "row", marginTop: 40, justifyContent: "center", alignItems: "center"}}>
-						<Text style={styles.resend_text}>Didn’t receive the email? </Text>
-						<TouchableOpacity>
-							<Text style={styles.resend_text1}>Click to resend</Text>
-						</TouchableOpacity>
-					</View>
-
-					<View style={styles.login_forgot_text_container}>
-						<TouchableOpacity style={styles.back_container} >
-							<Back1 />
-							<Text style={styles.login_account_text2} onPress={() => navigation.navigate("Login")}>Back to log in</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -72,7 +58,7 @@ const ResetPasswordEmail = () => {
 	)
 }
 
-export default ResetPasswordEmail;
+export default SuccessPasswordReset;
 
 const {width} = Dimensions.get("window")
 
@@ -81,23 +67,6 @@ const styles = StyleSheet.create({
 	email_input_container: {
 		width: "100%",
 		marginTop: 20,
-	},
-
-	resend_text: {
-		fontSize: 14,
-		fontWeight: "400",
-		fontFamily: "Inter-Regular",
-		color: "#363636",
-		lineHeight: 22,
-		letterSpacing: -0.5
-	},
-	resend_text1: {
-		fontSize: 14,
-		fontWeight: "500",
-		fontFamily: "Inter-Medium",
-		color: "#44CE2D",
-		lineHeight: 22,
-		letterSpacing: -0.5
 	},
 
 	login_account: {
@@ -111,14 +80,6 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 	},
 
-	back_container: {
-		width: "100%",
-		flexDirection: "row",
-		justifyContent: "center",
-		alignItems: "center",
-		gap: 2,
-		marginTop: 20,
-	},
 
 	top_icon_container_verify: {
 		fontSize: 16,
@@ -138,25 +99,6 @@ const styles = StyleSheet.create({
 
 	},
 
-	login_account_text2: {
-		color: "#44CE2D",
-		fontSize: 14,
-		fontFamily: "Inter-Medium",
-		fontWeight: "500",
-		lineHeight: 20,
-		letterSpacing: -0.5
-	},
-
-
-
-	login_forgot_text_container: {
-		flexDirection: 'column',
-		alignItems: 'center',
-		justifyContent: 'center',
-		marginTop: 10,
-		gap: 5,
-	},
-
 	top_icon_verification: {
 		fontSize: 16,
 		color: "#363636",
@@ -165,7 +107,8 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		marginVertical: 10,
 		lineHeight: 24,
-		letterSpacing: -0.5
+		letterSpacing: -0.5,
+        marginHorizontal: 20
 	},
 
 	top_container: {
@@ -185,8 +128,6 @@ const styles = StyleSheet.create({
 	},
 
 	top_icon_container: {
-		// backgroundColor: colors.icon_background,
-
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'center',

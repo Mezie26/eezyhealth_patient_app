@@ -1,4 +1,4 @@
-import { ActivityIndicator, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, TextInput, Dimensions } from 'react-native'
+import { ActivityIndicator, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, TextInput, Dimensions, Platform } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { colors } from '../../../css/colorsIndex';
 import { useNavigation } from '@react-navigation/native';
@@ -236,6 +236,7 @@ const styles = StyleSheet.create({
 
 	container_main: {
 		//marginHorizontal: 30,
+		paddingTop: Platform.OS === 'ios' ? 10 : 70, // 50 for iOS, 20 for Android
 	},
 
 	container: {
